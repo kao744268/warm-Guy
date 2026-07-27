@@ -743,44 +743,6 @@ sauceText +=
 });
 
 
-
-});
-
-
-
-
-
-if(sauceText){
-
-
-text +=
-
-"🥫 醬料製作\n\n"+
-
-sauceText;
-
-
-}
-
-
-
-
-
-document
-.getElementById("lineText")
-.value=text;
-
-
-
-}
-
-
-
-
-
-
-
-
 // ======================
 // 複製 LINE
 // ======================
