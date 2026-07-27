@@ -281,6 +281,7 @@ let html="";
 
 sauceData.forEach((s,index)=>{
 
+let opened = saucePrep[s.name];
 
 html += `
 
