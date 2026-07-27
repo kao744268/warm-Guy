@@ -430,7 +430,80 @@ renderFood();
 
 
 
+// ==========================
+// 雜物
+// ==========================
 
+
+let stuffText="";
+
+
+stuffData.forEach(item=>{
+
+
+let data =
+prepareData[item];
+
+
+if(
+data.qty > 0 ||
+data.actions.length > 0
+){
+
+
+stuffText +=
+
+"□ " +
+item;
+
+
+if(data.qty>0){
+
+stuffText +=
+" × " +
+data.qty;
+
+}
+
+
+stuffText += "\n";
+
+
+data.actions.forEach(action=>{
+
+
+stuffText +=
+
+"　→ " +
+action +
+"\n";
+
+
+});
+
+
+stuffText+="\n";
+
+
+}
+
+
+});
+
+
+
+if(stuffText){
+
+
+text +=
+
+"🧹 雜物備品\n\n";
+
+
+text += stuffText;
+
+
+}
 
 // ==========================
 // 醬料系統
