@@ -1,16 +1,22 @@
 // ===================================
-// 溫暖酒場｜智慧備料系統 V2.1
+// 溫暖酒場｜智慧備料系統 V2.2
 // app.js
 // ===================================
 
 
+// 清除舊版本資料格式
+localStorage.removeItem("saucePrep_v1");
+
+
+
 let prepData = JSON.parse(
-    localStorage.getItem("prepData")
+    localStorage.getItem("prepData_v2")
 ) || {};
 
 
+
 let saucePrep = JSON.parse(
-    localStorage.getItem("saucePrep")
+    localStorage.getItem("saucePrep_v2")
 ) || {};
 
 
@@ -20,13 +26,13 @@ let saucePrep = JSON.parse(
 function saveData(){
 
     localStorage.setItem(
-        "prepData",
+        "prepData_v2",
         JSON.stringify(prepData)
     );
 
 
     localStorage.setItem(
-        "saucePrep",
+        "saucePrep_v2",
         JSON.stringify(saucePrep)
     );
 
@@ -39,7 +45,7 @@ function saveData(){
 
 
 // ======================
-// 初始化
+// 初始化一般品項
 // ======================
 
 
@@ -47,7 +53,6 @@ function initItem(name,actions){
 
 
     if(!prepData[name]){
-
 
         prepData[name]={
 
@@ -59,12 +64,10 @@ function initItem(name,actions){
 
         };
 
-
     }
 
 
 }
-
 
 
 
@@ -89,7 +92,7 @@ x=>initItem(x,stuffActions)
 
 
 // ======================
-// 分頁
+// 頁面切換
 // ======================
 
 
@@ -99,14 +102,19 @@ function showPage(id){
 document
 .querySelectorAll("section")
 .forEach(
-x=>x.classList.remove("active")
+s=>s.classList.remove("active")
 );
 
 
 
-document
-.getElementById(id)
-.classList.add("active");
+let page=document.getElementById(id);
+
+
+if(page){
+
+page.classList.add("active");
+
+}
 
 
 }
@@ -118,7 +126,7 @@ document
 
 
 // ======================
-// 一般品項
+// 一般品項顯示
 // ======================
 
 
@@ -137,21 +145,16 @@ let item=prepData[name];
 
 html += `
 
-
 <div class="card">
-
 
 <h3>${name}</h3>
 
 
-
 <div class="row">
-
 
 <button onclick="changeQty('${name}',-1)">
 －
 </button>
-
 
 
 <span>
@@ -159,38 +162,31 @@ ${item.qty}
 </span>
 
 
-
 <button onclick="changeQty('${name}',1)">
 ＋
 </button>
-
 
 
 </div>
 
 
 
-
-
 <div>
 
-
 ${
-item.availableActions.map(a=>`
-
+item.availableActions.map(action=>`
 
 <button
 
-class="${item.actions.includes(a) ? 'active':''}"
+class="${item.actions.includes(action) ? "active":""}"
 
-onclick="toggleAction('${name}','${a}')"
+onclick="toggleAction('${name}','${action}')"
 
 >
 
-${a}
+${action}
 
 </button>
-
 
 `).join("")
 }
@@ -199,9 +195,7 @@ ${a}
 </div>
 
 
-
 </div>
-
 
 
 `;
@@ -212,9 +206,7 @@ ${a}
 
 
 
-document
-.getElementById(id)
-.innerHTML=html;
+document.getElementById(id).innerHTML=html;
 
 
 }
@@ -223,6 +215,11 @@ document
 
 
 
+
+
+// ======================
+// 數量控制
+// ======================
 
 
 function changeQty(name,num){
@@ -231,16 +228,14 @@ function changeQty(name,num){
 prepData[name].qty += num;
 
 
-if(prepData[name].qty<0){
+if(prepData[name].qty < 0){
 
-prepData[name].qty=0;
+prepData[name].qty = 0;
 
 }
 
 
-
 saveData();
-
 
 refresh();
 
@@ -253,6 +248,11 @@ refresh();
 
 
 
+// ======================
+// 操作按鈕
+// ======================
+
+
 function toggleAction(name,action){
 
 
@@ -261,16 +261,13 @@ prepData[name].actions;
 
 
 
-if(
-list.includes(action)
-){
+if(list.includes(action)){
 
 
 prepData[name].actions =
 list.filter(
 x=>x!==action
 );
-
 
 
 }else{
@@ -285,13 +282,13 @@ list.push(action);
 
 saveData();
 
-
 refresh();
 
 
 }// ======================
-// 醬料系統 V2.1
+// 醬料系統 V2.2
 // ======================
+
 
 
 function initSauce(){
@@ -319,14 +316,11 @@ materials:{}
 s.materials.forEach(m=>{
 
 
-if(
-!saucePrep[s.name].materials[m]
-){
+if(!saucePrep[s.name].materials[m]){
 
 
-saucePrep[s.name].materials[m]={
-
-checked:false,
+saucePrep[s.name]
+.materials[m]={
 
 qty:0
 
@@ -336,9 +330,7 @@ qty:0
 }
 
 
-
 });
-
 
 
 });
@@ -348,7 +340,6 @@ saveData();
 
 
 }
-
 
 
 
@@ -371,7 +362,7 @@ let html="";
 sauceData.forEach((s,index)=>{
 
 
-let data=saucePrep[s.name];
+let sauce=saucePrep[s.name];
 
 
 
@@ -391,7 +382,7 @@ html += `
 
 type="checkbox"
 
-${data.enabled?"checked":""}
+${sauce.enabled ? "checked":""}
 
 onchange="toggleSauce('${s.name}')"
 
@@ -409,13 +400,12 @@ ${s.name}
 
 
 
-
-<div id="sauce-box-${index}">
+<div>
 
 
 ${
 
-data.enabled ?
+sauce.enabled ?
 
 renderSauceMaterial(s)
 
@@ -424,7 +414,6 @@ renderSauceMaterial(s)
 ""
 
 }
-
 
 
 </div>
@@ -459,7 +448,6 @@ document
 function toggleSauce(name){
 
 
-
 saucePrep[name].enabled =
 
 !saucePrep[name].enabled;
@@ -483,44 +471,22 @@ renderSauce();
 function renderSauceMaterial(sauce){
 
 
-
-let data =
-saucePrep[sauce.name];
-
-
-
 let html="";
 
 
-
-html += `
-
-<p>
-
-材料：
-
-</p>
-
-`;
-
+let data=saucePrep[sauce.name];
 
 
 
 sauce.materials.forEach(m=>{
 
 
-let item=data.materials[m];
+let qty =
+data.materials[m].qty;
 
 
 
 html += `
-
-
-<div class="row">
-
-
-<label style="flex:1">
-
 
 
 <div class="row">
@@ -531,36 +497,6 @@ html += `
 ${m}
 
 </span>
-
-
-
-<button onclick="changeSauceQty('${sauce.name}','${m}',-1)">
-－
-</button>
-
-
-
-<span>
-
-${item.qty}
-
-</span>
-
-
-
-<button onclick="changeSauceQty('${sauce.name}','${m}',1)">
-＋
-</button>
-
-
-
-</div>
-
-
-${m}
-
-
-</label>
 
 
 
@@ -578,7 +514,7 @@ onclick="changeSauceQty('${sauce.name}','${m}',-1)"
 
 <span>
 
-${item.qty}
+${qty}
 
 </span>
 
@@ -602,7 +538,6 @@ onclick="changeSauceQty('${sauce.name}','${m}',1)"
 `;
 
 
-
 });
 
 
@@ -618,32 +553,27 @@ return html;
 
 
 
-
-
-
-}
-
-
-
-
-
-
-
 function changeSauceQty(sauce,item,num){
 
 
-let target =
-saucePrep[sauce].materials[item];
+
+saucePrep[sauce]
+.materials[item]
+.qty += num;
 
 
 
-target.qty += num;
+if(
+saucePrep[sauce]
+.materials[item]
+.qty < 0
+){
 
 
+saucePrep[sauce]
+.materials[item]
+.qty=0;
 
-if(target.qty<0){
-
-target.qty=0;
 
 }
 
@@ -656,36 +586,22 @@ saveData();
 renderSauce();
 
 
-}
-
-
-
-
-
-
-
-
-
-// ======================
-// LINE輸出
+}// ======================
+// LINE 備料通知
 // ======================
 
 
 function createLINE(){
 
 
-
 let text =
-
 "【🍶 溫暖酒場 今日備料】\n\n";
 
 
 
 
 
-
 function addCategory(title,list){
-
 
 
 let result="";
@@ -699,12 +615,30 @@ let item=prepData[name];
 
 
 
-if(item.qty>0){
+if(
+item.qty>0 ||
+item.actions.length>0
+){
+
 
 
 result +=
 
-`□ ${name} × ${item.qty}\n`;
+`□ ${name}`;
+
+
+
+if(item.qty>0){
+
+result +=
+
+` × ${item.qty}`;
+
+}
+
+
+
+result+="\n";
 
 
 
@@ -719,11 +653,11 @@ result +=
 });
 
 
-
 result+="\n";
 
 
 }
+
 
 
 });
@@ -747,7 +681,10 @@ result+
 }
 
 
+
 }
+
+
 
 
 
@@ -777,6 +714,8 @@ stuffData
 
 
 
+// 醬料
+
 let sauceText="";
 
 
@@ -788,30 +727,35 @@ let data=saucePrep[s.name];
 
 
 
-if(!data.enabled)return;
+if(!data.enabled){
+
+return;
+
+}
 
 
 
-let materialText="";
+let material="";
 
 
 
-Object.keys(data.materials)
+Object.keys(
+data.materials
+)
 .forEach(m=>{
 
 
-let item=data.materials[m];
+let qty =
+data.materials[m].qty;
 
 
 
-if(
-item.qty>0
-)
+if(qty>0){
 
 
-materialText +=
+material +=
 
-`□ ${m} × ${item.qty}\n`;
+`□ ${m} × ${qty}\n`;
 
 
 }
@@ -822,14 +766,14 @@ materialText +=
 
 
 
-if(materialText){
+if(material){
 
 
 sauceText +=
 
-`☑ ${s.name}\n\n`+
+`☑ ${s.name}\n`+
 
-materialText+
+material+
 
 "\n";
 
@@ -837,7 +781,9 @@ materialText+
 }
 
 
+
 });
+
 
 
 
@@ -858,10 +804,10 @@ sauceText;
 
 
 
-
 document
 .getElementById("lineText")
 .value=text;
+
 
 
 }
@@ -871,6 +817,11 @@ document
 
 
 
+
+
+// ======================
+// 複製 LINE
+// ======================
 
 
 function copyLINE(){
@@ -883,7 +834,8 @@ document.getElementById("lineText").value
 );
 
 
-alert("已複製");
+
+alert("已複製備料通知");
 
 
 }
@@ -895,8 +847,117 @@ alert("已複製");
 
 
 
+
 // ======================
-// 更新
+// 一鍵歸零
+// ======================
+
+
+function resetAll(){
+
+
+
+if(
+!confirm(
+"確定清除今日全部備料？"
+)
+
+){
+
+return;
+
+}
+
+
+
+
+
+
+Object.keys(prepData)
+.forEach(name=>{
+
+
+prepData[name].qty=0;
+
+
+prepData[name].actions=[];
+
+
+});
+
+
+
+
+
+
+
+Object.keys(saucePrep)
+.forEach(name=>{
+
+
+saucePrep[name].enabled=false;
+
+
+
+Object.keys(
+saucePrep[name].materials
+)
+.forEach(m=>{
+
+
+saucePrep[name]
+.materials[m]
+.qty=0;
+
+
+
+});
+
+
+});
+
+
+
+
+
+
+let box =
+document.getElementById("lineText");
+
+
+
+if(box){
+
+box.value="";
+
+}
+
+
+
+saveData();
+
+
+refresh();
+
+
+alert(
+"今日備料已歸零"
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ======================
+// 更新畫面
 // ======================
 
 
@@ -907,6 +968,7 @@ renderItems(
 drinkData,
 "drink"
 );
+
 
 
 renderItems(
@@ -926,121 +988,20 @@ stuffData,
 renderSauce();
 
 
-}
-
-
-function resetAll(){
-
-
-let confirmReset =
-confirm(
-"確定要清除今日全部備料嗎？"
-);
-
-
-
-if(!confirmReset){
-
-return;
 
 }
 
 
 
-// 清除一般品項
-
-Object.keys(prepData)
-.forEach(name=>{
-
-
-prepData[name]={
-
-qty:0,
-
-actions:[],
-
-availableActions:
-prepData[name].availableActions
-
-};
-
-
-});
 
 
 
 
-// 清除醬料
 
-Object.keys(saucePrep)
-.forEach(name=>{
+// ======================
+// 啟動
+// ======================
 
-
-saucePrep[name].enabled=false;
-
-
-Object.keys(
-saucePrep[name].materials
-)
-.forEach(m=>{
-
-
-saucePrep[name]
-.materials[m]={
-
-checked:false,
-
-qty:0
-
-};
-
-
-});
-
-
-});
-
-
-
-
-// 清除LINE
-
-let box =
-document.getElementById("lineText");
-
-
-if(box){
-
-box.value="";
-
-}
-
-
-
-saveData();
-
-
-refresh();
-
-
-
-alert(
-"今日備料已歸零"
-);
-
-
-}
-try{
-
-refresh();
-
-showPage("drink");
-
-}catch(e){
-
-console.log(e);
-
-}
 
 refresh();
 
