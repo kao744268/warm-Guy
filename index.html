@@ -1,70 +1,16 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 
 <head>
-  <style>
-
-.summary{
-
-background:#fff;
-
-border-radius:15px;
-
-padding:15px;
-
-margin-bottom:15px;
-
-box-shadow:0 2px 8px #ddd;
-
-}
-
-
-
-.summary h3{
-
-margin-top:0;
-
-color:#6b3e1e;
-
-}
-
-
-
-.clear-btn{
-
-width:100%;
-
-height:55px;
-
-border:none;
-
-border-radius:15px;
-
-background:#b22222;
-
-color:white;
-
-font-size:18px;
-
-font-weight:bold;
-
-margin-bottom:15px;
-
-}
-
-
-</style>
 
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>溫暖酒場備料系統</title>
+<title>溫暖備料系統</title>
 
 
 <link rel="stylesheet" href="style.css">
-
 
 </head>
 
@@ -72,18 +18,9 @@ margin-bottom:15px;
 <body>
 
 
-<div class="app">
-
-
 <header>
 
-<h1>
-🍶 溫暖酒場
-</h1>
-
-<p>
-備料系統
-</p>
+<h1>🍶 溫暖備料系統</h1>
 
 </header>
 
@@ -107,6 +44,11 @@ margin-bottom:15px;
 </button>
 
 
+<button onclick="showPage('stuff')">
+🧹 雜物
+</button>
+
+
 <button onclick="showPage('line')">
 📋 LINE
 </button>
@@ -114,47 +56,13 @@ margin-bottom:15px;
 
 </div>
 
-
-
-<div class="summary">
-
-
-<h3>
-📊 今日備料狀態
-</h3>
-
-
-<div id="summaryText">
-
-目前尚未選擇備料
-
-</div>
-
-
-</div>
-
-
-
-<button class="clear-btn"
-
-onclick="clearToday()">
-
-🧹 清除今日備料
-
-</button>
-<button onclick="showPage('line')">
-📋 LINE
-</button>
-
-
-</div>
 
 
 
 
 <section id="drink" class="page">
 
-<h2>🍺 酒水備料</h2>
+<h2>🍺 酒水</h2>
 
 <div id="drinkList"></div>
 
@@ -163,10 +71,9 @@ onclick="clearToday()">
 
 
 
-
 <section id="food" class="page">
 
-<h2>🥩 食材備料</h2>
+<h2>🥩 食材</h2>
 
 <div id="foodList"></div>
 
@@ -175,10 +82,9 @@ onclick="clearToday()">
 
 
 
-
 <section id="sauce" class="page">
 
-<h2>🥫 醬料製作</h2>
+<h2>🥫 醬料</h2>
 
 <div id="sauceList"></div>
 
@@ -187,11 +93,23 @@ onclick="clearToday()">
 
 
 
+<section id="stuff" class="page">
+
+<h2>🧹 雜物</h2>
+
+<div id="stuffList"></div>
+
+</section>
+
+
+
 
 <section id="line" class="page">
 
-
 <h2>📋 LINE通知</h2>
+
+
+<textarea id="lineText"></textarea>
 
 
 <button onclick="createLINE()">
@@ -202,10 +120,6 @@ onclick="clearToday()">
 
 
 
-<textarea id="lineText"></textarea>
-
-
-
 <button onclick="copyLINE()">
 
 複製文字
@@ -213,14 +127,10 @@ onclick="clearToday()">
 </button>
 
 
-
 </section>
 
 
 
-
-
-</div>
 
 
 <script src="data.js"></script>
