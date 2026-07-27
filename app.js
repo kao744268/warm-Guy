@@ -1,20 +1,19 @@
 // ===================================
-// 溫暖酒場｜智慧備料系統 V2
+// 溫暖酒場｜智慧備料系統 V2.1
 // app.js
 // ===================================
 
-
-// ======================
-// 初始化資料
-// ======================
 
 let prepData = JSON.parse(
     localStorage.getItem("prepData")
 ) || {};
 
+
 let saucePrep = JSON.parse(
     localStorage.getItem("saucePrep")
 ) || {};
+
+
 
 
 
@@ -25,6 +24,7 @@ function saveData(){
         JSON.stringify(prepData)
     );
 
+
     localStorage.setItem(
         "saucePrep",
         JSON.stringify(saucePrep)
@@ -34,14 +34,20 @@ function saveData(){
 
 
 
+
+
+
+
 // ======================
-// 建立資料
+// 初始化
 // ======================
 
-function initItem(name, actions){
+
+function initItem(name,actions){
 
 
     if(!prepData[name]){
+
 
         prepData[name]={
 
@@ -53,6 +59,7 @@ function initItem(name, actions){
 
         };
 
+
     }
 
 
@@ -60,19 +67,23 @@ function initItem(name, actions){
 
 
 
+
 drinkData.forEach(
-    x=>initItem(x,drinkActions)
+x=>initItem(x,drinkActions)
 );
 
 
 foodData.forEach(
-    x=>initItem(x,foodActions)
+x=>initItem(x,foodActions)
 );
 
 
 stuffData.forEach(
-    x=>initItem(x,stuffActions)
+x=>initItem(x,stuffActions)
 );
+
+
+
 
 
 
@@ -84,16 +95,19 @@ stuffData.forEach(
 
 function showPage(id){
 
-    document
-    .querySelectorAll("section")
-    .forEach(
-        x=>x.classList.remove("active")
-    );
+
+document
+.querySelectorAll("section")
+.forEach(
+x=>x.classList.remove("active")
+);
 
 
-    document
-    .getElementById(id)
-    .classList.add("active");
+
+document
+.getElementById(id)
+.classList.add("active");
+
 
 }
 
@@ -101,8 +115,10 @@ function showPage(id){
 
 
 
+
+
 // ======================
-// 建立品項
+// 一般品項
 // ======================
 
 
@@ -116,6 +132,7 @@ list.forEach(name=>{
 
 
 let item=prepData[name];
+
 
 
 html += `
@@ -137,7 +154,7 @@ html += `
 
 
 
-<span id="qty-${name}">
+<span>
 ${item.qty}
 </span>
 
@@ -148,7 +165,10 @@ ${item.qty}
 </button>
 
 
+
 </div>
+
+
 
 
 
@@ -159,8 +179,12 @@ ${
 item.availableActions.map(a=>`
 
 
-<button onclick="toggleAction('${name}','${a}')"
-class="${item.actions.includes(a)?'active':''}"
+<button
+
+class="${item.actions.includes(a) ? 'active':''}"
+
+onclick="toggleAction('${name}','${a}')"
+
 >
 
 ${a}
@@ -179,10 +203,13 @@ ${a}
 </div>
 
 
+
 `;
 
 
+
 });
+
 
 
 document
@@ -196,9 +223,6 @@ document
 
 
 
-// ======================
-// 數量
-// ======================
 
 
 function changeQty(name,num){
@@ -214,10 +238,12 @@ prepData[name].qty=0;
 }
 
 
+
 saveData();
 
 
 refresh();
+
 
 }
 
@@ -225,31 +251,32 @@ refresh();
 
 
 
-// ======================
-// 選項
-// ======================
 
 
 function toggleAction(name,action){
 
 
-let arr =
+let list =
 prepData[name].actions;
 
 
-if(arr.includes(action)){
+
+if(
+list.includes(action)
+){
 
 
 prepData[name].actions =
-arr.filter(
+list.filter(
 x=>x!==action
 );
+
 
 
 }else{
 
 
-arr.push(action);
+list.push(action);
 
 
 }
@@ -258,7 +285,66 @@ arr.push(action);
 
 saveData();
 
+
 refresh();
+
+
+}// ======================
+// 醬料系統 V2.1
+// ======================
+
+
+function initSauce(){
+
+
+sauceData.forEach(s=>{
+
+
+if(!saucePrep[s.name]){
+
+
+saucePrep[s.name]={
+
+enabled:false,
+
+materials:{}
+
+};
+
+
+}
+
+
+
+s.materials.forEach(m=>{
+
+
+if(
+!saucePrep[s.name].materials[m]
+){
+
+
+saucePrep[s.name].materials[m]={
+
+checked:false,
+
+qty:0
+
+};
+
+
+}
+
+
+
+});
+
+
+
+});
+
+
+saveData();
 
 
 }
@@ -267,10 +353,12 @@ refresh();
 
 
 
+initSauce();
 
-// ======================
-// 醬料
-// ======================
+
+
+
+
 
 
 function renderSauce(){
@@ -279,9 +367,13 @@ function renderSauce(){
 let html="";
 
 
+
 sauceData.forEach((s,index)=>{
 
-let opened = saucePrep[s.name];
+
+let data=saucePrep[s.name];
+
+
 
 html += `
 
@@ -291,28 +383,64 @@ html += `
 
 <h3>
 
+
+<label>
+
+
+<input
+
+type="checkbox"
+
+${data.enabled?"checked":""}
+
+onchange="toggleSauce('${s.name}')"
+
+>
+
+
 ${s.name}
+
+
+</label>
+
 
 </h3>
 
 
-<button onclick="openSauce(${index})">
-
-製作
-
-</button>
 
 
-<div id="sauce-${index}"></div>
+
+<div id="sauce-box-${index}">
+
+
+${
+
+data.enabled ?
+
+renderSauceMaterial(s)
+
+:
+
+""
+
+}
+
 
 
 </div>
 
 
+
+</div>
+
+
+
 `;
 
 
+
 });
+
 
 
 document
@@ -325,35 +453,63 @@ document
 
 
 
-function openSauce(index){
 
 
-let sauce=sauceData[index];
+
+function toggleSauce(name){
 
 
-if(!saucePrep[sauce.name]){
+
+saucePrep[name].enabled =
+
+!saucePrep[name].enabled;
 
 
-saucePrep[sauce.name]={};
+
+saveData();
+
+
+renderSauce();
 
 
 }
+
+
+
+
+
+
+
+function renderSauceMaterial(sauce){
+
+
+
+let data =
+saucePrep[sauce.name];
 
 
 
 let html="";
 
 
+
+html += `
+
+<p>
+
+材料：
+
+</p>
+
+`;
+
+
+
+
 sauce.materials.forEach(m=>{
 
 
-if(!saucePrep[sauce.name][m]){
-
-
-saucePrep[sauce.name][m]=0;
-
-
-}
+let item=data.materials[m];
 
 
 
@@ -363,29 +519,57 @@ html += `
 <div class="row">
 
 
-<span>
+<label style="flex:1">
+
+
+<input
+
+type="checkbox"
+
+${item.checked?"checked":""}
+
+onchange="toggleSauceMaterial('${sauce.name}','${m}')"
+
+>
+
 
 ${m}
 
-</span>
+
+</label>
 
 
 
-<button onclick="changeSauce('${sauce.name}','${m}',-1)">
+<button
+
+onclick="changeSauceQty('${sauce.name}','${m}',-1)"
+
+>
+
 －
+
 </button>
+
 
 
 <span>
 
-${saucePrep[sauce.name][m]}
+${item.qty}
 
 </span>
 
 
-<button onclick="changeSauce('${sauce.name}','${m}',1)">
+
+<button
+
+onclick="changeSauceQty('${sauce.name}','${m}',1)"
+
+>
+
 ＋
+
 </button>
+
 
 
 </div>
@@ -394,38 +578,68 @@ ${saucePrep[sauce.name][m]}
 `;
 
 
+
 });
 
 
 
-document
-.getElementById(
-"sauce-"+index
-)
-.innerHTML=html;
+return html;
+
+
+}
+
+
+
+
+
+
+
+function toggleSauceMaterial(sauce,item){
+
+
+
+saucePrep[sauce]
+.materials[item]
+.checked =
+
+!saucePrep[sauce]
+.materials[item]
+.checked;
+
 
 
 saveData();
 
 
+renderSauce();
+
+
 }
 
 
 
 
-function changeSauce(sauce,item,num){
 
 
-saucePrep[sauce][item]+=num;
+
+function changeSauceQty(sauce,item,num){
 
 
-if(
-saucePrep[sauce][item]<0
-){
+let target =
+saucePrep[sauce].materials[item];
 
-saucePrep[sauce][item]=0;
+
+
+target.qty += num;
+
+
+
+if(target.qty<0){
+
+target.qty=0;
 
 }
+
 
 
 saveData();
@@ -435,13 +649,6 @@ saveData();
 renderSauce();
 
 
-openSauce(
-sauceData.findIndex(
-x=>x.name===sauce
-)
-);
-
-
 }
 
 
@@ -450,15 +657,18 @@ x=>x.name===sauce
 
 
 
+
+
 // ======================
-// LINE
+// LINE輸出
 // ======================
 
 
 function createLINE(){
 
 
-let text=
+
+let text =
 
 "【🍶 溫暖酒場 今日備料】\n\n";
 
@@ -466,10 +676,13 @@ let text=
 
 
 
-function addSection(title,list){
+
+function addCategory(title,list){
+
 
 
 let result="";
+
 
 
 list.forEach(name=>{
@@ -478,12 +691,14 @@ list.forEach(name=>{
 let item=prepData[name];
 
 
+
 if(item.qty>0){
 
 
 result +=
 
 `□ ${name} × ${item.qty}\n`;
+
 
 
 item.actions.forEach(a=>{
@@ -497,6 +712,7 @@ result +=
 });
 
 
+
 result+="\n";
 
 
@@ -506,13 +722,18 @@ result+="\n";
 });
 
 
+
 if(result){
 
 
 text +=
 
-title+"\n\n"+
+title+
+
+"\n\n"+
+
 result+
+
 "────────\n\n";
 
 
@@ -523,19 +744,22 @@ result+
 
 
 
-addSection(
+
+addCategory(
 "🍺 酒水",
 drinkData
 );
 
 
-addSection(
+
+addCategory(
 "🥩 食材",
 foodData
 );
 
 
-addSection(
+
+addCategory(
 "🧹 雜物",
 stuffData
 );
@@ -544,42 +768,63 @@ stuffData
 
 
 
-text += "🥫 醬料製作\n\n";
+
+
+let sauceText="";
 
 
 
-Object.keys(saucePrep)
-.forEach(s=>{
+sauceData.forEach(s=>{
 
 
-let materials="";
+let data=saucePrep[s.name];
 
 
-Object.keys(saucePrep[s])
+
+if(!data.enabled)return;
+
+
+
+let materialText="";
+
+
+
+Object.keys(data.materials)
 .forEach(m=>{
 
 
-if(saucePrep[s][m]>0){
+let item=data.materials[m];
 
 
-materials +=
 
-`□ ${m} × ${saucePrep[s][m]}\n`;
+if(
+item.checked &&
+item.qty>0
+){
+
+
+materialText +=
+
+`□ ${m} × ${item.qty}\n`;
 
 
 }
 
 
+
 });
 
 
-if(materials){
+
+if(materialText){
 
 
-text +=
+sauceText +=
 
-s+"\n"+
-materials+
+`☑ ${s.name}\n\n`+
+
+materialText+
+
 "\n";
 
 
@@ -591,6 +836,22 @@ materials+
 
 
 
+if(sauceText){
+
+
+text +=
+
+"🥫 醬料製作\n\n"+
+
+sauceText;
+
+
+}
+
+
+
+
+
 
 document
 .getElementById("lineText")
@@ -598,6 +859,9 @@ document
 
 
 }
+
+
+
 
 
 
@@ -624,8 +888,9 @@ alert("已複製");
 
 
 
+
 // ======================
-// 更新畫面
+// 更新
 // ======================
 
 
@@ -644,10 +909,12 @@ foodData,
 );
 
 
+
 renderItems(
 stuffData,
 "stuff"
 );
+
 
 
 renderSauce();
@@ -659,12 +926,7 @@ renderSauce();
 
 
 
-
-// ======================
-// 啟動
-// ======================
-
-
 refresh();
+
 
 showPage("drink");
