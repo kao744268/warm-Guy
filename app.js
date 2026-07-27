@@ -1030,7 +1030,17 @@ alert(
 
 
 }
+try{
 
+refresh();
+
+showPage("drink");
+
+}catch(e){
+
+console.log(e);
+
+}
 
 refresh();
 
