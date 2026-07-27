@@ -1,7 +1,102 @@
 // ==========================
-// 溫暖酒場備料系統 V2.0
+// 溫暖酒場備料系統 V2.1
 // app.js
 // ==========================
+
+
+// ==========================
+// 載入保存資料
+// ==========================
+
+const saveKey = "warmPrepData";
+
+const saveSauceKey = "warmPrepSauce";
+
+
+
+function loadData(){
+
+
+let old =
+localStorage.getItem(saveKey);
+
+
+
+if(old){
+
+
+let data =
+JSON.parse(old);
+
+
+Object.keys(data).forEach(item=>{
+
+
+if(prepareData[item]){
+
+
+prepareData[item]=data[item];
+
+
+}
+
+
+});
+
+
+}
+
+
+
+let sauceOld =
+localStorage.getItem(saveSauceKey);
+
+
+
+if(sauceOld){
+
+sauceState =
+JSON.parse(sauceOld);
+
+}
+
+
+}
+
+
+
+
+
+// ==========================
+// 儲存資料
+// ==========================
+
+
+function saveData(){
+
+
+localStorage.setItem(
+
+saveKey,
+
+JSON.stringify(prepareData)
+
+);
+
+
+
+localStorage.setItem(
+
+saveSauceKey,
+
+JSON.stringify(sauceState)
+
+);
+
+
+}
+
+
 
 
 
@@ -17,9 +112,12 @@ let pages =
 document.querySelectorAll(".page");
 
 
+
 pages.forEach(item=>{
 
+
 item.classList.remove("show");
+
 
 });
 
@@ -28,21 +126,15 @@ item.classList.remove("show");
 document.getElementById(page)
 .classList.add("show");
 
+
 }
-
-
-
-
-// 預設首頁
-
-showPage("drink");
 
 
 
 
 
 // ==========================
-// 建立品項畫面
+// 建立品項
 // ==========================
 
 
@@ -51,6 +143,7 @@ function createItem(name){
 
 let data =
 prepareData[name];
+
 
 
 return `
@@ -73,26 +166,33 @@ ${name}
 <button class="qty-btn"
 
 onclick="changeQty('${name}',-1)">
--
+
+－
+
 </button>
+
 
 
 <div class="qty-number"
 
 id="qty-${name}">
+
 ${data.qty}
+
 </div>
+
 
 
 <button class="qty-btn"
 
 onclick="changeQty('${name}',1)">
-+
+
+＋
+
 </button>
 
 
 </div>
-
 
 
 
@@ -106,11 +206,10 @@ actionList.map(action=>{
 
 return `
 
+
 <button
 
-class="action-btn"
-
-id="${name}-${action}"
+class="action-btn ${data.actions.includes(action)?'active':''}"
 
 onclick="toggleAction('${name}','${action}')"
 
@@ -120,16 +219,18 @@ ${action}
 
 </button>
 
-`
+
+`;
+
 
 }).join("")
+
 
 }
 
 
 
 </div>
-
 
 
 </div>
@@ -155,6 +256,7 @@ function renderDrink(){
 let html="";
 
 
+
 drinkData.forEach(item=>{
 
 
@@ -166,12 +268,13 @@ html += createItem(item);
 
 
 document.getElementById(
+
 "drinkList"
+
 ).innerHTML=html;
 
 
 }
-
 
 
 
@@ -187,6 +290,7 @@ function renderFood(){
 let html="";
 
 
+
 foodData.forEach(item=>{
 
 
@@ -198,17 +302,13 @@ html += createItem(item);
 
 
 document.getElementById(
+
 "foodList"
+
 ).innerHTML=html;
 
 
-}
-
-
-
-
-
-// ==========================
+}// ==========================
 // 數量控制
 // ==========================
 
@@ -220,23 +320,34 @@ prepareData[name].qty += num;
 
 
 
-if(
-prepareData[name].qty < 0
-){
+if(prepareData[name].qty < 0){
 
-prepareData[name].qty=0;
+prepareData[name].qty = 0;
 
 }
 
 
 
-document.getElementById(
+let target = document.getElementById(
 "qty-"+name
-).innerHTML =
+);
+
+
+
+if(target){
+
+target.innerHTML =
 prepareData[name].qty;
 
+}
+
+
+
+saveData();
+
 
 }
+
 
 
 
@@ -260,22 +371,10 @@ list.indexOf(action);
 
 
 
-let btn =
-document.getElementById(
-name+"-"+action
-);
-
-
-
-if(index>-1){
+if(index > -1){
 
 
 list.splice(index,1);
-
-
-btn.classList.remove(
-"active"
-);
 
 
 }
@@ -286,16 +385,20 @@ else{
 list.push(action);
 
 
-btn.classList.add(
-"active"
-);
-
-
 }
 
 
-}
 
+saveData();
+
+
+
+renderDrink();
+
+renderFood();
+
+
+}
 
 
 
@@ -303,12 +406,12 @@ btn.classList.add(
 
 
 // ==========================
-// 醬料
+// 醬料系統
 // ==========================
 
 
 
-let sauceState={};
+let sauceState = {};
 
 
 
@@ -332,10 +435,11 @@ html += `
 
 <h3>
 
-
 <input
 
 type="checkbox"
+
+${sauceState[sauce.name] ? "checked":""}
 
 onclick="toggleSauce(${index},this)"
 
@@ -344,7 +448,6 @@ onclick="toggleSauce(${index},this)"
 
 ${sauce.name}
 
-
 </h3>
 
 
@@ -352,18 +455,39 @@ ${sauce.name}
 <div id="sauce-${index}"></div>
 
 
-
 </div>
 
 
 `;
 
+
 });
 
 
+
 document.getElementById(
+
 "sauceList"
-).innerHTML=html;
+
+).innerHTML = html;
+
+
+
+// 重新載入已選醬料
+
+sauceData.forEach((sauce,index)=>{
+
+
+if(sauceState[sauce.name]){
+
+
+showSauceMaterial(index);
+
+
+}
+
+
+});
 
 
 }
@@ -377,13 +501,6 @@ document.getElementById(
 function toggleSauce(index,box){
 
 
-let area =
-document.getElementById(
-"sauce-"+index
-);
-
-
-
 let sauce =
 sauceData[index];
 
@@ -392,31 +509,80 @@ sauceData[index];
 if(box.checked){
 
 
+if(!sauceState[sauce.name]){
+
 
 sauceState[sauce.name]={
-
-qty:0,
 
 materials:{}
 
 };
 
 
+}
 
 
-let html=`
+showSauceMaterial(index);
 
 
-<p>
-⚠️ 製作 ${sauce.name}
-</p>
+}
+
+else{
 
 
-`;
+delete sauceState[sauce.name];
+
+
+document.getElementById(
+
+"sauce-"+index
+
+).innerHTML="";
+
+
+}
+
+
+
+saveData();
+
+
+}
+
+
+
+
+
+
+function showSauceMaterial(index){
+
+
+let sauce =
+sauceData[index];
+
+
+
+let area =
+document.getElementById(
+
+"sauce-"+index
+
+);
+
+
+
+let html = "";
 
 
 
 sauce.materials.forEach(item=>{
+
+
+let qty =
+
+sauceState[sauce.name]
+.materials[item] || 0;
+
 
 
 html += `
@@ -437,23 +603,34 @@ ${item}
 
 <button class="qty-btn"
 
-onclick="changeSauceMaterial('${sauce.name}','${item}',-1)">
--
+onclick="changeSauceMaterial('${sauce.name}','${item}',-1)"
+
+>
+
+－
+
 </button>
 
 
 <div class="qty-number"
 
-id="sauce-${sauce.name}-${item}">
-0
-</div>
+id="sauce-${sauce.name}-${item}"
 
+>
+
+${qty}
+
+</div>
 
 
 <button class="qty-btn"
 
-onclick="changeSauceMaterial('${sauce.name}','${item}',1)">
-+
+onclick="changeSauceMaterial('${sauce.name}','${item}',1)"
+
+>
+
+＋
+
 </button>
 
 
@@ -466,30 +643,15 @@ onclick="changeSauceMaterial('${sauce.name}','${item}',1)">
 `;
 
 
-
 });
 
 
-
-area.innerHTML=html;
-
-
-
-}
-
-else{
-
-
-delete sauceState[sauce.name];
-
-
-area.innerHTML="";
+area.innerHTML = html;
 
 
 }
 
 
-}
 
 
 
@@ -502,29 +664,26 @@ num
 ){
 
 
+
 if(
 !sauceState[sauce].materials[material]
 ){
 
-sauceState[sauce]
-.materials[material]=0;
+sauceState[sauce].materials[material]=0;
 
 }
 
 
 
-sauceState[sauce]
-.materials[material]+=num;
+sauceState[sauce].materials[material]+=num;
 
 
 
 if(
-sauceState[sauce]
-.materials[material]<0
+sauceState[sauce].materials[material]<0
 ){
 
-sauceState[sauce]
-.materials[material]=0;
+sauceState[sauce].materials[material]=0;
 
 }
 
@@ -540,36 +699,30 @@ sauceState[sauce]
 .materials[material];
 
 
-}
+
+saveData();
 
 
-
-
-
-
+}// ==========================
+// LINE 文字產生
 // ==========================
-// LINE產生
-// ==========================
-
 
 
 function createLINE(){
 
 
-let text="";
-
-
-text +=
-"【溫暖酒場備料】\n\n";
+let text = "";
 
 
 
-text +=
-"📅 "+
-new Date()
-.toLocaleDateString("zh-TW")
+text += "【溫暖酒場備料】\n\n";
+
+
+text += "📅 " +
+new Date().toLocaleDateString("zh-TW")
 +
 "\n\n";
+
 
 
 
@@ -582,27 +735,31 @@ let drinkText="";
 drinkData.forEach(item=>{
 
 
-let d =
+let data =
 prepareData[item];
 
 
-if(d.qty>0){
+
+if(data.qty > 0){
 
 
 drinkText +=
 
-item+
-" × "+
-d.qty+
+item +
+" × " +
+data.qty +
 "\n";
 
 
-d.actions.forEach(a=>{
+data.actions.forEach(action=>{
+
 
 drinkText +=
-"　→ "+
-a+
+
+"　→ " +
+action +
 "\n";
+
 
 });
 
@@ -617,13 +774,16 @@ a+
 if(drinkText){
 
 
-text+="🍺 酒水\n\n";
+text +=
+"🍺 酒水\n\n";
 
-text+=drinkText+"\n";
+
+text +=
+drinkText +
+"\n";
 
 
 }
-
 
 
 
@@ -638,27 +798,31 @@ let foodText="";
 foodData.forEach(item=>{
 
 
-let d =
+let data =
 prepareData[item];
 
 
-if(d.qty>0){
+
+if(data.qty > 0){
 
 
 foodText +=
 
-item+
-" × "+
-d.qty+
+item +
+" × " +
+data.qty +
 "\n";
 
 
-d.actions.forEach(a=>{
+data.actions.forEach(action=>{
+
 
 foodText +=
-"　→ "+
-a+
+
+"　→ " +
+action +
 "\n";
+
 
 });
 
@@ -673,9 +837,13 @@ a+
 if(foodText){
 
 
-text+="🥩 食材\n\n";
+text +=
+"🥩 食材\n\n";
 
-text+=foodText+"\n";
+
+text +=
+foodText +
+"\n";
 
 
 }
@@ -698,7 +866,9 @@ Object.keys(sauceState)
 
 sauceText +=
 
-"【"+sauce+"】\n";
+"🥫 " +
+sauce +
+"\n";
 
 
 
@@ -716,8 +886,9 @@ if(materials[item]>0){
 
 sauceText +=
 
-item+
-" × "+
+"　" +
+item +
+" × " +
 materials[item]
 +
 "\n";
@@ -729,21 +900,22 @@ materials[item]
 });
 
 
-
-sauceText+="\n";
+sauceText += "\n";
 
 
 });
 
 
 
-
 if(sauceText){
 
 
-text+="🥫 製作醬料\n\n";
+text +=
+"🥫 醬料製作\n\n";
 
-text+=sauceText;
+
+text +=
+sauceText;
 
 
 }
@@ -756,6 +928,10 @@ document.getElementById(
 ).value=text;
 
 
+
+saveData();
+
+
 }
 
 
@@ -765,21 +941,21 @@ document.getElementById(
 
 
 // ==========================
-// 複製LINE
+// 複製 LINE
 // ==========================
-
 
 
 function copyLINE(){
 
 
-let box =
+let text =
 document.getElementById(
 "lineText"
 );
 
 
-box.select();
+
+text.select();
 
 
 document.execCommand(
@@ -799,9 +975,51 @@ alert(
 
 
 
+
+
 // ==========================
-// 啟動
+// 清除今日資料
 // ==========================
+
+
+function clearToday(){
+
+
+
+if(
+confirm(
+"確定清除今天所有備料資料？"
+)
+
+){
+
+
+
+Object.keys(prepareData)
+.forEach(item=>{
+
+
+prepareData[item]={
+
+
+qty:0,
+
+actions:[]
+
+
+};
+
+
+});
+
+
+
+sauceState={};
+
+
+
+saveData();
+
 
 
 renderDrink();
@@ -809,3 +1027,39 @@ renderDrink();
 renderFood();
 
 renderSauce();
+
+
+
+document.getElementById(
+"lineText"
+).value="";
+
+
+}
+
+
+}
+
+
+
+
+
+
+// ==========================
+// 啟動系統
+// ==========================
+
+
+loadData();
+
+
+
+renderDrink();
+
+renderFood();
+
+renderSauce();
+
+
+
+showPage("drink");
