@@ -1,7 +1,7 @@
-/* ==========================
-   溫暖備料系統 V1
+/* ===================================
+   溫暖酒場｜智慧備料系統 V2
    style.css
-========================== */
+=================================== */
 
 
 
@@ -26,7 +26,7 @@ BlinkMacSystemFont,
 "Microsoft JhengHei",
 sans-serif;
 
-background:#f6f1e8;
+background:#f5eee2;
 
 color:#333;
 
@@ -46,19 +46,23 @@ margin-bottom:20px;
 
 
 
-h1{
+header h1{
 
-font-size:26px;
+margin-bottom:5px;
 
 color:#6b3e1e;
+
+font-size:28px;
 
 }
 
 
 
-h2{
+header p{
 
-color:#6b3e1e;
+margin-top:0;
+
+color:#777;
 
 }
 
@@ -66,10 +70,12 @@ color:#6b3e1e;
 
 
 
-/* 分類按鈕 */
+/* ===================
+分類按鈕
+=================== */
 
 
-.menu{
+nav{
 
 display:grid;
 
@@ -83,19 +89,28 @@ margin-bottom:20px;
 
 
 
-.menu button{
+nav button{
+
 
 border:none;
 
-border-radius:12px;
+border-radius:15px;
 
 padding:12px 5px;
+
+font-size:14px;
 
 background:#8b5a2b;
 
 color:white;
 
-font-size:14px;
+}
+
+
+
+nav button:active{
+
+transform:scale(.95);
 
 }
 
@@ -103,10 +118,14 @@ font-size:14px;
 
 
 
-/* 頁面 */
 
 
-.page{
+/* ===================
+頁面
+=================== */
+
+
+section{
 
 display:none;
 
@@ -114,7 +133,7 @@ display:none;
 
 
 
-.page.show{
+section.active{
 
 display:block;
 
@@ -123,35 +142,51 @@ display:block;
 
 
 
+h2{
 
-/* 品項卡 */
+color:#6b3e1e;
+
+font-size:22px;
+
+}
 
 
-.item{
+
+
+
+
+/* ===================
+品項卡
+=================== */
+
+
+.card{
+
 
 background:white;
 
-border-radius:15px;
+border-radius:18px;
 
-padding:15px;
+padding:16px;
 
-margin-bottom:12px;
+margin-bottom:15px;
 
-box-shadow:0 2px 8px rgba(0,0,0,.1);
+box-shadow:
+
+0 3px 10px rgba(0,0,0,.08);
 
 }
 
 
 
+.card h3{
 
 
-.item-name{
+margin-top:0;
 
 font-size:20px;
 
-font-weight:bold;
-
-margin-bottom:12px;
+color:#4a2b16;
 
 }
 
@@ -159,24 +194,32 @@ margin-bottom:12px;
 
 
 
-/* 數量 */
 
 
-.qty-box{
+/* ===================
+數量控制
+=================== */
+
+
+.row{
+
 
 display:flex;
 
 align-items:center;
 
+justify-content:center;
+
 gap:15px;
 
-margin-bottom:12px;
+margin:12px 0;
 
 }
 
 
 
-.qty-btn{
+.row button{
+
 
 width:45px;
 
@@ -184,19 +227,23 @@ height:40px;
 
 border:none;
 
-border-radius:10px;
+border-radius:12px;
 
-font-size:25px;
+font-size:22px;
 
-background:#ddd;
+background:#eee;
+
+color:#333;
 
 }
 
 
 
-.qty-number{
+.row span{
 
 font-size:22px;
+
+font-weight:bold;
 
 min-width:40px;
 
@@ -208,36 +255,34 @@ text-align:center;
 
 
 
-/* 選項 */
 
 
-.action-box{
-
-display:flex;
-
-flex-wrap:wrap;
-
-gap:8px;
-
-}
+/* ===================
+功能按鈕
+=================== */
 
 
+.card > button{
 
-.action-btn{
 
 border:none;
 
 border-radius:20px;
 
-padding:8px 14px;
+padding:9px 15px;
+
+margin:5px;
 
 background:#eee;
+
+font-size:15px;
 
 }
 
 
 
-.action-btn.active{
+.card > button.active{
+
 
 background:#6b3e1e;
 
@@ -249,26 +294,37 @@ color:white;
 
 
 
-/* LINE */
+
+
+/* ===================
+LINE
+=================== */
 
 
 textarea{
 
+
 width:100%;
 
-height:300px;
-
-border-radius:15px;
+height:320px;
 
 padding:15px;
 
+border-radius:15px;
+
+border:none;
+
 font-size:16px;
+
+resize:none;
 
 }
 
 
 
+
 #line button{
+
 
 width:100%;
 
@@ -278,7 +334,7 @@ margin-top:10px;
 
 border:none;
 
-border-radius:12px;
+border-radius:15px;
 
 background:#6b3e1e;
 
@@ -293,24 +349,32 @@ font-size:18px;
 
 
 
-/* 手機最佳化 */
+
+/* ===================
+手機優化
+=================== */
 
 
 @media(max-width:600px){
 
 
-.menu{
 
-grid-template-columns:repeat(5,1fr);
-
-}
-
-
-.menu button{
+nav button{
 
 font-size:12px;
 
+padding:10px 3px;
+
 }
+
+
+
+.card{
+
+padding:14px;
+
+}
+
 
 
 }
