@@ -285,8 +285,18 @@ button.classList.add(
 // ==========================
 
 
-function renderSauce(){
+// ==========================
+// 醬料系統 V1.2
+// ==========================
 
+
+const sauceState = {};
+
+
+
+
+
+function renderSauce(){
 
 
 let html="";
@@ -304,25 +314,28 @@ html += `
 
 <div class="item-name">
 
-${sauce.name}
+☑ ${sauce.name}
 
 </div>
+
 
 
 <button
 
 class="action-btn"
 
-onclick="showSauce(${index})"
+onclick="toggleSauce(${index})"
 
 >
 
-查看材料
+選擇製作
 
 </button>
 
 
+
 <div id="sauce-${index}"></div>
+
 
 
 </div>
@@ -330,7 +343,9 @@ onclick="showSauce(${index})"
 
 `;
 
+
 });
+
 
 
 document
@@ -344,8 +359,8 @@ document
 
 
 
-function showSauce(index){
 
+function toggleSauce(index){
 
 
 let sauce =
@@ -353,25 +368,123 @@ sauceData[index];
 
 
 
-let html =
+if(
+sauceState[sauce.name]
+){
 
-"<p>需要製作：</p>";
+
+delete sauceState[sauce.name];
+
+
+document
+.getElementById(
+"sauce-"+index
+)
+.innerHTML="";
+
+
+}
+
+else{
+
+
+sauceState[sauce.name]={};
+
+
+
+showSauceMaterial(index);
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+function showSauceMaterial(index){
+
+
+let sauce =
+sauceData[index];
+
+
+
+let html="";
 
 
 
 sauce.materials.forEach(item=>{
 
 
-html +=
+if(
+!sauceState[sauce.name][item]
+){
 
-`
-<div>
+sauceState[sauce.name][item]=0;
 
-□ ${item}
+}
+
+
+
+html += `
+
+
+<div class="qty-box">
+
+
+<div style="flex:1">
+
+${item}
 
 </div>
 
+
+
+<button class="qty-btn"
+
+onclick="changeSauceQty('${sauce.name}','${item}',-1)"
+
+>
+
+－
+
+</button>
+
+
+
+<div class="qty-number"
+
+id="sauce-${sauce.name}-${item}"
+
+>
+
+${sauceState[sauce.name][item]}
+
+</div>
+
+
+
+<button class="qty-btn"
+
+onclick="changeSauceQty('${sauce.name}','${item}',1)"
+
+>
+
+＋
+
+</button>
+
+
+</div>
+
+
 `;
+
 
 
 });
@@ -393,282 +506,34 @@ document
 
 
 
-// ==========================
-// LINE產生
-// ==========================
-
-
-function createLINE(){
-
-
-
-let text =
-
-"【🍶 溫暖酒場備料】\n\n";
+function changeSauceQty(
+sauce,
+item,
+num
+){
 
 
 
+sauceState[sauce][item]+=num;
 
 
 
-// 酒水
+if(
+sauceState[sauce][item]<0
+){
 
-
-let drinkText="";
-
-
-
-drinkData.forEach(item=>{
-
-
-let data =
-prepareData[item];
-
-
-
-if(data.qty>0){
-
-
-drinkText +=
-
-"□ "+
-item+
-" × "+
-data.qty+
-"\n";
-
-
-data.actions.forEach(action=>{
-
-
-drinkText +=
-
-"　→ "+
-action+
-"\n";
-
-
-});
-
-
-drinkText+="\n";
-
+sauceState[sauce][item]=0;
 
 }
-
-
-});
-
-
-
-if(drinkText){
-
-
-text +=
-
-"🍺 酒水\n\n"+
-drinkText;
-
-
-}
-
-
-
-
-
-
-// 食材
-
-
-let foodText="";
-
-
-
-foodData.forEach(item=>{
-
-
-let data =
-prepareData[item];
-
-
-if(data.qty>0){
-
-
-foodText +=
-
-"□ "+
-item+
-" × "+
-data.qty+
-"\n";
-
-
-data.actions.forEach(action=>{
-
-
-foodText +=
-
-"　→ "+
-action+
-"\n";
-
-
-});
-
-
-foodText+="\n";
-
-
-}
-
-
-});
-
-
-
-if(foodText){
-
-
-text +=
-
-"🥩 食材\n\n"+
-foodText;
-
-
-}
-
-
-
-
-
-
-// 雜物
-
-
-let stuffText="";
-
-
-
-stuffData.forEach(item=>{
-
-
-let data =
-prepareData[item];
-
-
-if(data.qty>0){
-
-
-stuffText +=
-
-"□ "+
-item+
-" × "+
-data.qty+
-"\n";
-
-
-}
-
-
-});
-
-
-
-if(stuffText){
-
-
-text +=
-
-"🧹 雜物\n\n"+
-stuffText;
-
-
-}
-
-
 
 
 
 document
 .getElementById(
-"lineText"
+"sauce-"+sauce+"-"+item
 )
-.value=text;
+.innerHTML =
+sauceState[sauce][item];
 
 
 }
-
-
-
-
-
-
-// ==========================
-// 複製
-// ==========================
-
-
-function copyLINE(){
-
-
-let box =
-document.getElementById(
-"lineText"
-);
-
-
-
-box.select();
-
-
-
-document.execCommand(
-"copy"
-);
-
-
-
-alert(
-"已複製"
-);
-
-
-}
-
-
-
-
-
-
-// ==========================
-// 啟動
-// ==========================
-
-
-
-renderList(
-drinkData,
-"drinkList"
-);
-
-
-renderList(
-foodData,
-"foodList"
-);
-
-
-renderList(
-stuffData,
-"stuffList"
-);
-
-
-renderSauce();
-
-
-
-showPage(
-"drink"
-);
