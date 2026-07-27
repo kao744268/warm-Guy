@@ -285,7 +285,34 @@ document.getElementById(
 
 
 function renderFood(){
+// ==========================
+// 顯示雜物
+// ==========================
 
+
+function renderStuff(){
+
+
+let html="";
+
+
+stuffData.forEach(item=>{
+
+
+html += createItem(item);
+
+
+});
+
+
+document.getElementById(
+
+"stuffList"
+
+).innerHTML = html;
+
+
+}
 
 let html="";
 
@@ -1087,6 +1114,8 @@ loadData();
 renderDrink();
 
 renderFood();
+
+renderStuff();
 
 renderSauce();
 
