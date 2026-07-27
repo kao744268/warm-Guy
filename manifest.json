@@ -1,1 +1,16 @@
-
+{
+  "name": "溫暖酒場｜智慧備料系統",
+  "short_name": "溫暖備料",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5eee2",
+  "theme_color": "#6b3e1e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
