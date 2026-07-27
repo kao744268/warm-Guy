@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>溫暖酒場備料系統</title>
+
+
+<link rel="stylesheet" href="style.css">
+
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<header>
+
+<h1>
+🍶 溫暖酒場
+</h1>
+
+<p>
+備料系統
+</p>
+
+</header>
+
+
+
+<div class="menu">
+
+
+<button onclick="showPage('drink')">
+🍺 酒水
+</button>
+
+
+<button onclick="showPage('food')">
+🥩 食材
+</button>
+
+
+<button onclick="showPage('sauce')">
+🥫 醬料
+</button>
+
+
+<button onclick="showPage('line')">
+📋 LINE
+</button>
+
+
+</div>
+
+
+
+
+<section id="drink" class="page">
+
+<h2>🍺 酒水備料</h2>
+
+<div id="drinkList"></div>
+
+</section>
+
+
+
+
+
+<section id="food" class="page">
+
+<h2>🥩 食材備料</h2>
+
+<div id="foodList"></div>
+
+</section>
+
+
+
+
+
+<section id="sauce" class="page">
+
+<h2>🥫 醬料製作</h2>
+
+<div id="sauceList"></div>
+
+</section>
+
+
+
+
+
+<section id="line" class="page">
+
+
+<h2>📋 LINE通知</h2>
+
+
+<button onclick="createLINE()">
+
+產生備料通知
+
+</button>
+
+
+
+<textarea id="lineText"></textarea>
+
+
+
+<button onclick="copyLINE()">
+
+複製文字
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+</div>
+
+
+<script src="data.js"></script>
+
+<script src="app.js"></script>
+
+
+</body>
+
+</html>
