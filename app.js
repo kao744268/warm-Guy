@@ -715,10 +715,10 @@ let text = "";
 
 
 
-text += "【溫暖酒場備料】\n\n";
+text += "【🍶 溫暖酒場備料】\n\n";
 
-
-text += "📅 " +
+text += 
+"📅 " +
 new Date().toLocaleDateString("zh-TW")
 +
 "\n\n";
@@ -726,8 +726,10 @@ new Date().toLocaleDateString("zh-TW")
 
 
 
-
+// ==========================
 // 酒水
+// ==========================
+
 
 let drinkText="";
 
@@ -740,15 +742,30 @@ prepareData[item];
 
 
 
-if(data.qty > 0){
+if(
+data.qty > 0 ||
+data.actions.length > 0
+){
 
 
 drinkText +=
 
-item +
+"□ " +
+item;
+
+
+
+if(data.qty>0){
+
+drinkText +=
 " × " +
-data.qty +
-"\n";
+data.qty;
+
+}
+
+
+drinkText += "\n";
+
 
 
 data.actions.forEach(action=>{
@@ -762,6 +779,10 @@ action +
 
 
 });
+
+
+
+drinkText+="\n";
 
 
 }
@@ -775,12 +796,11 @@ if(drinkText){
 
 
 text +=
+
 "🍺 酒水\n\n";
 
 
-text +=
-drinkText +
-"\n";
+text += drinkText;
 
 
 }
@@ -789,7 +809,11 @@ drinkText +
 
 
 
+
+
+// ==========================
 // 食材
+// ==========================
 
 
 let foodText="";
@@ -803,15 +827,30 @@ prepareData[item];
 
 
 
-if(data.qty > 0){
+if(
+data.qty > 0 ||
+data.actions.length > 0
+){
 
 
 foodText +=
 
-item +
+"□ " +
+item;
+
+
+
+if(data.qty>0){
+
+foodText +=
 " × " +
-data.qty +
-"\n";
+data.qty;
+
+}
+
+
+foodText += "\n";
+
 
 
 data.actions.forEach(action=>{
@@ -827,6 +866,9 @@ action +
 });
 
 
+foodText+="\n";
+
+
 }
 
 
@@ -838,12 +880,11 @@ if(foodText){
 
 
 text +=
+
 "🥩 食材\n\n";
 
 
-text +=
-foodText +
-"\n";
+text += foodText;
 
 
 }
@@ -853,7 +894,9 @@ foodText +
 
 
 
+// ==========================
 // 醬料
+// ==========================
 
 
 let sauceText="";
@@ -866,9 +909,9 @@ Object.keys(sauceState)
 
 sauceText +=
 
-"🥫 " +
+"【製作 " +
 sauce +
-"\n";
+"】\n";
 
 
 
@@ -886,7 +929,7 @@ if(materials[item]>0){
 
 sauceText +=
 
-"　" +
+"□ " +
 item +
 " × " +
 materials[item]
@@ -900,7 +943,8 @@ materials[item]
 });
 
 
-sauceText += "\n";
+
+sauceText+="\n";
 
 
 });
@@ -911,41 +955,27 @@ if(sauceText){
 
 
 text +=
+
 "🥫 醬料製作\n\n";
 
 
-text +=
-sauceText;
+text += sauceText;
 
 
 }
+
 
 
 
 
 document.getElementById(
+
 "lineText"
+
 ).value=text;
 
 
-
-saveData();
-
-
 }
-
-
-
-
-
-
-
-// ==========================
-// 複製 LINE
-// ==========================
-
-
-function copyLINE(){
 
 
 let text =
