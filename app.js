@@ -923,7 +923,107 @@ renderSauce();
 }
 
 
+function resetAll(){
 
+
+let confirmReset =
+confirm(
+"確定要清除今日全部備料嗎？"
+);
+
+
+
+if(!confirmReset){
+
+return;
+
+}
+
+
+
+// 清除一般品項
+
+Object.keys(prepData)
+.forEach(name=>{
+
+
+prepData[name]={
+
+qty:0,
+
+actions:[],
+
+availableActions:
+prepData[name].availableActions
+
+};
+
+
+});
+
+
+
+
+// 清除醬料
+
+Object.keys(saucePrep)
+.forEach(name=>{
+
+
+saucePrep[name].enabled=false;
+
+
+Object.keys(
+saucePrep[name].materials
+)
+.forEach(m=>{
+
+
+saucePrep[name]
+.materials[m]={
+
+checked:false,
+
+qty:0
+
+};
+
+
+});
+
+
+});
+
+
+
+
+// 清除LINE
+
+let box =
+document.getElementById("lineText");
+
+
+if(box){
+
+box.value="";
+
+}
+
+
+
+saveData();
+
+
+refresh();
+
+
+
+alert(
+"今日備料已歸零"
+);
+
+
+}
 
 
 refresh();
