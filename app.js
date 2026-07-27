@@ -522,15 +522,39 @@ html += `
 <label style="flex:1">
 
 
-<input
 
-type="checkbox"
+<div class="row">
 
-${item.checked?"checked":""}
 
-onchange="toggleSauceMaterial('${sauce.name}','${m}')"
+<span style="flex:1">
 
->
+${m}
+
+</span>
+
+
+
+<button onclick="changeSauceQty('${sauce.name}','${m}',-1)">
+－
+</button>
+
+
+
+<span>
+
+${item.qty}
+
+</span>
+
+
+
+<button onclick="changeSauceQty('${sauce.name}','${m}',1)">
+＋
+</button>
+
+
+
+</div>
 
 
 ${m}
@@ -594,24 +618,7 @@ return html;
 
 
 
-function toggleSauceMaterial(sauce,item){
 
-
-
-saucePrep[sauce]
-.materials[item]
-.checked =
-
-!saucePrep[sauce]
-.materials[item]
-.checked;
-
-
-
-saveData();
-
-
-renderSauce();
 
 
 }
@@ -798,9 +805,8 @@ let item=data.materials[m];
 
 
 if(
-item.checked &&
 item.qty>0
-){
+)
 
 
 materialText +=
