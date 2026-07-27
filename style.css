@@ -281,12 +281,11 @@ font-size:15px;
 
 
 
-.card > button.active{
+button.active{
 
+background:#6b3e1e !important;
 
-background:#6b3e1e;
-
-color:white;
+color:white !important;
 
 }
 
