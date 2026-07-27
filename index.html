@@ -7,109 +7,168 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>溫暖備料系統</title>
+
+<title>
+溫暖酒場｜智慧備料系統
+</title>
 
 
 <link rel="stylesheet" href="style.css">
 
+
+<link rel="manifest" href="manifest.json">
+
+
 </head>
+
 
 
 <body>
 
 
+
 <header>
 
-<h1>🍶 溫暖備料系統</h1>
+<h1>
+🍶 溫暖酒場
+</h1>
+
+<p>
+智慧備料系統 V2
+</p>
 
 </header>
 
 
 
-<div class="menu">
+
+
+<nav>
 
 
 <button onclick="showPage('drink')">
+
 🍺 酒水
+
 </button>
 
 
 <button onclick="showPage('food')">
+
 🥩 食材
+
 </button>
 
 
 <button onclick="showPage('sauce')">
+
 🥫 醬料
+
 </button>
 
 
 <button onclick="showPage('stuff')">
+
 🧹 雜物
+
 </button>
 
 
 <button onclick="showPage('line')">
+
 📋 LINE
+
 </button>
 
 
-</div>
+
+</nav>
 
 
 
 
 
-<section id="drink" class="page">
 
-<h2>🍺 酒水</h2>
 
-<div id="drinkList"></div>
+<main>
+
+
+
+<section id="drink">
+
+<h2>
+🍺 酒水備料
+</h2>
+
 
 </section>
 
 
 
 
-<section id="food" class="page">
 
-<h2>🥩 食材</h2>
+<section id="food">
 
-<div id="foodList"></div>
+<h2>
+🥩 食材備料
+</h2>
+
 
 </section>
 
 
 
 
-<section id="sauce" class="page">
 
-<h2>🥫 醬料</h2>
 
-<div id="sauceList"></div>
+
+<section id="sauce">
+
+<h2>
+🥫 醬料製作
+</h2>
+
 
 </section>
 
 
 
 
-<section id="stuff" class="page">
 
-<h2>🧹 雜物</h2>
 
-<div id="stuffList"></div>
+
+<section id="stuff">
+
+<h2>
+🧹 雜物備品
+</h2>
+
 
 </section>
 
 
 
 
-<section id="line" class="page">
-
-<h2>📋 LINE通知</h2>
 
 
-<textarea id="lineText"></textarea>
+
+<section id="line">
+
+
+<h2>
+📋 LINE通知
+</h2>
+
+
+
+<textarea
+
+id="lineText"
+
+placeholder="按下產生備料通知">
+
+</textarea>
+
 
 
 <button onclick="createLINE()">
@@ -127,7 +186,14 @@
 </button>
 
 
+
 </section>
+
+
+
+
+</main>
+
 
 
 
@@ -138,6 +204,8 @@
 <script src="app.js"></script>
 
 
+
 </body>
+
 
 </html>
