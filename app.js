@@ -429,7 +429,16 @@ saucePrep[sauce][item]=0;
 
 saveData();
 
-refresh();
+
+
+renderSauce();
+
+
+openSauce(
+sauceData.findIndex(
+x=>x.name===sauce
+)
+);
 
 
 }
