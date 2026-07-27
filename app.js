@@ -735,50 +735,12 @@ return;
 
 
 
-let material="";
+sauceText +=
 
-
-
-Object.keys(
-data.materials
-)
-.forEach(m=>{
-
-
-let qty =
-data.materials[m].qty;
-
-
-
-if(qty>0){
-
-
-material +=
-
-`□ ${m} × ${qty}\n`;
-
-
-}
-
+`☑ ${s.name}\n\n`;
 
 
 });
-
-
-
-if(material){
-
-
-sauceText +=
-
-`☑ ${s.name}\n`+
-
-material+
-
-"\n";
-
-
-}
 
 
 
