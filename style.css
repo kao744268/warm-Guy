@@ -1,379 +1,538 @@
 /* ===================================
    溫暖酒場｜智慧備料系統 V2
+   日式居酒屋 UI
    style.css
 =================================== */
 
 
-
 *{
-
-box-sizing:border-box;
-
+    box-sizing:border-box;
 }
-
 
 
 body{
 
-margin:0;
+    margin:0;
 
-padding:15px;
+    padding:15px;
 
-font-family:
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
 
--apple-system,
-BlinkMacSystemFont,
-"Microsoft JhengHei",
-sans-serif;
+    background:#f3eee4;
 
-background:#f5eee2;
-
-color:#333;
+    color:#292521;
 
 }
 
 
-
+/* ===================
+   頁首
+=================== */
 
 
 header{
 
-text-align:center;
+    text-align:center;
 
-margin-bottom:20px;
+    margin-bottom:22px;
+
+    padding:12px 0 8px;
 
 }
-
 
 
 header h1{
 
-margin-bottom:5px;
+    margin:0 0 5px;
 
-color:#6b3e1e;
+    color:#332a24;
 
-font-size:28px;
+    font-size:28px;
+
+    font-weight:700;
+
+    letter-spacing:3px;
 
 }
 
+
+header h1::before{
+
+    content:"温暖酒場";
+
+}
+
+
+header h1{
+
+    font-size:0;
+
+}
+
+
+header h1::before{
+
+    font-size:28px;
+
+}
 
 
 header p{
 
-margin-top:0;
+    margin:6px 0 0;
 
-color:#777;
+    color:#8b8177;
+
+    font-size:13px;
+
+    letter-spacing:3px;
+
+}
+
+
+header p::after{
+
+    content:" 仕込み管理帳";
 
 }
 
 
 
-
-
 /* ===================
-分類按鈕
+   分類按鈕
 =================== */
 
 
 nav{
 
-display:grid;
+    display:grid;
 
-grid-template-columns:repeat(5,1fr);
+    grid-template-columns:repeat(5,1fr);
 
-gap:8px;
+    gap:6px;
 
-margin-bottom:20px;
+    margin-bottom:22px;
+
+    padding:5px;
+
+    background:#e5ded2;
+
+    border:1px solid #d5ccbf;
 
 }
-
 
 
 nav button{
 
+    border:none;
 
-border:none;
+    border-radius:4px;
 
-border-radius:15px;
+    padding:12px 5px;
 
-padding:12px 5px;
+    font-size:14px;
 
-font-size:14px;
+    font-weight:600;
 
-background:#8b5a2b;
+    letter-spacing:1px;
 
-color:white;
+    background:#66594e;
+
+    color:#fff;
+
+    box-shadow:none;
+
+    transition:.15s;
 
 }
-
 
 
 nav button:active{
 
-transform:scale(.95);
+    transform:scale(.96);
 
 }
 
 
 
-
-
-
-
 /* ===================
-頁面
+   頁面
 =================== */
 
 
 section{
 
-display:none;
+    display:none;
 
 }
-
 
 
 section.active{
 
-display:block;
+    display:block;
 
 }
-
-
 
 
 h2{
 
-color:#6b3e1e;
+    color:#332a24;
 
-font-size:22px;
+    font-size:22px;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    margin:0 0 16px;
+
+    padding-left:12px;
+
+    border-left:5px solid #9d3d2f;
 
 }
 
 
 
-
-
-
 /* ===================
-品項卡
+   品項卡
 =================== */
 
 
 .card{
 
+    background:#fffdf8;
 
-background:white;
+    border-radius:6px;
 
-border-radius:18px;
+    padding:17px;
 
-padding:16px;
+    margin-bottom:14px;
 
-margin-bottom:15px;
+    border:1px solid #e2d9cc;
 
-box-shadow:
+    box-shadow:
 
-0 3px 10px rgba(0,0,0,.08);
+        0 2px 7px rgba(70,55,40,.07);
 
 }
-
 
 
 .card h3{
 
+    margin:0 0 12px;
 
-margin-top:0;
+    font-size:19px;
 
-font-size:20px;
+    color:#3b3028;
 
-color:#4a2b16;
+    font-weight:700;
+
+    letter-spacing:1px;
 
 }
 
 
 
-
-
-
-
 /* ===================
-數量控制
+   數量控制
 =================== */
 
 
 .row{
 
+    display:flex;
 
-display:flex;
+    align-items:center;
 
-align-items:center;
+    justify-content:center;
 
-justify-content:center;
+    gap:18px;
 
-gap:15px;
-
-margin:12px 0;
+    margin:14px 0;
 
 }
-
 
 
 .row button{
 
+    width:44px;
 
-width:45px;
+    height:40px;
 
-height:40px;
+    border:1px solid #d8cec1;
 
-border:none;
+    border-radius:5px;
 
-border-radius:12px;
+    font-size:21px;
 
-font-size:22px;
+    background:#eee9e1;
 
-background:#eee;
-
-color:#333;
+    color:#403832;
 
 }
 
+
+.row button:active{
+
+    background:#ded5c9;
+
+    transform:scale(.95);
+
+}
 
 
 .row span{
 
-font-size:22px;
+    font-size:22px;
 
-font-weight:bold;
+    font-weight:700;
 
-min-width:40px;
+    min-width:42px;
 
-text-align:center;
+    text-align:center;
+
+    color:#332a24;
 
 }
 
 
 
-
-
-
-
 /* ===================
-功能按鈕
+   功能按鈕
 =================== */
 
 
 .card > button{
 
+    border:1px solid #d8cec1;
 
-border:none;
+    border-radius:4px;
 
-border-radius:20px;
+    padding:9px 15px;
 
-padding:9px 15px;
+    margin:4px 3px;
 
-margin:5px;
+    background:#eee9e1;
 
-background:#eee;
+    color:#51483f;
 
-font-size:15px;
+    font-size:14px;
+
+    font-weight:500;
+
+    letter-spacing:.5px;
 
 }
 
+
+.card > button:active{
+
+    transform:scale(.96);
+
+}
 
 
 button.active{
 
-background:#6b3e1e !important;
+    background:#9d3d2f !important;
 
-color:white !important;
+    color:white !important;
+
+    border-color:#9d3d2f !important;
 
 }
 
 
 
-
-
-
-
 /* ===================
-LINE
+   LINE
 =================== */
 
 
 textarea{
 
+    width:100%;
 
-width:100%;
+    height:320px;
 
-height:320px;
+    padding:15px;
 
-padding:15px;
+    border-radius:5px;
 
-border-radius:15px;
+    border:1px solid #d8cec1;
 
-border:none;
+    background:#fffdf8;
 
-font-size:16px;
+    color:#332a24;
 
-resize:none;
+    font-size:16px;
+
+    line-height:1.7;
+
+    resize:none;
 
 }
-
-
 
 
 #line button{
 
+    width:100%;
 
-width:100%;
+    height:50px;
 
-height:50px;
+    margin-top:10px;
 
-margin-top:10px;
+    border:none;
 
-border:none;
+    border-radius:5px;
 
-border-radius:15px;
+    background:#9d3d2f;
 
-background:#6b3e1e;
+    color:white;
 
-color:white;
+    font-size:18px;
 
-font-size:18px;
+    font-weight:600;
+
+    letter-spacing:2px;
+
+}
+
+
+#line button:active{
+
+    transform:scale(.98);
 
 }
 
 
 
+/* ===================
+   日式裝飾
+=================== */
 
+
+section::before{
+
+    content:"";
+
+    display:block;
+
+    width:35px;
+
+    height:2px;
+
+    margin-bottom:10px;
+
+    background:#9d3d2f;
+
+    opacity:.7;
+
+}
 
 
 
 /* ===================
-手機優化
+   手機優化
 =================== */
 
 
 @media(max-width:600px){
 
+    body{
+
+        padding:12px;
+
+    }
 
 
-nav button{
+    header{
 
-font-size:12px;
+        margin-bottom:18px;
 
-padding:10px 3px;
-
-}
+    }
 
 
+    header h1::before{
 
-.card{
+        font-size:25px;
 
-padding:14px;
-
-}
+    }
 
 
+    header p{
+
+        font-size:12px;
+
+        letter-spacing:2px;
+
+    }
+
+
+    nav{
+
+        gap:4px;
+
+        padding:4px;
+
+    }
+
+
+    nav button{
+
+        font-size:12px;
+
+        padding:10px 3px;
+
+        letter-spacing:0;
+
+    }
+
+
+    .card{
+
+        padding:15px;
+
+        margin-bottom:12px;
+
+    }
+
+
+    .card h3{
+
+        font-size:18px;
+
+    }
+
+
+    .row{
+
+        gap:15px;
+
+    }
+
+
+    .row button{
+
+        width:43px;
+
+        height:40px;
+
+    }
+
+
+    .card > button{
+
+        padding:9px 12px;
+
+        font-size:13px;
+
+    }
 
 }
