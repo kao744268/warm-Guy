@@ -5,8 +5,24 @@
 =================================== */
 
 
+/* ================================
+   基礎設定
+================================ */
+
+
 *{
+
     box-sizing:border-box;
+
+}
+
+
+html{
+
+    width:100%;
+
+    min-height:100%;
+
 }
 
 
@@ -14,98 +30,92 @@ body{
 
     margin:0;
 
-    padding:15px;
+    padding:14px;
+
+    width:100%;
+
+    min-height:100vh;
 
     font-family:
+
         -apple-system,
         BlinkMacSystemFont,
         "Noto Sans TC",
         "Microsoft JhengHei",
         sans-serif;
 
-    background:#f3eee4;
+    background:#f2ede3;
 
-    color:#292521;
+    color:#302923;
+
+    -webkit-tap-highlight-color:transparent;
 
 }
 
 
-/* ===================
+/* ================================
    頁首
-=================== */
+================================ */
 
 
 header{
 
     text-align:center;
 
-    margin-bottom:22px;
+    margin:4px 0 20px;
 
-    padding:12px 0 8px;
+    padding:10px 0 4px;
+
+}
+
+
+.header-mark{
+
+    font-size:11px;
+
+    color:#9a3d2f;
+
+    letter-spacing:5px;
+
+    margin-bottom:5px;
+
+    font-weight:600;
 
 }
 
 
 header h1{
 
-    margin:0 0 5px;
+    margin:0;
 
-    color:#332a24;
+    color:#302923;
 
-    font-size:28px;
+    font-size:30px;
 
-    font-weight:700;
+    font-weight:800;
 
-    letter-spacing:3px;
-
-}
-
-
-header h1::before{
-
-    content:"温暖酒場";
-
-}
-
-
-header h1{
-
-    font-size:0;
-
-}
-
-
-header h1::before{
-
-    font-size:28px;
+    letter-spacing:5px;
 
 }
 
 
 header p{
 
-    margin:6px 0 0;
+    margin:8px 0 0;
 
-    color:#8b8177;
+    color:#857a70;
 
-    font-size:13px;
+    font-size:12px;
 
     letter-spacing:3px;
 
 }
 
 
-header p::after{
 
-    content:" 仕込み管理帳";
-
-}
-
-
-
-/* ===================
-   分類按鈕
-=================== */
+/* ================================
+   分類導航
+================================ */
 
 
 nav{
@@ -114,55 +124,71 @@ nav{
 
     grid-template-columns:repeat(5,1fr);
 
-    gap:6px;
+    gap:5px;
 
-    margin-bottom:22px;
+    margin-bottom:24px;
 
     padding:5px;
 
-    background:#e5ded2;
+    background:#ddd5c9;
 
-    border:1px solid #d5ccbf;
+    border:1px solid #cbc1b4;
 
 }
 
 
 nav button{
 
+    appearance:none;
+
     border:none;
 
-    border-radius:4px;
+    border-radius:3px;
 
-    padding:12px 5px;
+    min-height:46px;
 
-    font-size:14px;
+    padding:7px 3px;
 
-    font-weight:600;
-
-    letter-spacing:1px;
-
-    background:#66594e;
+    background:#685c52;
 
     color:#fff;
 
+    font-size:13px;
+
+    font-weight:600;
+
+    letter-spacing:.5px;
+
     box-shadow:none;
 
-    transition:.15s;
+    transition:
+
+        transform .12s ease,
+        background .12s ease;
 
 }
 
 
 nav button:active{
 
-    transform:scale(.96);
+    transform:scale(.95);
+
+    background:#4e443c;
 
 }
 
 
 
-/* ===================
-   頁面
-=================== */
+/* ================================
+   主內容
+================================ */
+
+
+main{
+
+    width:100%;
+
+}
 
 
 section{
@@ -179,57 +205,99 @@ section.active{
 }
 
 
+section::before{
+
+    content:"";
+
+    display:block;
+
+    width:34px;
+
+    height:3px;
+
+    margin-bottom:10px;
+
+    background:#9a3d2f;
+
+}
+
+
 h2{
 
-    color:#332a24;
-
-    font-size:22px;
-
-    font-weight:700;
-
-    letter-spacing:2px;
-
-    margin:0 0 16px;
+    margin:0 0 17px;
 
     padding-left:12px;
 
-    border-left:5px solid #9d3d2f;
+    border-left:4px solid #9a3d2f;
+
+    color:#302923;
+
+    font-size:21px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
 
 }
 
 
 
-/* ===================
-   品項卡
-=================== */
+/* ================================
+   品項卡片
+================================ */
 
 
 .card{
 
+    position:relative;
+
+    width:100%;
+
+    margin-bottom:13px;
+
+    padding:16px;
+
     background:#fffdf8;
 
-    border-radius:6px;
+    border:1px solid #ddd4c7;
 
-    padding:17px;
-
-    margin-bottom:14px;
-
-    border:1px solid #e2d9cc;
+    border-radius:5px;
 
     box-shadow:
 
-        0 2px 7px rgba(70,55,40,.07);
+        0 2px 6px rgba(55,42,30,.06);
+
+}
+
+
+.card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:3px;
+
+    height:100%;
+
+    background:#c9bfb1;
+
+    border-radius:5px 0 0 5px;
 
 }
 
 
 .card h3{
 
-    margin:0 0 12px;
+    margin:0 0 13px;
+
+    color:#392f28;
 
     font-size:19px;
-
-    color:#3b3028;
 
     font-weight:700;
 
@@ -239,9 +307,9 @@ h2{
 
 
 
-/* ===================
+/* ================================
    數量控制
-=================== */
+================================ */
 
 
 .row{
@@ -261,115 +329,184 @@ h2{
 
 .row button{
 
+    appearance:none;
+
     width:44px;
 
     height:40px;
 
-    border:1px solid #d8cec1;
+    padding:0;
 
-    border-radius:5px;
+    border:1px solid #d3c9bc;
 
-    font-size:21px;
+    border-radius:4px;
 
     background:#eee9e1;
 
-    color:#403832;
+    color:#403831;
+
+    font-size:22px;
+
+    font-weight:500;
 
 }
 
 
 .row button:active{
 
-    background:#ded5c9;
+    transform:scale(.93);
 
-    transform:scale(.95);
+    background:#ddd5ca;
 
 }
 
 
 .row span{
 
-    font-size:22px;
-
-    font-weight:700;
-
     min-width:42px;
 
     text-align:center;
 
-    color:#332a24;
+    color:#302923;
+
+    font-size:22px;
+
+    font-weight:800;
 
 }
 
 
 
-/* ===================
-   功能按鈕
-=================== */
+/* ================================
+   操作按鈕
+================================ */
 
 
 .card > button{
 
-    border:1px solid #d8cec1;
+    appearance:none;
 
-    border-radius:4px;
+    border:1px solid #d4cabd;
 
-    padding:9px 15px;
+    border-radius:3px;
 
     margin:4px 3px;
+
+    padding:9px 13px;
 
     background:#eee9e1;
 
     color:#51483f;
 
-    font-size:14px;
+    font-size:13px;
 
-    font-weight:500;
+    font-weight:600;
 
     letter-spacing:.5px;
+
+    transition:
+
+        transform .12s ease,
+        background .12s ease;
 
 }
 
 
 .card > button:active{
 
-    transform:scale(.96);
+    transform:scale(.95);
 
 }
 
 
 button.active{
 
-    background:#9d3d2f !important;
+    background:#9a3d2f !important;
 
-    color:white !important;
+    border-color:#9a3d2f !important;
 
-    border-color:#9d3d2f !important;
+    color:#fff !important;
 
 }
 
 
 
-/* ===================
-   LINE
-=================== */
+/* ================================
+   不同分類的卡片色
+================================ */
 
 
-textarea{
+/* 酒水 */
+
+#drink .card::after{
+
+    background:#9a3d2f;
+
+}
+
+
+/* 食材 */
+
+#food .card::after{
+
+    background:#687653;
+
+}
+
+
+/* 醬料 */
+
+#sauce .card::after{
+
+    background:#806044;
+
+}
+
+
+/* 雜物 */
+
+#stuff .card::after{
+
+    background:#66615b;
+
+}
+
+
+
+/* ================================
+   LINE 頁面
+================================ */
+
+
+#line textarea{
+
+    display:block;
 
     width:100%;
 
-    height:320px;
+    height:300px;
+
+    margin-bottom:10px;
 
     padding:15px;
 
+    border:1px solid #d5cbbf;
+
     border-radius:5px;
 
-    border:1px solid #d8cec1;
+    outline:none;
 
     background:#fffdf8;
 
     color:#332a24;
+
+    font-family:
+
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
 
     font-size:16px;
 
@@ -380,27 +517,36 @@ textarea{
 }
 
 
+#line textarea:focus{
+
+    border-color:#9a3d2f;
+
+}
+
+
 #line button{
 
     width:100%;
 
-    height:50px;
+    min-height:48px;
 
-    margin-top:10px;
+    margin-top:8px;
+
+    padding:10px;
 
     border:none;
 
-    border-radius:5px;
+    border-radius:4px;
 
-    background:#9d3d2f;
+    background:#66594f;
 
-    color:white;
+    color:#fff;
 
-    font-size:18px;
+    font-size:16px;
 
     font-weight:600;
 
-    letter-spacing:2px;
+    letter-spacing:1px;
 
 }
 
@@ -412,85 +558,96 @@ textarea{
 }
 
 
+#line button:last-child{
 
-/* ===================
-   日式裝飾
-=================== */
+    background:#eee9e1;
 
+    border:1px solid #d4cabd;
 
-section::before{
-
-    content:"";
-
-    display:block;
-
-    width:35px;
-
-    height:2px;
-
-    margin-bottom:10px;
-
-    background:#9d3d2f;
-
-    opacity:.7;
+    color:#51483f;
 
 }
 
 
 
-/* ===================
-   手機優化
-=================== */
+/* ================================
+   手機版
+================================ */
 
 
 @media(max-width:600px){
 
+
     body{
 
-        padding:12px;
+        padding:11px;
 
     }
 
 
     header{
 
-        margin-bottom:18px;
+        margin-top:2px;
+
+        margin-bottom:17px;
 
     }
 
 
-    header h1::before{
+    header h1{
 
-        font-size:25px;
+        font-size:27px;
+
+        letter-spacing:4px;
 
     }
 
 
     header p{
 
-        font-size:12px;
+        font-size:11px;
 
         letter-spacing:2px;
 
     }
 
 
+    .header-mark{
+
+        font-size:10px;
+
+        letter-spacing:4px;
+
+    }
+
+
     nav{
 
-        gap:4px;
+        gap:3px;
 
         padding:4px;
+
+        margin-bottom:20px;
 
     }
 
 
     nav button{
 
+        min-height:44px;
+
+        padding:7px 2px;
+
         font-size:12px;
 
-        padding:10px 3px;
+    }
 
-        letter-spacing:0;
+
+    h2{
+
+        font-size:20px;
+
+        margin-bottom:15px;
 
     }
 
@@ -499,7 +656,7 @@ section::before{
 
         padding:15px;
 
-        margin-bottom:12px;
+        margin-bottom:11px;
 
     }
 
@@ -529,10 +686,40 @@ section::before{
 
     .card > button{
 
-        padding:9px 12px;
+        padding:9px 11px;
 
         font-size:13px;
 
     }
+
+
+    #line textarea{
+
+        height:280px;
+
+    }
+
+}
+
+
+/* ================================
+   防止手機文字選取與縮放干擾
+================================ */
+
+
+button{
+
+    user-select:none;
+
+    -webkit-user-select:none;
+
+}
+
+
+textarea{
+
+    user-select:text;
+
+    -webkit-user-select:text;
 
 }
