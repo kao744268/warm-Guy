@@ -5,34 +5,34 @@
 
 <meta charset="UTF-8">
 
-<meta 
-name="viewport" 
+<meta
+name="viewport"
 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+<meta name="theme-color" content="#332a24">
 
 <title>
 溫暖酒場｜智慧備料系統
 </title>
 
-
 <link rel="stylesheet" href="style.css">
-
 
 <link rel="manifest" href="manifest.json">
 
-
 </head>
-
 
 
 <body>
 
 
-
 <header>
 
+<div class="header-mark">
+仕込み
+</div>
+
 <h1>
-🍶 溫暖酒場
+温暖酒場
 </h1>
 
 <p>
@@ -43,52 +43,29 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 
 
 
-
-
 <nav>
 
-
 <button onclick="showPage('drink')">
-
-🍺 酒水
-
+🍶 酒水
 </button>
-
 
 <button onclick="showPage('food')">
-
-🥩 食材
-
+🥢 食材
 </button>
-
 
 <button onclick="showPage('sauce')">
-
-🥫 醬料
-
+🥣 醬料
 </button>
-
 
 <button onclick="showPage('stuff')">
-
 🧹 雜物
-
 </button>
-
 
 <button onclick="showPage('line')">
-
 📋 LINE
-
 </button>
 
-
-
 </nav>
-
-
-
-
 
 
 
@@ -99,43 +76,30 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <section id="drink">
 
 <h2>
-🍺 酒水備料
+🍶 酒水備料
 </h2>
 
-
 </section>
-
-
 
 
 
 <section id="food">
 
 <h2>
-🥩 食材備料
+🥢 食材備料
 </h2>
 
-
 </section>
-
-
-
-
 
 
 
 <section id="sauce">
 
 <h2>
-🥫 醬料製作
+🥣 醬料製作
 </h2>
 
-
 </section>
-
-
-
-
 
 
 
@@ -145,64 +109,42 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 🧹 雜物備品
 </h2>
 
-
 </section>
 
 
 
-
-
-
-
 <section id="line">
-
 
 <h2>
 📋 LINE通知
 </h2>
 
 
-
 <textarea
-
 id="lineText"
-
 placeholder="按下產生備料通知">
-
 </textarea>
 
 
-
 <button onclick="createLINE()">
-
 產生備料通知
-
 </button>
-
 
 
 <button onclick="copyLINE()">
-
 複製文字
-
 </button>
-  
+
+
 <button onclick="resetAll()">
-
 🔄 一鍵歸零
-
 </button>
 
 
 </section>
 
 
-
-
 </main>
-
-
-
 
 
 
@@ -211,8 +153,6 @@ placeholder="按下產生備料通知">
 <script src="app.js"></script>
 
 
-
 </body>
-
 
 </html>
