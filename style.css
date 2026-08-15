@@ -1,175 +1,880 @@
-/* ================================
-   今日採購總覽
-================================ */
-
-.purchase-summary{
-
-    margin-bottom:20px;
-
-}
+/* ===================================
+   溫暖酒場｜智慧備料系統 V3
+   日式採購管理 UI
+=================================== */
 
 
-.summary-title{
+* {
 
-    margin-bottom:9px;
-
-    padding-left:11px;
-
-    border-left:4px solid #9a3d2f;
-
-    color:#302923;
-
-    font-size:15px;
-
-    font-weight:800;
-
-    letter-spacing:2px;
+    box-sizing: border-box;
 
 }
 
 
-.summary-grid{
+html {
 
-    display:grid;
+    width: 100%;
 
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:7px;
+    min-height: 100%;
 
 }
 
 
-.summary-card{
+body {
 
-    display:grid;
+    margin: 0;
 
-    grid-template-columns:
-        auto 1fr;
+    padding: 14px;
 
-    grid-template-rows:
-        auto auto;
+    min-height: 100vh;
 
-    column-gap:7px;
+    background: #f1ece2;
 
-    align-items:center;
+    color: #302923;
 
-    min-height:74px;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
 
-    padding:10px;
-
-    border:1px solid #d5cbbf;
-
-    border-radius:5px;
-
-    background:#fffdf8;
-
-    text-align:left;
+    -webkit-tap-highlight-color: transparent;
 
 }
-
-
-.summary-card:active{
-
-    transform:scale(.97);
-
-}
-
-
-.summary-icon{
-
-    grid-row:1 / 3;
-
-    font-size:19px;
-
-}
-
-
-.summary-name{
-
-    color:#554b43;
-
-    font-size:12px;
-
-    font-weight:700;
-
-}
-
-
-.summary-card strong{
-
-    color:#302923;
-
-    font-size:22px;
-
-    line-height:1;
-
-}
-
-
-.summary-card > span:last-child{
-
-    position:absolute;
-
-    margin-left:36px;
-
-    margin-top:28px;
-
-    color:#887d72;
-
-    font-size:10px;
-
-}
-
 
 
 /* ================================
-   採購單預覽
+   Header
 ================================ */
 
-#purchase-preview{
 
-    margin-bottom:12px;
+header {
 
-    padding:14px;
+    text-align: center;
 
-    border:1px solid #d8cec1;
+    padding: 10px 0 8px;
 
-    border-radius:5px;
-
-    background:#e8e1d6;
-
-    color:#665d55;
-
-    font-size:13px;
-
-    line-height:1.7;
+    margin-bottom: 16px;
 
 }
 
 
-@media(max-width:600px){
+.header-mark {
 
-    .summary-card{
+    margin-bottom: 5px;
 
-        min-height:70px;
+    color: #9a3d2f;
 
-        padding:8px;
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 5px;
+
+}
+
+
+header h1 {
+
+    margin: 0;
+
+    color: #302923;
+
+    font-size: 30px;
+
+    font-weight: 800;
+
+    letter-spacing: 5px;
+
+}
+
+
+header p {
+
+    margin: 7px 0 0;
+
+    color: #857b71;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+}
+
+
+/* ================================
+   今日採購
+================================ */
+
+
+.purchase-summary {
+
+    margin-bottom: 18px;
+
+}
+
+
+.summary-title {
+
+    margin-bottom: 8px;
+
+    padding-left: 11px;
+
+    border-left: 4px solid #9a3d2f;
+
+    color: #302923;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+
+.summary-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 6px;
+
+}
+
+
+.summary-card {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 82px;
+
+    padding: 8px 4px;
+
+    border: 1px solid #d4cabe;
+
+    border-radius: 5px;
+
+    background: #fffdf8;
+
+    color: #403831;
+
+}
+
+
+.summary-card:active {
+
+    transform: scale(.96);
+
+}
+
+
+.summary-icon {
+
+    font-size: 14px;
+
+}
+
+
+.summary-name {
+
+    margin-top: 2px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+}
+
+
+.summary-card strong {
+
+    margin-top: 3px;
+
+    font-size: 22px;
+
+    line-height: 1;
+
+}
+
+
+.summary-card > span:last-child {
+
+    color: #8a8075;
+
+    font-size: 9px;
+
+}
+
+
+/* ================================
+   導航
+================================ */
+
+
+nav {
+
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 4px;
+
+    margin-bottom: 22px;
+
+    padding: 4px;
+
+    background: #dcd4c8;
+
+    border: 1px solid #c9bfb2;
+
+}
+
+
+nav button {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 4px;
+
+    min-height: 62px;
+
+    padding: 6px 2px;
+
+    border: none;
+
+    border-radius: 4px;
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+nav button:active {
+
+    transform: scale(.94);
+
+}
+
+
+.nav-icon {
+
+    font-size: 19px;
+
+    line-height: 1;
+
+}
+
+
+.nav-wanlaixing {
+
+    background: #9a3d2f;
+
+}
+
+
+.nav-pxmart {
+
+    background: #667653;
+
+}
+
+
+.nav-houyi {
+
+    background: #806044;
+
+}
+
+
+.nav-sauce {
+
+    background: #665247;
+
+}
+
+
+.nav-line {
+
+    background: #555b5a;
+
+}
+
+
+/* ================================
+   Section
+================================ */
+
+
+section {
+
+    display: none;
+
+}
+
+
+section.active {
+
+    display: block;
+
+}
+
+
+section::before {
+
+    content: "";
+
+    display: block;
+
+    width: 34px;
+
+    height: 3px;
+
+    margin-bottom: 10px;
+
+    background: #9a3d2f;
+
+}
+
+
+h2 {
+
+    margin: 0 0 7px;
+
+    padding-left: 12px;
+
+    border-left: 4px solid #9a3d2f;
+
+    color: #302923;
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+
+.section-description {
+
+    margin-bottom: 14px;
+
+    color: #887d72;
+
+    font-size: 12px;
+
+    letter-spacing: .5px;
+
+}
+
+
+/* ================================
+   品項卡片
+================================ */
+
+
+.card {
+
+    position: relative;
+
+    margin-bottom: 11px;
+
+    padding: 15px;
+
+    background: #fffdf8;
+
+    border: 1px solid #ddd4c7;
+
+    border-radius: 5px;
+
+    box-shadow:
+        0 2px 6px rgba(55,42,30,.06);
+
+}
+
+
+.card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 3px;
+
+    height: 100%;
+
+    border-radius: 5px 0 0 5px;
+
+    background: #9a3d2f;
+
+}
+
+
+#pxmart .card::before {
+
+    background: #667653;
+
+}
+
+
+#houyi .card::before {
+
+    background: #806044;
+
+}
+
+
+#sauce .card::before {
+
+    background: #665247;
+
+}
+
+
+.card h3 {
+
+    margin: 0 0 12px;
+
+    color: #392f28;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+}
+
+
+/* ================================
+   規格
+================================ */
+
+
+.option-title {
+
+    margin-bottom: 6px;
+
+    color: #8a8075;
+
+    font-size: 11px;
+
+}
+
+
+.option-box {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.option-button {
+
+    padding: 8px 14px;
+
+    border: 1px solid #d2c8ba;
+
+    border-radius: 4px;
+
+    background: #eee9e1;
+
+    color: #544b43;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+.option-button.active {
+
+    background: #9a3d2f !important;
+
+    border-color: #9a3d2f !important;
+
+    color: white !important;
+
+}
+
+
+/* ================================
+   數量
+================================ */
+
+
+.row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    margin: 13px 0;
+
+}
+
+
+.row button {
+
+    width: 44px;
+
+    height: 40px;
+
+    padding: 0;
+
+    border: 1px solid #d3c9bc;
+
+    border-radius: 4px;
+
+    background: #eee9e1;
+
+    color: #403831;
+
+    font-size: 22px;
+
+}
+
+
+.row button:active {
+
+    transform: scale(.92);
+
+}
+
+
+.row span {
+
+    min-width: 42px;
+
+    text-align: center;
+
+    font-size: 22px;
+
+    font-weight: 800;
+
+}
+
+
+/* ================================
+   採購按鈕
+================================ */
+
+
+.purchase-button {
+
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 9px;
+
+    border: 1px solid #d3c9bc;
+
+    border-radius: 4px;
+
+    background: #eee9e1;
+
+    color: #51483f;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+}
+
+
+.purchase-button:active {
+
+    transform: scale(.98);
+
+}
+
+
+.purchase-button.active {
+
+    background: #9a3d2f !important;
+
+    border-color: #9a3d2f !important;
+
+    color: white !important;
+
+}
+
+
+/* ================================
+   醬料
+================================ */
+
+
+.sauce-material {
+
+    padding: 6px 0;
+
+    border-bottom: 1px dashed #ded5ca;
+
+    color: #675e56;
+
+    font-size: 14px;
+
+}
+
+
+.sauce-material:last-of-type {
+
+    border-bottom: none;
+
+}
+
+
+/* ================================
+   採購單
+================================ */
+
+
+#line textarea {
+
+    display: block;
+
+    width: 100%;
+
+    height: 290px;
+
+    margin-bottom: 9px;
+
+    padding: 14px;
+
+    border: 1px solid #d4cabd;
+
+    border-radius: 5px;
+
+    outline: none;
+
+    background: #fffdf8;
+
+    color: #332a24;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
+
+    font-size: 16px;
+
+    line-height: 1.7;
+
+    resize: none;
+
+}
+
+
+#line textarea:focus {
+
+    border-color: #9a3d2f;
+
+}
+
+
+#line button {
+
+    width: 100%;
+
+    min-height: 48px;
+
+    margin-top: 7px;
+
+    padding: 10px;
+
+    border-radius: 4px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+}
+
+
+.line-main-button {
+
+    border: none;
+
+    background: #9a3d2f;
+
+    color: white;
+
+}
+
+
+.line-copy-button {
+
+    border: none;
+
+    background: #665a51;
+
+    color: white;
+
+}
+
+
+.reset-button {
+
+    border: 1px solid #d3c9bc;
+
+    background: #eee9e1;
+
+    color: #51483f;
+
+}
+
+
+/* ================================
+   手機
+================================ */
+
+
+@media(max-width:600px) {
+
+    body {
+
+        padding: 11px;
 
     }
 
 
-    .summary-name{
+    header h1 {
 
-        font-size:11px;
+        font-size: 27px;
+
+        letter-spacing: 4px;
+
+    }
+
+
+    .summary-grid {
+
+        gap: 5px;
 
     }
 
 
-    .summary-card strong{
+    .summary-card {
 
-        font-size:20px;
+        min-height: 76px;
 
     }
+
+
+    .summary-name {
+
+        font-size: 11px;
+
+    }
+
+
+    .summary-card strong {
+
+        font-size: 20px;
+
+    }
+
+
+    nav {
+
+        gap: 3px;
+
+        padding: 3px;
+
+    }
+
+
+    nav button {
+
+        min-height: 59px;
+
+        font-size: 10px;
+
+    }
+
+
+    .nav-icon {
+
+        font-size: 18px;
+
+    }
+
+
+    .card {
+
+        padding: 14px;
+
+    }
+
+
+    .card h3 {
+
+        font-size: 17px;
+
+    }
+
+
+}
+
+
+/* ================================
+   防止選取
+================================ */
+
+
+button {
+
+    user-select: none;
+
+    -webkit-user-select: none;
+
+}
+
+
+button:focus {
+
+    outline: none;
 
 }
