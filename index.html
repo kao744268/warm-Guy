@@ -57,6 +57,110 @@ href="manifest.json">
 
 
 
+<!-- =========================
+     今日採購總覽
+========================= -->
+
+<div class="purchase-summary">
+
+<div class="summary-title">
+今日採購
+</div>
+
+
+<div class="summary-grid">
+
+
+<button
+class="summary-card summary-wanlaixing"
+onclick="showPage('wanlaixing')">
+
+<span class="summary-icon">
+🟥
+</span>
+
+<span class="summary-name">
+旺來興
+</span>
+
+<strong
+id="summary-wanlaixing">
+
+0
+
+</strong>
+
+<span>
+項
+</span>
+
+</button>
+
+
+
+<button
+class="summary-card summary-pxmart"
+onclick="showPage('pxmart')">
+
+<span class="summary-icon">
+🟩
+</span>
+
+<span class="summary-name">
+全聯
+</span>
+
+<strong
+id="summary-pxmart">
+
+0
+
+</strong>
+
+<span>
+項
+</span>
+
+</button>
+
+
+
+<button
+class="summary-card summary-houyi"
+onclick="showPage('houyi')">
+
+<span class="summary-icon">
+🟫
+</span>
+
+<span class="summary-name">
+後驛店
+</span>
+
+<strong
+id="summary-houyi">
+
+0
+
+</strong>
+
+<span>
+項
+</span>
+
+</button>
+
+
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     導航
+========================= -->
+
 <nav>
 
 
@@ -146,31 +250,26 @@ onclick="showPage('line')">
 <main>
 
 
-
 <section
 id="wanlaixing">
-
 </section>
 
 
 
 <section
 id="pxmart">
-
 </section>
 
 
 
 <section
 id="houyi">
-
 </section>
 
 
 
 <section
 id="sauce">
-
 </section>
 
 
@@ -188,6 +287,15 @@ id="line">
 
 確認完各店採購數量後，
 按下「產生採購單」。
+
+</div>
+
+
+
+<div
+id="purchase-preview">
+
+尚未產生採購單
 
 </div>
 
