@@ -1521,3 +1521,128 @@ function resetAll(){
     createLINE();
 
 }
+// ===================================
+// V3｜今日採購總覽
+// ===================================
+
+function updatePurchaseSummary(){
+
+    updateSummaryCount(
+        "wanlaixing",
+        wanlaixingData,
+        "summary-wanlaixing"
+    );
+
+
+    updateSummaryCount(
+        "pxmart",
+        pxmartData,
+        "summary-pxmart"
+    );
+
+
+    updateSummaryCount(
+        "houyi",
+        houyiData,
+        "summary-houyi"
+    );
+
+}
+
+
+
+
+function updateSummaryCount(
+
+    category,
+
+    list,
+
+    elementId
+
+){
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+
+    if(!element){
+
+        return;
+
+    }
+
+
+    let count = 0;
+
+
+    list.forEach(
+
+        function(item,index){
+
+            const state =
+                getItemState(
+                    category,
+                    index
+                );
+
+
+            if(
+                state.selected &&
+                state.quantity > 0
+            ){
+
+                count++;
+
+            }
+
+        }
+
+    );
+
+
+    element.textContent =
+        count;
+
+}
+
+
+
+
+// ===================================
+// V3｜更新總覽
+// ===================================
+
+const originalSavePurchaseData =
+    savePurchaseData;
+
+
+savePurchaseData =
+    function(){
+
+        originalSavePurchaseData();
+
+        updatePurchaseSummary();
+
+    };
+
+
+
+
+// ===================================
+// V3｜頁面載入後更新
+// ===================================
+
+setTimeout(
+
+    function(){
+
+        updatePurchaseSummary();
+
+    },
+
+    100
+
+);
