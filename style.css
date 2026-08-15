@@ -1,238 +1,25 @@
-/* ===================================
-   溫暖酒場｜智慧備料系統 V2
-   日式居酒屋 UI
-   style.css
-=================================== */
-
-
 /* ================================
-   基礎設定
+   今日採購總覽
 ================================ */
 
+.purchase-summary{
 
-*{
-
-    box-sizing:border-box;
-
-}
-
-
-html{
-
-    width:100%;
-
-    min-height:100%;
+    margin-bottom:20px;
 
 }
 
 
-body{
+.summary-title{
 
-    margin:0;
+    margin-bottom:9px;
 
-    padding:14px;
-
-    width:100%;
-
-    min-height:100vh;
-
-    font-family:
-
-        -apple-system,
-        BlinkMacSystemFont,
-        "Noto Sans TC",
-        "Microsoft JhengHei",
-        sans-serif;
-
-    background:#f2ede3;
-
-    color:#302923;
-
-    -webkit-tap-highlight-color:transparent;
-
-}
-
-
-/* ================================
-   頁首
-================================ */
-
-
-header{
-
-    text-align:center;
-
-    margin:4px 0 20px;
-
-    padding:10px 0 4px;
-
-}
-
-
-.header-mark{
-
-    font-size:11px;
-
-    color:#9a3d2f;
-
-    letter-spacing:5px;
-
-    margin-bottom:5px;
-
-    font-weight:600;
-
-}
-
-
-header h1{
-
-    margin:0;
-
-    color:#302923;
-
-    font-size:30px;
-
-    font-weight:800;
-
-    letter-spacing:5px;
-
-}
-
-
-header p{
-
-    margin:8px 0 0;
-
-    color:#857a70;
-
-    font-size:12px;
-
-    letter-spacing:3px;
-
-}
-
-
-
-/* ================================
-   分類導航
-================================ */
-
-
-nav{
-
-    display:grid;
-
-    grid-template-columns:repeat(5,1fr);
-
-    gap:5px;
-
-    margin-bottom:24px;
-
-    padding:5px;
-
-    background:#ddd5c9;
-
-    border:1px solid #cbc1b4;
-
-}
-
-
-nav button{
-
-    appearance:none;
-
-    border:none;
-
-    border-radius:3px;
-
-    min-height:46px;
-
-    padding:7px 3px;
-
-    background:#685c52;
-
-    color:#fff;
-
-    font-size:13px;
-
-    font-weight:600;
-
-    letter-spacing:.5px;
-
-    box-shadow:none;
-
-    transition:
-
-        transform .12s ease,
-        background .12s ease;
-
-}
-
-
-nav button:active{
-
-    transform:scale(.95);
-
-    background:#4e443c;
-
-}
-
-
-
-/* ================================
-   主內容
-================================ */
-
-
-main{
-
-    width:100%;
-
-}
-
-
-section{
-
-    display:none;
-
-}
-
-
-section.active{
-
-    display:block;
-
-}
-
-
-section::before{
-
-    content:"";
-
-    display:block;
-
-    width:34px;
-
-    height:3px;
-
-    margin-bottom:10px;
-
-    background:#9a3d2f;
-
-}
-
-
-h2{
-
-    margin:0 0 17px;
-
-    padding-left:12px;
+    padding-left:11px;
 
     border-left:4px solid #9a3d2f;
 
     color:#302923;
 
-    font-size:21px;
+    font-size:15px;
 
     font-weight:800;
 
@@ -241,485 +28,148 @@ h2{
 }
 
 
+.summary-grid{
 
-/* ================================
-   品項卡片
-================================ */
+    display:grid;
 
+    grid-template-columns:
+        repeat(3,1fr);
 
-.card{
-
-    position:relative;
-
-    width:100%;
-
-    margin-bottom:13px;
-
-    padding:16px;
-
-    background:#fffdf8;
-
-    border:1px solid #ddd4c7;
-
-    border-radius:5px;
-
-    box-shadow:
-
-        0 2px 6px rgba(55,42,30,.06);
+    gap:7px;
 
 }
 
 
-.card::after{
+.summary-card{
 
-    content:"";
+    display:grid;
 
-    position:absolute;
+    grid-template-columns:
+        auto 1fr;
 
-    top:0;
+    grid-template-rows:
+        auto auto;
 
-    left:0;
-
-    width:3px;
-
-    height:100%;
-
-    background:#c9bfb1;
-
-    border-radius:5px 0 0 5px;
-
-}
-
-
-.card h3{
-
-    margin:0 0 13px;
-
-    color:#392f28;
-
-    font-size:19px;
-
-    font-weight:700;
-
-    letter-spacing:1px;
-
-}
-
-
-
-/* ================================
-   數量控制
-================================ */
-
-
-.row{
-
-    display:flex;
+    column-gap:7px;
 
     align-items:center;
 
-    justify-content:center;
+    min-height:74px;
 
-    gap:18px;
-
-    margin:14px 0;
-
-}
-
-
-.row button{
-
-    appearance:none;
-
-    width:44px;
-
-    height:40px;
-
-    padding:0;
-
-    border:1px solid #d3c9bc;
-
-    border-radius:4px;
-
-    background:#eee9e1;
-
-    color:#403831;
-
-    font-size:22px;
-
-    font-weight:500;
-
-}
-
-
-.row button:active{
-
-    transform:scale(.93);
-
-    background:#ddd5ca;
-
-}
-
-
-.row span{
-
-    min-width:42px;
-
-    text-align:center;
-
-    color:#302923;
-
-    font-size:22px;
-
-    font-weight:800;
-
-}
-
-
-
-/* ================================
-   操作按鈕
-================================ */
-
-
-.card > button{
-
-    appearance:none;
-
-    border:1px solid #d4cabd;
-
-    border-radius:3px;
-
-    margin:4px 3px;
-
-    padding:9px 13px;
-
-    background:#eee9e1;
-
-    color:#51483f;
-
-    font-size:13px;
-
-    font-weight:600;
-
-    letter-spacing:.5px;
-
-    transition:
-
-        transform .12s ease,
-        background .12s ease;
-
-}
-
-
-.card > button:active{
-
-    transform:scale(.95);
-
-}
-
-
-button.active{
-
-    background:#9a3d2f !important;
-
-    border-color:#9a3d2f !important;
-
-    color:#fff !important;
-
-}
-
-
-
-/* ================================
-   不同分類的卡片色
-================================ */
-
-
-/* 酒水 */
-
-#drink .card::after{
-
-    background:#9a3d2f;
-
-}
-
-
-/* 食材 */
-
-#food .card::after{
-
-    background:#687653;
-
-}
-
-
-/* 醬料 */
-
-#sauce .card::after{
-
-    background:#806044;
-
-}
-
-
-/* 雜物 */
-
-#stuff .card::after{
-
-    background:#66615b;
-
-}
-
-
-
-/* ================================
-   LINE 頁面
-================================ */
-
-
-#line textarea{
-
-    display:block;
-
-    width:100%;
-
-    height:300px;
-
-    margin-bottom:10px;
-
-    padding:15px;
+    padding:10px;
 
     border:1px solid #d5cbbf;
 
     border-radius:5px;
 
-    outline:none;
-
     background:#fffdf8;
 
-    color:#332a24;
-
-    font-family:
-
-        -apple-system,
-        BlinkMacSystemFont,
-        "Noto Sans TC",
-        "Microsoft JhengHei",
-        sans-serif;
-
-    font-size:16px;
-
-    line-height:1.7;
-
-    resize:none;
+    text-align:left;
 
 }
 
 
-#line textarea:focus{
+.summary-card:active{
 
-    border-color:#9a3d2f;
-
-}
-
-
-#line button{
-
-    width:100%;
-
-    min-height:48px;
-
-    margin-top:8px;
-
-    padding:10px;
-
-    border:none;
-
-    border-radius:4px;
-
-    background:#66594f;
-
-    color:#fff;
-
-    font-size:16px;
-
-    font-weight:600;
-
-    letter-spacing:1px;
+    transform:scale(.97);
 
 }
 
 
-#line button:active{
+.summary-icon{
 
-    transform:scale(.98);
+    grid-row:1 / 3;
+
+    font-size:19px;
 
 }
 
 
-#line button:last-child{
+.summary-name{
 
-    background:#eee9e1;
+    color:#554b43;
 
-    border:1px solid #d4cabd;
+    font-size:12px;
 
-    color:#51483f;
+    font-weight:700;
+
+}
+
+
+.summary-card strong{
+
+    color:#302923;
+
+    font-size:22px;
+
+    line-height:1;
+
+}
+
+
+.summary-card > span:last-child{
+
+    position:absolute;
+
+    margin-left:36px;
+
+    margin-top:28px;
+
+    color:#887d72;
+
+    font-size:10px;
 
 }
 
 
 
 /* ================================
-   手機版
+   採購單預覽
 ================================ */
+
+#purchase-preview{
+
+    margin-bottom:12px;
+
+    padding:14px;
+
+    border:1px solid #d8cec1;
+
+    border-radius:5px;
+
+    background:#e8e1d6;
+
+    color:#665d55;
+
+    font-size:13px;
+
+    line-height:1.7;
+
+}
 
 
 @media(max-width:600px){
 
+    .summary-card{
 
-    body{
+        min-height:70px;
 
-        padding:11px;
-
-    }
-
-
-    header{
-
-        margin-top:2px;
-
-        margin-bottom:17px;
+        padding:8px;
 
     }
 
 
-    header h1{
-
-        font-size:27px;
-
-        letter-spacing:4px;
-
-    }
-
-
-    header p{
+    .summary-name{
 
         font-size:11px;
 
-        letter-spacing:2px;
-
     }
 
 
-    .header-mark{
-
-        font-size:10px;
-
-        letter-spacing:4px;
-
-    }
-
-
-    nav{
-
-        gap:3px;
-
-        padding:4px;
-
-        margin-bottom:20px;
-
-    }
-
-
-    nav button{
-
-        min-height:44px;
-
-        padding:7px 2px;
-
-        font-size:12px;
-
-    }
-
-
-    h2{
+    .summary-card strong{
 
         font-size:20px;
 
-        margin-bottom:15px;
-
     }
-
-
-    .card{
-
-        padding:15px;
-
-        margin-bottom:11px;
-
-    }
-
-
-    .card h3{
-
-        font-size:18px;
-
-    }
-
-
-    .row{
-
-        gap:15px;
-
-    }
-
-
-    .row button{
-
-        width:43px;
-
-        height:40px;
-
-    }
-
-
-    .card > button{
-
-        padding:9px 11px;
-
-        font-size:13px;
-
-    }
-
-
-    #line textarea{
-
-        height:280px;
-
-    }
-
-}
-
-
-/* ================================
-   防止手機文字選取與縮放干擾
-================================ */
-
-
-button{
-
-    user-select:none;
-
-    -webkit-user-select:none;
-
-}
-
-
-textarea{
-
-    user-select:text;
-
-    -webkit-user-select:text;
 
 }
