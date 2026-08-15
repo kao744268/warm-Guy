@@ -1,6 +1,6 @@
 /* ===================================
    溫暖酒場｜智慧備料系統 V3
-   日式採購管理 UI
+   和風居酒屋 UI
 =================================== */
 
 
@@ -24,13 +24,19 @@ body {
 
     margin: 0;
 
-    padding: 14px;
+    padding: 16px;
 
     min-height: 100vh;
 
-    background: #f1ece2;
+    background:
+        linear-gradient(
+            180deg,
+            #eee8dc 0%,
+            #f5f0e7 45%,
+            #e9e1d5 100%
+        );
 
-    color: #302923;
+    color: #292522;
 
     font-family:
         -apple-system,
@@ -45,32 +51,62 @@ body {
 
 
 /* ================================
-   Header
+   Header｜居酒屋招牌
 ================================ */
 
 
 header {
 
+    position: relative;
+
     text-align: center;
 
-    padding: 10px 0 8px;
+    padding: 12px 10px 20px;
 
-    margin-bottom: 16px;
+    margin-bottom: 14px;
+
+}
+
+
+header::before {
+
+    content: "温 暖 酒 場";
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #a04435;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 7px;
+
+}
+
+
+header::after {
+
+    content: "";
+
+    display: block;
+
+    width: 54px;
+
+    height: 2px;
+
+    margin: 12px auto 0;
+
+    background: #a04435;
 
 }
 
 
 .header-mark {
 
-    margin-bottom: 5px;
-
-    color: #9a3d2f;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    letter-spacing: 5px;
+    display: none;
 
 }
 
@@ -79,26 +115,32 @@ header h1 {
 
     margin: 0;
 
-    color: #302923;
+    color: #28231f;
 
-    font-size: 30px;
+    font-family:
+        "Noto Serif TC",
+        "Songti TC",
+        "PMingLiU",
+        serif;
 
-    font-weight: 800;
+    font-size: 32px;
 
-    letter-spacing: 5px;
+    font-weight: 900;
+
+    letter-spacing: 8px;
 
 }
 
 
 header p {
 
-    margin: 7px 0 0;
+    margin: 8px 0 0;
 
-    color: #857b71;
+    color: #81776c;
 
-    font-size: 11px;
+    font-size: 10px;
 
-    letter-spacing: 3px;
+    letter-spacing: 4px;
 
 }
 
@@ -110,26 +152,68 @@ header p {
 
 .purchase-summary {
 
-    margin-bottom: 18px;
+    position: relative;
+
+    margin-bottom: 20px;
+
+    padding: 15px 13px 13px;
+
+    border: 1px solid #d5cabb;
+
+    background: rgba(255,253,248,.72);
+
+    box-shadow:
+        0 5px 18px rgba(67,52,38,.07);
 
 }
 
 
 .summary-title {
 
-    margin-bottom: 8px;
+    display: flex;
 
-    padding-left: 11px;
+    align-items: center;
 
-    border-left: 4px solid #9a3d2f;
+    gap: 8px;
 
-    color: #302923;
+    margin-bottom: 12px;
 
-    font-size: 15px;
+    padding: 0;
+
+    border: none;
+
+    color: #3b342e;
+
+    font-size: 13px;
 
     font-weight: 800;
 
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+
+}
+
+
+.summary-title::before {
+
+    content: "本日";
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 32px;
+
+    height: 20px;
+
+    background: #a04435;
+
+    color: white;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
 
 }
 
@@ -138,34 +222,60 @@ header p {
 
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+        repeat(3,1fr);
 
-    gap: 6px;
+    gap: 8px;
 
 }
 
 
 .summary-card {
 
+    position: relative;
+
     display: flex;
 
     flex-direction: column;
 
-    align-items: center;
+    align-items: flex-start;
 
     justify-content: center;
 
-    min-height: 82px;
+    min-height: 88px;
 
-    padding: 8px 4px;
+    padding: 12px;
 
-    border: 1px solid #d4cabe;
+    border: 1px solid #ddd4c7;
 
-    border-radius: 5px;
+    border-radius: 2px;
 
-    background: #fffdf8;
+    background: #fffdf9;
 
-    color: #403831;
+    color: #332c26;
+
+    text-align: left;
+
+    transition:
+        transform .12s ease,
+        box-shadow .12s ease;
+
+}
+
+
+.summary-card::after {
+
+    content: "›";
+
+    position: absolute;
+
+    right: 10px;
+
+    bottom: 7px;
+
+    color: #b7ada1;
+
+    font-size: 18px;
 
 }
 
@@ -179,27 +289,38 @@ header p {
 
 .summary-icon {
 
-    font-size: 14px;
+    display: none;
 
 }
 
 
 .summary-name {
 
-    margin-top: 2px;
+    margin: 0 0 5px;
 
-    font-size: 12px;
+    color: #665c52;
 
-    font-weight: 700;
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
 
 }
 
 
 .summary-card strong {
 
-    margin-top: 3px;
+    margin: 0;
 
-    font-size: 22px;
+    color: #2c2723;
+
+    font-family:
+        "Noto Serif TC",
+        "Songti TC",
+        serif;
+
+    font-size: 27px;
 
     line-height: 1;
 
@@ -208,15 +329,45 @@ header p {
 
 .summary-card > span:last-child {
 
-    color: #8a8075;
+    position: absolute;
+
+    right: 12px;
+
+    top: 16px;
+
+    color: #91867b;
 
     font-size: 9px;
 
 }
 
 
+/* 各店識別色 */
+
+
+.summary-wanlaixing {
+
+    border-top: 3px solid #a04435;
+
+}
+
+
+.summary-pxmart {
+
+    border-top: 3px solid #71805e;
+
+}
+
+
+.summary-houyi {
+
+    border-top: 3px solid #8a6849;
+
+}
+
+
 /* ================================
-   導航
+   主導航
 ================================ */
 
 
@@ -224,22 +375,27 @@ nav {
 
     display: grid;
 
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns:
+        repeat(5,1fr);
 
-    gap: 4px;
+    gap: 0;
 
-    margin-bottom: 22px;
+    margin-bottom: 25px;
 
-    padding: 4px;
+    padding: 0;
 
-    background: #dcd4c8;
+    overflow: hidden;
 
-    border: 1px solid #c9bfb2;
+    border: 1px solid #cfc5b8;
+
+    background: #d8cfc2;
 
 }
 
 
 nav button {
+
+    position: relative;
 
     display: flex;
 
@@ -251,33 +407,74 @@ nav button {
 
     gap: 4px;
 
-    min-height: 62px;
+    min-height: 67px;
 
-    padding: 6px 2px;
+    padding: 7px 2px;
 
     border: none;
 
-    border-radius: 4px;
+    border-right: 1px solid rgba(255,255,255,.2);
 
-    color: white;
+    border-radius: 0;
 
-    font-size: 11px;
+    color: #fff;
+
+    font-size: 10px;
 
     font-weight: 700;
+
+    letter-spacing: 1px;
+
+}
+
+
+nav button:last-child {
+
+    border-right: none;
 
 }
 
 
 nav button:active {
 
-    transform: scale(.94);
+    transform: none;
+
+}
+
+
+nav button::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 50%;
+
+    width: 0;
+
+    height: 3px;
+
+    background: rgba(255,255,255,.8);
+
+    transform: translateX(-50%);
+
+    transition: width .15s;
+
+}
+
+
+nav button:active::after {
+
+    width: 70%;
 
 }
 
 
 .nav-icon {
 
-    font-size: 19px;
+    font-size: 20px;
 
     line-height: 1;
 
@@ -286,35 +483,35 @@ nav button:active {
 
 .nav-wanlaixing {
 
-    background: #9a3d2f;
+    background: #994235;
 
 }
 
 
 .nav-pxmart {
 
-    background: #667653;
+    background: #687654;
 
 }
 
 
 .nav-houyi {
 
-    background: #806044;
+    background: #806247;
 
 }
 
 
 .nav-sauce {
 
-    background: #665247;
+    background: #68564c;
 
 }
 
 
 .nav-line {
 
-    background: #555b5a;
+    background: #505553;
 
 }
 
@@ -335,6 +532,30 @@ section.active {
 
     display: block;
 
+    animation:
+        sectionFade .18s ease;
+
+}
+
+
+@keyframes sectionFade {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(4px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
 }
 
 
@@ -344,45 +565,77 @@ section::before {
 
     display: block;
 
-    width: 34px;
+    width: 30px;
 
-    height: 3px;
+    height: 2px;
 
-    margin-bottom: 10px;
+    margin-bottom: 11px;
 
-    background: #9a3d2f;
+    background: #a04435;
 
 }
 
 
 h2 {
 
-    margin: 0 0 7px;
+    position: relative;
 
-    padding-left: 12px;
+    margin: 0 0 6px;
 
-    border-left: 4px solid #9a3d2f;
+    padding: 0;
+
+    border: none;
 
     color: #302923;
 
-    font-size: 21px;
+    font-family:
+        "Noto Serif TC",
+        "Songti TC",
+        serif;
 
-    font-weight: 800;
+    font-size: 23px;
 
-    letter-spacing: 2px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+}
+
+
+h2::after {
+
+    content: "仕込み・購買";
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: #968a7d;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans TC",
+        sans-serif;
+
+    font-size: 9px;
+
+    font-weight: 500;
+
+    letter-spacing: 3px;
 
 }
 
 
 .section-description {
 
-    margin-bottom: 14px;
+    margin: 10px 0 15px;
 
-    color: #887d72;
+    color: #8b8074;
 
-    font-size: 12px;
+    font-size: 11px;
 
-    letter-spacing: .5px;
+    letter-spacing: 1px;
 
 }
 
@@ -396,18 +649,39 @@ h2 {
 
     position: relative;
 
-    margin-bottom: 11px;
+    margin-bottom: 10px;
 
-    padding: 15px;
+    padding: 17px 16px 15px 18px;
 
-    background: #fffdf8;
+    overflow: hidden;
 
-    border: 1px solid #ddd4c7;
+    border: 1px solid #ddd4c8;
 
-    border-radius: 5px;
+    border-radius: 2px;
+
+    background:
+        linear-gradient(
+            105deg,
+            #fffdf9,
+            #fbf7f0
+        );
 
     box-shadow:
-        0 2px 6px rgba(55,42,30,.06);
+        0 3px 12px
+        rgba(60,46,33,.055);
+
+    transition:
+        transform .12s ease,
+        box-shadow .12s ease;
+
+}
+
+
+.card:hover {
+
+    box-shadow:
+        0 5px 16px
+        rgba(60,46,33,.08);
 
 }
 
@@ -426,43 +700,46 @@ h2 {
 
     height: 100%;
 
-    border-radius: 5px 0 0 5px;
-
-    background: #9a3d2f;
+    background: #a04435;
 
 }
 
 
 #pxmart .card::before {
 
-    background: #667653;
+    background: #71805e;
 
 }
 
 
 #houyi .card::before {
 
-    background: #806044;
+    background: #8a6849;
 
 }
 
 
 #sauce .card::before {
 
-    background: #665247;
+    background: #68564c;
 
 }
 
 
 .card h3 {
 
-    margin: 0 0 12px;
+    margin: 0 0 14px;
 
-    color: #392f28;
+    color: #332c26;
+
+    font-family:
+        "Noto Serif TC",
+        "Songti TC",
+        serif;
 
     font-size: 18px;
 
-    font-weight: 800;
+    font-weight: 900;
 
     letter-spacing: 1px;
 
@@ -478,9 +755,11 @@ h2 {
 
     margin-bottom: 6px;
 
-    color: #8a8075;
+    color: #998d80;
 
-    font-size: 11px;
+    font-size: 10px;
+
+    letter-spacing: 2px;
 
 }
 
@@ -493,43 +772,43 @@ h2 {
 
     gap: 6px;
 
-    margin-bottom: 10px;
+    margin-bottom: 11px;
 
 }
 
 
 .option-button {
 
-    padding: 8px 14px;
+    padding: 7px 13px;
 
-    border: 1px solid #d2c8ba;
+    border: 1px solid #d4cabd;
 
-    border-radius: 4px;
+    border-radius: 2px;
 
-    background: #eee9e1;
+    background: #f0ebe3;
 
-    color: #544b43;
+    color: #655b51;
 
-    font-size: 13px;
+    font-size: 12px;
 
-    font-weight: 600;
+    font-weight: 700;
 
 }
 
 
 .option-button.active {
 
-    background: #9a3d2f !important;
+    border-color: #a04435 !important;
 
-    border-color: #9a3d2f !important;
+    background: #a04435 !important;
 
-    color: white !important;
+    color: #fff !important;
 
 }
 
 
 /* ================================
-   數量
+   數量控制
 ================================ */
 
 
@@ -541,7 +820,7 @@ h2 {
 
     justify-content: center;
 
-    gap: 18px;
+    gap: 19px;
 
     margin: 13px 0;
 
@@ -550,28 +829,38 @@ h2 {
 
 .row button {
 
-    width: 44px;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 40px;
 
     height: 40px;
 
     padding: 0;
 
-    border: 1px solid #d3c9bc;
+    border: 1px solid #d2c8bb;
 
-    border-radius: 4px;
+    border-radius: 50%;
 
-    background: #eee9e1;
+    background: #f1ece4;
 
-    color: #403831;
+    color: #4c433b;
 
-    font-size: 22px;
+    font-size: 21px;
+
+    font-weight: 300;
 
 }
 
 
 .row button:active {
 
-    transform: scale(.92);
+    background: #ded5c9;
+
+    transform: scale(.90);
 
 }
 
@@ -580,11 +869,18 @@ h2 {
 
     min-width: 42px;
 
+    color: #302923;
+
     text-align: center;
 
-    font-size: 22px;
+    font-family:
+        "Noto Serif TC",
+        "Songti TC",
+        serif;
 
-    font-weight: 800;
+    font-size: 23px;
+
+    font-weight: 900;
 
 }
 
@@ -596,25 +892,54 @@ h2 {
 
 .purchase-button {
 
+    position: relative;
+
     width: 100%;
 
-    min-height: 44px;
+    min-height: 43px;
 
     padding: 9px;
 
-    border: 1px solid #d3c9bc;
+    border: 1px solid #d2c8bb;
 
-    border-radius: 4px;
+    border-radius: 2px;
 
-    background: #eee9e1;
+    background: #f0ebe3;
 
-    color: #51483f;
+    color: #62584f;
 
-    font-size: 14px;
+    font-size: 13px;
 
-    font-weight: 700;
+    font-weight: 800;
 
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+
+}
+
+
+.purchase-button::before {
+
+    content: "＋";
+
+    margin-right: 5px;
+
+}
+
+
+.purchase-button.active {
+
+    border-color: #a04435 !important;
+
+    background: #a04435 !important;
+
+    color: white !important;
+
+}
+
+
+.purchase-button.active::before {
+
+    content: "✓";
 
 }
 
@@ -626,31 +951,27 @@ h2 {
 }
 
 
-.purchase-button.active {
-
-    background: #9a3d2f !important;
-
-    border-color: #9a3d2f !important;
-
-    color: white !important;
-
-}
-
-
 /* ================================
    醬料
 ================================ */
 
 
+.sauce-card {
+
+    padding-bottom: 13px;
+
+}
+
+
 .sauce-material {
 
-    padding: 6px 0;
+    padding: 7px 0;
 
-    border-bottom: 1px dashed #ded5ca;
+    border-bottom: 1px dashed #ddd3c7;
 
-    color: #675e56;
+    color: #71665c;
 
-    font-size: 14px;
+    font-size: 13px;
 
 }
 
@@ -667,38 +988,82 @@ h2 {
 ================================ */
 
 
+#line .line-description {
+
+    margin-bottom: 12px;
+
+    padding: 10px 12px;
+
+    border-left: 3px solid #a04435;
+
+    background: #e8e0d4;
+
+    color: #776c62;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+}
+
+
+#purchase-preview {
+
+    margin-bottom: 12px;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d7cdc0;
+
+    background: #faf6ef;
+
+    color: #62584e;
+
+    font-size: 12px;
+
+    line-height: 1.8;
+
+}
+
+
 #line textarea {
 
     display: block;
 
     width: 100%;
 
-    height: 290px;
+    height: 300px;
 
     margin-bottom: 9px;
 
-    padding: 14px;
+    padding: 17px;
 
     border: 1px solid #d4cabd;
 
-    border-radius: 5px;
+    border-radius: 2px;
 
     outline: none;
 
-    background: #fffdf8;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            #fffdf9 0px,
+            #fffdf9 31px,
+            #eee6db 32px
+        );
 
     color: #332a24;
 
     font-family:
-        -apple-system,
-        BlinkMacSystemFont,
+        "Noto Serif TC",
+        "Songti TC",
         "Noto Sans TC",
         "Microsoft JhengHei",
         sans-serif;
 
-    font-size: 16px;
+    font-size: 15px;
 
-    line-height: 1.7;
+    line-height: 32px;
 
     resize: none;
 
@@ -707,7 +1072,7 @@ h2 {
 
 #line textarea:focus {
 
-    border-color: #9a3d2f;
+    border-color: #a04435;
 
 }
 
@@ -722,13 +1087,13 @@ h2 {
 
     padding: 10px;
 
-    border-radius: 4px;
+    border-radius: 2px;
 
-    font-size: 15px;
+    font-size: 14px;
 
-    font-weight: 700;
+    font-weight: 800;
 
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 
 }
 
@@ -737,7 +1102,7 @@ h2 {
 
     border: none;
 
-    background: #9a3d2f;
+    background: #a04435;
 
     color: white;
 
@@ -748,7 +1113,7 @@ h2 {
 
     border: none;
 
-    background: #665a51;
+    background: #62564d;
 
     color: white;
 
@@ -757,17 +1122,17 @@ h2 {
 
 .reset-button {
 
-    border: 1px solid #d3c9bc;
+    border: 1px solid #d0c6b9;
 
-    background: #eee9e1;
+    background: #eee8df;
 
-    color: #51483f;
+    color: #665c53;
 
 }
 
 
 /* ================================
-   手機
+   手機版
 ================================ */
 
 
@@ -780,11 +1145,27 @@ h2 {
     }
 
 
+    header {
+
+        padding-top: 9px;
+
+        margin-bottom: 13px;
+
+    }
+
+
     header h1 {
 
-        font-size: 27px;
+        font-size: 28px;
 
-        letter-spacing: 4px;
+        letter-spacing: 6px;
+
+    }
+
+
+    .purchase-summary {
+
+        padding: 13px 10px 11px;
 
     }
 
@@ -798,39 +1179,39 @@ h2 {
 
     .summary-card {
 
-        min-height: 76px;
+        min-height: 79px;
+
+        padding: 10px;
 
     }
 
 
     .summary-name {
 
-        font-size: 11px;
+        font-size: 10px;
 
     }
 
 
     .summary-card strong {
 
-        font-size: 20px;
+        font-size: 23px;
 
     }
 
 
     nav {
 
-        gap: 3px;
-
-        padding: 3px;
+        margin-bottom: 22px;
 
     }
 
 
     nav button {
 
-        min-height: 59px;
+        min-height: 62px;
 
-        font-size: 10px;
+        font-size: 9px;
 
     }
 
@@ -842,9 +1223,16 @@ h2 {
     }
 
 
+    h2 {
+
+        font-size: 21px;
+
+    }
+
+
     .card {
 
-        padding: 14px;
+        padding: 15px 14px 14px 17px;
 
     }
 
@@ -855,6 +1243,30 @@ h2 {
 
     }
 
+
+    .row {
+
+        gap: 17px;
+
+    }
+
+
+    .row button {
+
+        width: 42px;
+
+        height: 42px;
+
+    }
+
+
+    #line textarea {
+
+        height: 280px;
+
+        padding: 14px;
+
+    }
 
 }
 
@@ -869,6 +1281,8 @@ button {
     user-select: none;
 
     -webkit-user-select: none;
+
+    cursor: pointer;
 
 }
 
