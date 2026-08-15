@@ -9,15 +9,29 @@
 name="viewport"
 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<meta name="theme-color" content="#332a24">
+<meta
+name="theme-color"
+content="#332a24">
+
+<meta
+name="apple-mobile-web-app-capable"
+content="yes">
+
+<meta
+name="apple-mobile-web-app-status-bar-style"
+content="black">
 
 <title>
-溫暖酒場｜智慧備料系統
+溫暖酒場｜採購管理
 </title>
 
-<link rel="stylesheet" href="style.css">
+<link
+rel="stylesheet"
+href="style.css">
 
-<link rel="manifest" href="manifest.json">
+<link
+rel="manifest"
+href="manifest.json">
 
 </head>
 
@@ -28,7 +42,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 <header>
 
 <div class="header-mark">
-仕込み
+仕込み・購買
 </div>
 
 <h1>
@@ -36,7 +50,7 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 </h1>
 
 <p>
-智慧備料系統 V2
+採購管理系統 V3
 </p>
 
 </header>
@@ -45,25 +59,85 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 
 <nav>
 
-<button onclick="showPage('drink')">
-🍶 酒水
+
+<button
+class="nav-wanlaixing"
+onclick="showPage('wanlaixing')">
+
+<span class="nav-icon">
+🛒
+</span>
+
+<span>
+旺來興
+</span>
+
 </button>
 
-<button onclick="showPage('food')">
-🥢 食材
+
+
+<button
+class="nav-pxmart"
+onclick="showPage('pxmart')">
+
+<span class="nav-icon">
+🛒
+</span>
+
+<span>
+全聯
+</span>
+
 </button>
 
-<button onclick="showPage('sauce')">
-🥣 醬料
+
+
+<button
+class="nav-houyi"
+onclick="showPage('houyi')">
+
+<span class="nav-icon">
+🛒
+</span>
+
+<span>
+後驛店
+</span>
+
 </button>
 
-<button onclick="showPage('stuff')">
-🧹 雜物
+
+
+<button
+class="nav-sauce"
+onclick="showPage('sauce')">
+
+<span class="nav-icon">
+🥣
+</span>
+
+<span>
+醬料
+</span>
+
 </button>
 
-<button onclick="showPage('line')">
-📋 LINE
+
+
+<button
+class="nav-line"
+onclick="showPage('line')">
+
+<span class="nav-icon">
+📋
+</span>
+
+<span>
+採購單
+</span>
+
 </button>
+
 
 </nav>
 
@@ -73,71 +147,85 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable
 
 
 
-<section id="drink">
-
-<h2>
-🍶 酒水備料
-</h2>
+<section
+id="wanlaixing">
 
 </section>
 
 
 
-<section id="food">
-
-<h2>
-🥢 食材備料
-</h2>
+<section
+id="pxmart">
 
 </section>
 
 
 
-<section id="sauce">
-
-<h2>
-🥣 醬料製作
-</h2>
+<section
+id="houyi">
 
 </section>
 
 
 
-<section id="stuff">
-
-<h2>
-🧹 雜物備品
-</h2>
+<section
+id="sauce">
 
 </section>
 
 
 
-<section id="line">
+<section
+id="line">
+
 
 <h2>
-📋 LINE通知
+📋 今日採購單
 </h2>
+
+
+<div class="line-description">
+
+確認完各店採購數量後，
+按下「產生採購單」。
+
+</div>
+
 
 
 <textarea
 id="lineText"
-placeholder="按下產生備料通知">
+placeholder="採購單會顯示在這裡">
 </textarea>
 
 
-<button onclick="createLINE()">
-產生備料通知
+
+<button
+class="line-main-button"
+onclick="createLINE()">
+
+產生採購單
+
 </button>
 
 
-<button onclick="copyLINE()">
-複製文字
+
+<button
+class="line-copy-button"
+onclick="copyLINE()">
+
+複製採購單
+
 </button>
 
 
-<button onclick="resetAll()">
+
+<button
+class="reset-button"
+onclick="resetAll()">
+
 🔄 一鍵歸零
+
 </button>
 
 
