@@ -2,6 +2,7 @@
 // 溫暖酒場｜智慧備料系統 V3
 // app.js
 // 採購管理核心
+// 備註功能版
 // ===================================
 
 
@@ -41,6 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
     renderSaucePage();
 
     updatePurchaseSummary();
+
+    updatePurchasePreview();
 
     showPage("wanlaixing");
 
@@ -96,6 +99,8 @@ function savePurchaseData() {
     );
 
     updatePurchaseSummary();
+
+    updatePurchasePreview();
 
 }
 
@@ -254,7 +259,9 @@ function createPurchaseCard(category, item, index) {
     );
 
 
+    // ==================
     // 品項名稱
+    // ==================
 
     const title = document.createElement("h3");
 
@@ -391,6 +398,54 @@ function createPurchaseCard(category, item, index) {
 
 
     // ==================
+    // 備註
+    // ==================
+
+    const noteTitle = document.createElement("div");
+
+    noteTitle.className = "note-title";
+
+    noteTitle.textContent = "備註";
+
+    card.appendChild(noteTitle);
+
+
+    const noteInput = document.createElement("input");
+
+    noteInput.type = "text";
+
+    noteInput.className = "purchase-note";
+
+    noteInput.placeholder =
+        "例如：指定品牌、規格、數量備註";
+
+    noteInput.value =
+        state.note || "";
+
+
+    noteInput.addEventListener(
+        "input",
+        function () {
+
+            const currentState =
+                getItemState(
+                    category,
+                    index
+                );
+
+            currentState.note =
+                noteInput.value;
+
+            savePurchaseData();
+
+        }
+    );
+
+
+    card.appendChild(noteInput);
+
+
+    // ==================
     // 採購按鈕
     // ==================
 
@@ -458,9 +513,22 @@ function getItemState(category, index) {
 
             selected: false,
 
-            option: ""
+            option: "",
+
+            note: ""
 
         };
+
+    }
+
+
+    // 相容舊版資料
+    if (
+        typeof purchaseData[category][index].note !==
+        "string"
+    ) {
+
+        purchaseData[category][index].note = "";
 
     }
 
@@ -860,7 +928,6 @@ function createLINE() {
 
     const wanText =
         createCategoryLINE(
-            "wanlaixingData",
             "wanlaixing",
             wanlaixingData
         );
@@ -880,7 +947,6 @@ function createLINE() {
 
     const pxText =
         createCategoryLINE(
-            "pxmartData",
             "pxmart",
             pxmartData
         );
@@ -900,7 +966,6 @@ function createLINE() {
 
     const houyiText =
         createCategoryLINE(
-            "houyiData",
             "houyi",
             houyiData
         );
@@ -964,7 +1029,6 @@ function createLINE() {
 // ======================
 
 function createCategoryLINE(
-    unusedName,
     category,
     list
 ) {
@@ -990,6 +1054,7 @@ function createCategoryLINE(
                 "・" + item.name;
 
 
+            // 規格
             if (item.options) {
 
                 line +=
@@ -1002,9 +1067,23 @@ function createCategoryLINE(
             }
 
 
+            // 數量
             line +=
                 " × " +
                 state.quantity;
+
+
+            // 備註
+            if (
+                state.note &&
+                state.note.trim()
+            ) {
+
+                line +=
+                    "\n  📝 " +
+                    state.note.trim();
+
+            }
 
 
             lines.push(line);
