@@ -1,613 +1,435 @@
 // ===================================
 // 溫暖酒場｜智慧備料系統 V3
 // app.js
-// 採購管理版
+// 採購管理核心
 // ===================================
 
 
 // ======================
-// 本機資料
+// LocalStorage
 // ======================
 
-const PURCHASE_STORAGE_KEY =
-    "warmSakabaPurchaseV3";
-
-const SAUCE_STORAGE_KEY =
-    "warmSakabaSauceV3";
-
-
+const PURCHASE_STORAGE_KEY = "warmSakabaPurchaseV3";
+const SAUCE_STORAGE_KEY = "warmSakabaSauceV3";
 
 
 // ======================
-// 採購資料
+// 資料
 // ======================
 
 let purchaseData = {
-
     wanlaixing: {},
-
     pxmart: {},
-
     houyi: {}
-
 };
 
-
-
-
-// ======================
-// 醬料資料
-// ======================
-
 let sauceState = {};
-
-
 
 
 // ======================
 // 初始化
 // ======================
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
+document.addEventListener("DOMContentLoaded", function () {
 
-        loadPurchaseData();
+    loadPurchaseData();
 
-        loadSauceData();
+    loadSauceData();
 
-        renderPurchasePages();
+    renderPurchasePages();
 
-        renderSaucePage();
+    renderSaucePage();
 
-        showPage("wanlaixing");
+    updatePurchaseSummary();
 
+    showPage("wanlaixing");
+
+});
+
+
+// ======================
+// 採購資料讀取
+// ======================
+
+function loadPurchaseData() {
+
+    const saved = localStorage.getItem(PURCHASE_STORAGE_KEY);
+
+    if (!saved) {
+        return;
     }
-);
 
+    try {
 
+        const parsed = JSON.parse(saved);
 
+        purchaseData = {
+            wanlaixing: parsed.wanlaixing || {},
+            pxmart: parsed.pxmart || {},
+            houyi: parsed.houyi || {}
+        };
 
-// ======================
-// 讀取採購資料
-// ======================
+    } catch (error) {
 
-function loadPurchaseData(){
+        console.log("採購資料讀取失敗", error);
 
-    const saved =
-        localStorage.getItem(
-            PURCHASE_STORAGE_KEY
-        );
-
-    if(saved){
-
-        try{
-
-            const parsed =
-                JSON.parse(saved);
-
-            purchaseData = {
-
-                wanlaixing:
-                    parsed.wanlaixing || {},
-
-                pxmart:
-                    parsed.pxmart || {},
-
-                houyi:
-                    parsed.houyi || {}
-
-            };
-
-        }
-        catch(error){
-
-            console.log(
-                "採購資料讀取失敗",
-                error
-            );
-
-        }
+        purchaseData = {
+            wanlaixing: {},
+            pxmart: {},
+            houyi: {}
+        };
 
     }
 
 }
 
 
-
-
 // ======================
-// 儲存採購資料
+// 採購資料儲存
 // ======================
 
-function savePurchaseData(){
+function savePurchaseData() {
 
     localStorage.setItem(
-
         PURCHASE_STORAGE_KEY,
-
-        JSON.stringify(
-            purchaseData
-        )
-
+        JSON.stringify(purchaseData)
     );
+
+    updatePurchaseSummary();
 
 }
 
 
-
-
 // ======================
-// 讀取醬料資料
+// 醬料資料讀取
 // ======================
 
-function loadSauceData(){
+function loadSauceData() {
 
-    const saved =
-        localStorage.getItem(
-            SAUCE_STORAGE_KEY
-        );
+    const saved = localStorage.getItem(SAUCE_STORAGE_KEY);
 
-    if(saved){
+    if (!saved) {
+        return;
+    }
 
-        try{
+    try {
 
-            sauceState =
-                JSON.parse(saved);
+        sauceState = JSON.parse(saved);
 
-        }
-        catch(error){
+    } catch (error) {
 
-            console.log(
-                "醬料資料讀取失敗",
-                error
-            );
+        console.log("醬料資料讀取失敗", error);
 
-        }
+        sauceState = {};
 
     }
 
 }
 
 
-
-
 // ======================
-// 儲存醬料資料
+// 醬料資料儲存
 // ======================
 
-function saveSauceData(){
+function saveSauceData() {
 
     localStorage.setItem(
-
         SAUCE_STORAGE_KEY,
-
-        JSON.stringify(
-            sauceState
-        )
-
+        JSON.stringify(sauceState)
     );
 
 }
 
 
-
-
 // ======================
-// 取得採購資料
+// 取得分類資料
 // ======================
 
-function getPurchaseList(
-    category
-){
+function getPurchaseList(category) {
 
-    if(
-        category === "wanlaixing"
-    ){
-
+    if (category === "wanlaixing") {
         return wanlaixingData;
-
     }
 
-
-    if(
-        category === "pxmart"
-    ){
-
+    if (category === "pxmart") {
         return pxmartData;
-
     }
 
-
-    if(
-        category === "houyi"
-    ){
-
+    if (category === "houyi") {
         return houyiData;
-
     }
-
 
     return [];
 
 }
 
 
-
-
 // ======================
 // 建立採購頁面
 // ======================
 
-function renderPurchasePages(){
+function renderPurchasePages() {
 
     renderPurchasePage(
         "wanlaixing",
-        wanlaixingData
+        wanlaixingData,
+        "🛒 旺來興採購"
     );
 
     renderPurchasePage(
         "pxmart",
-        pxmartData
+        pxmartData,
+        "🛒 全聯採購"
     );
 
     renderPurchasePage(
         "houyi",
-        houyiData
+        houyiData,
+        "🛒 後驛店採購"
     );
 
 }
-
-
 
 
 // ======================
 // 建立單一採購頁面
 // ======================
 
-function renderPurchasePage(
-    category,
-    list
-){
+function renderPurchasePage(category, list, titleText) {
 
-    const section =
-        document.getElementById(
-            category
-        );
+    const section = document.getElementById(category);
 
-    if(!section){
-
+    if (!section) {
         return;
-
     }
-
 
     section.innerHTML = "";
 
+    const title = document.createElement("h2");
 
-    const title =
-        document.createElement("h2");
+    title.textContent = titleText;
 
-
-    if(category === "wanlaixing"){
-
-        title.textContent =
-            "🛒 旺來興採購";
-
-    }
+    section.appendChild(title);
 
 
-    if(category === "pxmart"){
+    const description = document.createElement("div");
 
-        title.textContent =
-            "🛒 全聯採購";
+    description.className = "section-description";
 
-    }
+    description.textContent =
+        "選擇今天需要採購的品項與數量";
 
-
-    if(category === "houyi"){
-
-        title.textContent =
-            "🛒 後驛店採購";
-
-    }
+    section.appendChild(description);
 
 
-    section.appendChild(
-        title
+    list.forEach(function (item, index) {
+
+        const card = createPurchaseCard(
+            category,
+            item,
+            index
+        );
+
+        section.appendChild(card);
+
+    });
+
+}
+
+
+// ======================
+// 建立品項卡片
+// ======================
+
+function createPurchaseCard(category, item, index) {
+
+    const card = document.createElement("div");
+
+    card.className = "card";
+
+
+    const state = getItemState(
+        category,
+        index
     );
 
 
-    list.forEach(
-        function(item, index){
+    // 品項名稱
 
-            const card =
-                createPurchaseCard(
-                    category,
-                    item,
-                    index
-                );
+    const title = document.createElement("h3");
 
-            section.appendChild(
-                card
+    title.textContent = item.name;
+
+    card.appendChild(title);
+
+
+    // ==================
+    // 規格
+    // ==================
+
+    if (item.options) {
+
+        const optionTitle = document.createElement("div");
+
+        optionTitle.className = "option-title";
+
+        optionTitle.textContent = "規格";
+
+        card.appendChild(optionTitle);
+
+
+        const optionBox = document.createElement("div");
+
+        optionBox.className = "option-box";
+
+
+        item.options.forEach(function (option) {
+
+            const button = document.createElement("button");
+
+            button.type = "button";
+
+            button.className = "option-button";
+
+            button.textContent = option;
+
+
+            if (state.option === option) {
+
+                button.classList.add("active");
+
+            }
+
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    selectOption(
+                        category,
+                        index,
+                        option
+                    );
+
+                }
+            );
+
+
+            optionBox.appendChild(button);
+
+        });
+
+
+        card.appendChild(optionBox);
+
+    }
+
+
+    // ==================
+    // 數量
+    // ==================
+
+    const row = document.createElement("div");
+
+    row.className = "row";
+
+
+    const minus = document.createElement("button");
+
+    minus.type = "button";
+
+    minus.textContent = "−";
+
+
+    minus.addEventListener(
+        "click",
+        function () {
+
+            changeQuantity(
+                category,
+                index,
+                -1
             );
 
         }
     );
 
-}
+
+    const quantity = document.createElement("span");
+
+    quantity.textContent = state.quantity;
 
 
+    const plus = document.createElement("button");
+
+    plus.type = "button";
+
+    plus.textContent = "+";
 
 
-// ======================
-// 建立採購品項卡
-// ======================
-
-function createPurchaseCard(
-    category,
-    item,
-    index
-){
-
-    const card =
-        document.createElement(
-            "div"
-        );
-
-    card.className =
-        "card";
-
-
-    const title =
-        document.createElement(
-            "h3"
-        );
-
-    title.textContent =
-        item.name;
-
-
-    card.appendChild(
-        title
-    );
-
-
-
-    // ==================
-    // 規格選擇
-    // ==================
-
-    if(item.options){
-
-        const optionBox =
-            document.createElement(
-                "div"
-            );
-
-        optionBox.className =
-            "option-box";
-
-
-        item.options.forEach(
-            function(option){
-
-                const button =
-                    document.createElement(
-                        "button"
-                    );
-
-                button.textContent =
-                    option;
-
-
-                button.className =
-                    "option-button";
-
-
-                const current =
-                    getItemState(
-                        category,
-                        index
-                    );
-
-
-                if(
-                    current.option === option
-                ){
-
-                    button.classList.add(
-                        "active"
-                    );
-
-                }
-
-
-                button.onclick =
-                    function(){
-
-                        selectOption(
-
-                            category,
-
-                            index,
-
-                            option
-
-                        );
-
-                    };
-
-
-                optionBox.appendChild(
-                    button
-                );
-
-            }
-        );
-
-
-        card.appendChild(
-            optionBox
-        );
-
-    }
-
-
-
-    // ==================
-    // 數量控制
-    // ==================
-
-    const row =
-        document.createElement(
-            "div"
-        );
-
-    row.className =
-        "row";
-
-
-    const minus =
-        document.createElement(
-            "button"
-        );
-
-    minus.textContent =
-        "−";
-
-
-    minus.onclick =
-        function(){
+    plus.addEventListener(
+        "click",
+        function () {
 
             changeQuantity(
-
                 category,
-
                 index,
-
-                -1
-
-            );
-
-        };
-
-
-    const quantity =
-        document.createElement(
-            "span"
-        );
-
-
-    quantity.textContent =
-        getItemQuantity(
-            category,
-            index
-        );
-
-
-    quantity.id =
-        "quantity-" +
-        category +
-        "-" +
-        index;
-
-
-    const plus =
-        document.createElement(
-            "button"
-        );
-
-
-    plus.textContent =
-        "+";
-
-
-    plus.onclick =
-        function(){
-
-            changeQuantity(
-
-                category,
-
-                index,
-
                 1
-
             );
 
-        };
-
-
-    row.appendChild(
-        minus
-    );
-
-    row.appendChild(
-        quantity
-    );
-
-    row.appendChild(
-        plus
+        }
     );
 
 
-    card.appendChild(
-        row
-    );
+    row.appendChild(minus);
 
+    row.appendChild(quantity);
+
+    row.appendChild(plus);
+
+    card.appendChild(row);
 
 
     // ==================
     // 採購按鈕
     // ==================
 
-    const purchaseButton =
-        document.createElement(
-            "button"
-        );
+    const purchaseButton = document.createElement("button");
+
+    purchaseButton.type = "button";
+
+    purchaseButton.className = "purchase-button";
 
 
-    purchaseButton.textContent =
-        "加入採購";
+    if (state.selected) {
 
-
-    purchaseButton.onclick =
-        function(){
-
-            togglePurchase(
-
-                category,
-
-                index
-
-            );
-
-        };
-
-
-    const current =
-        getItemState(
-            category,
-            index
-        );
-
-
-    if(current.selected){
-
-        purchaseButton.classList.add(
-            "active"
-        );
+        purchaseButton.classList.add("active");
 
         purchaseButton.textContent =
             "✓ 已加入採購";
 
+    } else {
+
+        purchaseButton.textContent =
+            "加入採購";
+
     }
 
 
-    card.appendChild(
-        purchaseButton
+    purchaseButton.addEventListener(
+        "click",
+        function () {
+
+            togglePurchase(
+                category,
+                index
+            );
+
+        }
     );
+
+
+    card.appendChild(purchaseButton);
 
 
     return card;
@@ -615,30 +437,20 @@ function createPurchaseCard(
 }
 
 
-
-
 // ======================
 // 取得品項狀態
 // ======================
 
-function getItemState(
-    category,
-    index
-){
+function getItemState(category, index) {
 
-    if(
-        !purchaseData[category]
-    ){
+    if (!purchaseData[category]) {
 
-        purchaseData[category] =
-            {};
+        purchaseData[category] = {};
 
     }
 
 
-    if(
-        !purchaseData[category][index]
-    ){
+    if (!purchaseData[category][index]) {
 
         purchaseData[category][index] = {
 
@@ -658,243 +470,127 @@ function getItemState(
 }
 
 
-
-
-// ======================
-// 取得數量
-// ======================
-
-function getItemQuantity(
-    category,
-    index
-){
-
-    return getItemState(
-        category,
-        index
-    ).quantity;
-
-}
-
-
-
-
 // ======================
 // 修改數量
 // ======================
 
-function changeQuantity(
+function changeQuantity(category, index, amount) {
 
-    category,
-
-    index,
-
-    amount
-
-){
-
-    const item =
-        getItemState(
-            category,
-            index
-        );
+    const state = getItemState(
+        category,
+        index
+    );
 
 
-    item.quantity +=
-        amount;
+    state.quantity += amount;
 
 
-    if(
-        item.quantity < 0
-    ){
+    if (state.quantity < 0) {
 
-        item.quantity = 0;
+        state.quantity = 0;
 
     }
 
 
-    if(
-        item.quantity > 999
-    ){
+    if (state.quantity > 999) {
 
-        item.quantity = 999;
+        state.quantity = 999;
 
     }
 
 
-    if(
-        item.quantity > 0
-    ){
+    if (state.quantity > 0) {
 
-        item.selected = true;
+        state.selected = true;
+
+    }
+
+
+    if (state.quantity === 0) {
+
+        state.selected = false;
 
     }
 
 
     savePurchaseData();
 
-
-    updateQuantityDisplay(
-
-        category,
-
-        index
-
-    );
-
-
-    refreshCardButton(
-
-        category,
-
-        index
-
-    );
+    renderPurchasePages();
 
 }
-
-
-
-
-// ======================
-// 更新數量顯示
-// ======================
-
-function updateQuantityDisplay(
-
-    category,
-
-    index
-
-){
-
-    const element =
-        document.getElementById(
-
-            "quantity-" +
-            category +
-            "-" +
-            index
-
-        );
-
-
-    if(element){
-
-        element.textContent =
-            getItemQuantity(
-                category,
-                index
-            );
-
-    }
-
-}
-
-
 
 
 // ======================
 // 選擇規格
 // ======================
 
-function selectOption(
+function selectOption(category, index, option) {
 
-    category,
-
-    index,
-
-    option
-
-){
-
-    const item =
-        getItemState(
-            category,
-            index
-        );
+    const state = getItemState(
+        category,
+        index
+    );
 
 
-    item.option =
-        option;
+    state.option = option;
+
+    state.selected = true;
 
 
-    item.selected =
-        true;
+    if (state.quantity === 0) {
 
-
-    if(
-        item.quantity === 0
-    ){
-
-        item.quantity = 1;
+        state.quantity = 1;
 
     }
 
 
     savePurchaseData();
 
-
     renderPurchasePages();
 
 }
-
-
 
 
 // ======================
 // 加入／取消採購
 // ======================
 
-function togglePurchase(
+function togglePurchase(category, index) {
 
-    category,
-
-    index
-
-){
-
-    const item =
-        getItemState(
-            category,
-            index
-        );
+    const state = getItemState(
+        category,
+        index
+    );
 
 
-    if(
-        item.selected
-    ){
-
-        item.selected = false;
-
-    }
-    else{
-
-        item.selected = true;
+    const list = getPurchaseList(
+        category
+    );
 
 
-        if(
-            item.quantity === 0
-        ){
+    if (state.selected) {
 
-            item.quantity = 1;
+        state.selected = false;
+
+    } else {
+
+        state.selected = true;
+
+
+        if (state.quantity === 0) {
+
+            state.quantity = 1;
 
         }
 
 
-        const data =
-            getPurchaseList(
-                category
-            );
+        if (
+            list[index].options &&
+            !state.option
+        ) {
 
-
-        if(
-            data[index].options &&
-            !item.option
-        ){
-
-            item.option =
-                data[index].options[0];
+            state.option =
+                list[index].options[0];
 
         }
 
@@ -903,40 +599,93 @@ function togglePurchase(
 
     savePurchaseData();
 
-
     renderPurchasePages();
 
 }
 
 
+// ======================
+// 今日採購總覽
+// ======================
+
+function updatePurchaseSummary() {
+
+    updateSummaryCount(
+        "wanlaixing",
+        wanlaixingData,
+        "summary-wanlaixing"
+    );
+
+
+    updateSummaryCount(
+        "pxmart",
+        pxmartData,
+        "summary-pxmart"
+    );
+
+
+    updateSummaryCount(
+        "houyi",
+        houyiData,
+        "summary-houyi"
+    );
+
+}
 
 
 // ======================
-// 更新採購按鈕
+// 更新單一數量
 // ======================
 
-function refreshCardButton(
-
+function updateSummaryCount(
     category,
+    list,
+    elementId
+) {
 
-    index
+    const element =
+        document.getElementById(elementId);
 
-){
 
-    renderPurchasePages();
+    if (!element) {
+        return;
+    }
+
+
+    let count = 0;
+
+
+    list.forEach(function (item, index) {
+
+        const state =
+            getItemState(
+                category,
+                index
+            );
+
+
+        if (
+            state.selected &&
+            state.quantity > 0
+        ) {
+
+            count++;
+
+        }
+
+    });
+
+
+    element.textContent = count;
 
 }
 
 
-
-
 // ======================
-// 顯示頁面
+// 頁面切換
 // ======================
 
-function showPage(
-    page
-){
+function showPage(page) {
 
     const sections =
         document.querySelectorAll(
@@ -944,61 +693,45 @@ function showPage(
         );
 
 
-    sections.forEach(
-        function(section){
+    sections.forEach(function (section) {
 
-            section.classList.remove(
-                "active"
-            );
+        section.classList.remove("active");
 
-        }
-    );
+    });
 
 
     const target =
-        document.getElementById(
-            page
-        );
+        document.getElementById(page);
 
 
-    if(target){
-
-        target.classList.add(
-            "active"
-        );
-
+    if (!target) {
+        return;
     }
 
 
+    target.classList.add("active");
+
+
     window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
+        top: 0,
+        behavior: "smooth"
     });
 
 }
 
 
-
-
 // ======================
-// 醬料頁面
+// 醬料製作
 // ======================
 
-function renderSaucePage(){
+function renderSaucePage() {
 
     const section =
-        document.getElementById(
-            "sauce"
-        );
+        document.getElementById("sauce");
 
 
-    if(!section){
-
+    if (!section) {
         return;
-
     }
 
 
@@ -1006,302 +739,352 @@ function renderSaucePage(){
 
 
     const title =
-        document.createElement(
-            "h2"
-        );
-
+        document.createElement("h2");
 
     title.textContent =
         "🥣 醬料製作";
 
-
-    section.appendChild(
-        title
-    );
+    section.appendChild(title);
 
 
-    sauceData.forEach(
-        function(sauce, index){
+    const description =
+        document.createElement("div");
 
-            const card =
-                document.createElement(
-                    "div"
+    description.className =
+        "section-description";
+
+    description.textContent =
+        "選擇今天需要製作的醬料";
+
+    section.appendChild(description);
+
+
+    sauceData.forEach(function (sauce, index) {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card sauce-card";
+
+
+        const title =
+            document.createElement("h3");
+
+        title.textContent =
+            sauce.name;
+
+        card.appendChild(title);
+
+
+        sauce.materials.forEach(
+            function (material) {
+
+                const materialRow =
+                    document.createElement("div");
+
+                materialRow.className =
+                    "sauce-material";
+
+                materialRow.textContent =
+                    "・" + material;
+
+                card.appendChild(
+                    materialRow
                 );
 
-
-            card.className =
-                "card";
-
-
-            const name =
-                document.createElement(
-                    "h3"
-                );
+            }
+        );
 
 
-            name.textContent =
-                sauce.name;
+        const button =
+            document.createElement("button");
+
+        button.type = "button";
+
+        button.className =
+            "purchase-button";
 
 
-            card.appendChild(
-                name
-            );
+        if (sauceState[index]) {
 
+            button.classList.add("active");
 
-            sauce.materials.forEach(
-                function(material){
+            button.textContent =
+                "✓ 已加入備料";
 
-                    const row =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    row.className =
-                        "sauce-material";
-
-
-                    row.textContent =
-                        "・" + material;
-
-
-                    card.appendChild(
-                        row
-                    );
-
-                }
-            );
-
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
+        } else {
 
             button.textContent =
                 "加入備料";
 
+        }
 
-            if(
-                sauceState[index]
-            ){
 
-                button.classList.add(
-                    "active"
-                );
+        button.addEventListener(
+            "click",
+            function () {
 
-                button.textContent =
-                    "✓ 已加入備料";
+                sauceState[index] =
+                    !sauceState[index];
+
+                saveSauceData();
+
+                renderSaucePage();
 
             }
+        );
 
 
-            button.onclick =
-                function(){
-
-                    sauceState[index] =
-                        !sauceState[index];
+        card.appendChild(button);
 
 
-                    saveSauceData();
+        section.appendChild(card);
 
-                    renderSaucePage();
-
-                };
-
-
-            card.appendChild(
-                button
-            );
-
-
-            section.appendChild(
-                card
-            );
-
-        }
-    );
+    });
 
 }
 
 
-
-
 // ======================
-// 建立 LINE 採購通知
+// 產生採購單
 // ======================
 
-function createLINE(){
+function createLINE() {
 
     let text =
-        "【溫暖酒場｜採購清單】\n\n";
+        "【溫暖酒場｜今日採購】\n\n";
 
 
-    let hasPurchase =
-        false;
+    let hasPurchase = false;
 
-
-
-    // ==================
-    // 旺來興
-    // ==================
 
     const wanText =
         createCategoryLINE(
-
-            "旺來興",
-
+            "wanlaixingData",
             "wanlaixing",
-
             wanlaixingData
-
         );
 
 
-    if(wanText){
+    if (wanText) {
 
         text +=
             "🟥 旺來興\n" +
             wanText +
-            "\n";
+            "\n\n";
 
-        hasPurchase =
-            true;
+        hasPurchase = true;
 
     }
 
 
-
-    // ==================
-    // 全聯
-    // ==================
-
     const pxText =
         createCategoryLINE(
-
-            "全聯",
-
+            "pxmartData",
             "pxmart",
-
             pxmartData
-
         );
 
 
-    if(pxText){
+    if (pxText) {
 
         text +=
             "🟩 全聯\n" +
             pxText +
-            "\n";
+            "\n\n";
 
-        hasPurchase =
-            true;
+        hasPurchase = true;
 
     }
 
 
-
-    // ==================
-    // 後驛店
-    // ==================
-
     const houyiText =
         createCategoryLINE(
-
-            "後驛店",
-
+            "houyiData",
             "houyi",
-
             houyiData
-
         );
 
 
-    if(houyiText){
+    if (houyiText) {
 
         text +=
             "🟫 後驛店\n" +
             houyiText +
-            "\n";
+            "\n\n";
 
-        hasPurchase =
-            true;
+        hasPurchase = true;
 
     }
 
-
-
-    // ==================
-    // 醬料
-    // ==================
 
     const sauceText =
         createSauceLINE();
 
 
-    if(sauceText){
+    if (sauceText) {
 
         text +=
             "🥣 醬料製作\n" +
             sauceText +
-            "\n";
+            "\n\n";
 
-        hasPurchase =
-            true;
+        hasPurchase = true;
 
     }
 
 
-
-    if(!hasPurchase){
+    if (!hasPurchase) {
 
         text +=
-            "目前沒有需要採購的品項。";
+            "目前沒有選擇任何採購品項。";
 
     }
-
 
 
     const textarea =
-        document.getElementById(
-            "lineText"
-        );
+        document.getElementById("lineText");
 
 
-    if(textarea){
+    if (textarea) {
 
         textarea.value =
             text.trim();
 
     }
 
+
+    updatePurchasePreview();
+
 }
 
 
-
-
 // ======================
-// 建立分類 LINE
+// 分類採購文字
 // ======================
 
 function createCategoryLINE(
-
-    categoryName,
-
+    unusedName,
     category,
-
     list
-
-){
+) {
 
     const lines = [];
 
 
-    list.forEach(
+    list.forEach(function (item, index) {
 
-        function(item, index){
+        const state =
+            getItemState(
+                category,
+                index
+            );
+
+
+        if (
+            state.selected &&
+            state.quantity > 0
+        ) {
+
+            let line =
+                "・" + item.name;
+
+
+            if (item.options) {
+
+                line +=
+                    " " +
+                    (
+                        state.option ||
+                        item.options[0]
+                    );
+
+            }
+
+
+            line +=
+                " × " +
+                state.quantity;
+
+
+            lines.push(line);
+
+        }
+
+    });
+
+
+    return lines.join("\n");
+
+}
+
+
+// ======================
+// 醬料採購文字
+// ======================
+
+function createSauceLINE() {
+
+    const lines = [];
+
+
+    sauceData.forEach(function (sauce, index) {
+
+        if (sauceState[index]) {
+
+            lines.push(
+                "・" + sauce.name
+            );
+
+        }
+
+    });
+
+
+    return lines.join("\n");
+
+}
+
+
+// ======================
+// 採購單預覽
+// ======================
+
+function updatePurchasePreview() {
+
+    const preview =
+        document.getElementById(
+            "purchase-preview"
+        );
+
+
+    if (!preview) {
+        return;
+    }
+
+
+    const counts = {
+
+        wanlaixing: 0,
+
+        pxmart: 0,
+
+        houyi: 0
+
+    };
+
+
+    [
+        "wanlaixing",
+        "pxmart",
+        "houyi"
+    ].forEach(function (category) {
+
+        const list =
+            getPurchaseList(category);
+
+
+        list.forEach(function (item, index) {
 
             const state =
                 getItemState(
@@ -1310,183 +1093,114 @@ function createCategoryLINE(
                 );
 
 
-            if(
+            if (
                 state.selected &&
                 state.quantity > 0
-            ){
+            ) {
 
-                let line =
-                    item.name;
-
-
-                if(
-                    item.options
-                ){
-
-                    line +=
-                        " " +
-                        (
-                            state.option ||
-                            item.options[0]
-                        );
-
-                }
-
-
-                line +=
-                    " × " +
-                    state.quantity;
-
-
-                lines.push(
-                    line
-                );
+                counts[category]++;
 
             }
 
-        }
+        });
 
-    );
+    });
 
 
-    return lines.join("\n");
+    const total =
+        counts.wanlaixing +
+        counts.pxmart +
+        counts.houyi;
+
+
+    if (total === 0) {
+
+        preview.innerHTML =
+            "目前尚未選擇採購品項。";
+
+        return;
+
+    }
+
+
+    preview.innerHTML =
+
+        "🟥 旺來興　" +
+        counts.wanlaixing +
+        " 項<br>" +
+
+        "🟩 全聯　　" +
+        counts.pxmart +
+        " 項<br>" +
+
+        "🟫 後驛店　" +
+        counts.houyi +
+        " 項";
 
 }
 
 
-
-
 // ======================
-// 建立醬料 LINE
+// 複製採購單
 // ======================
 
-function createSauceLINE(){
-
-    const lines = [];
-
-
-    sauceData.forEach(
-
-        function(sauce, index){
-
-            if(
-                sauceState[index]
-            ){
-
-                lines.push(
-                    "・" +
-                    sauce.name
-                );
-
-            }
-
-        }
-
-    );
-
-
-    return lines.join("\n");
-
-}
-
-
-
-
-// ======================
-// 複製 LINE 文字
-// ======================
-
-function copyLINE(){
+function copyLINE() {
 
     const textarea =
-        document.getElementById(
-            "lineText"
-        );
+        document.getElementById("lineText");
 
 
-    if(!textarea){
-
-        return;
-
-    }
-
-
-    if(
+    if (
+        !textarea ||
         !textarea.value.trim()
-    ){
+    ) {
 
         alert(
-            "請先產生採購通知。"
+            "請先產生採購單。"
         );
 
         return;
 
     }
-
-
-    textarea.select();
-
-
-    textarea.setSelectionRange(
-
-        0,
-
-        textarea.value.length
-
-    );
 
 
     navigator.clipboard.writeText(
-
         textarea.value
-
     )
-    .then(
+    .then(function () {
 
-        function(){
+        alert(
+            "已複製採購單。"
+        );
 
-            alert(
-                "已複製採購通知。"
-            );
+    })
+    .catch(function () {
 
-        }
+        textarea.select();
 
-    )
-    .catch(
+        alert(
+            "請手動複製採購單。"
+        );
 
-        function(){
-
-            alert(
-                "複製失敗，請手動複製。"
-            );
-
-        }
-
-    );
+    });
 
 }
-
-
 
 
 // ======================
 // 一鍵歸零
 // ======================
 
-function resetAll(){
+function resetAll() {
 
     const confirmed =
         confirm(
-
-            "確定要清除所有採購數量與備料紀錄嗎？"
-
+            "確定要清除今天所有採購與醬料備料紀錄嗎？"
         );
 
 
-    if(!confirmed){
-
+    if (!confirmed) {
         return;
-
     }
 
 
@@ -1518,131 +1232,19 @@ function resetAll(){
 
     renderSaucePage();
 
-    createLINE();
+    updatePurchaseSummary();
 
-}
-// ===================================
-// V3｜今日採購總覽
-// ===================================
-
-function updatePurchaseSummary(){
-
-    updateSummaryCount(
-        "wanlaixing",
-        wanlaixingData,
-        "summary-wanlaixing"
-    );
+    updatePurchasePreview();
 
 
-    updateSummaryCount(
-        "pxmart",
-        pxmartData,
-        "summary-pxmart"
-    );
+    const textarea =
+        document.getElementById("lineText");
 
 
-    updateSummaryCount(
-        "houyi",
-        houyiData,
-        "summary-houyi"
-    );
+    if (textarea) {
 
-}
-
-
-
-
-function updateSummaryCount(
-
-    category,
-
-    list,
-
-    elementId
-
-){
-
-    const element =
-        document.getElementById(
-            elementId
-        );
-
-
-    if(!element){
-
-        return;
+        textarea.value = "";
 
     }
 
-
-    let count = 0;
-
-
-    list.forEach(
-
-        function(item,index){
-
-            const state =
-                getItemState(
-                    category,
-                    index
-                );
-
-
-            if(
-                state.selected &&
-                state.quantity > 0
-            ){
-
-                count++;
-
-            }
-
-        }
-
-    );
-
-
-    element.textContent =
-        count;
-
 }
-
-
-
-
-// ===================================
-// V3｜更新總覽
-// ===================================
-
-const originalSavePurchaseData =
-    savePurchaseData;
-
-
-savePurchaseData =
-    function(){
-
-        originalSavePurchaseData();
-
-        updatePurchaseSummary();
-
-    };
-
-
-
-
-// ===================================
-// V3｜頁面載入後更新
-// ===================================
-
-setTimeout(
-
-    function(){
-
-        updatePurchaseSummary();
-
-    },
-
-    100
-
-);
