@@ -2,7 +2,7 @@
 // 溫暖酒場｜智慧備料系統 V3
 // app.js
 // 採購管理核心
-// 備註功能版
+// 備註 + 巨蛋店
 // ===================================
 
 
@@ -21,7 +21,8 @@ const SAUCE_STORAGE_KEY = "warmSakabaSauceV3";
 let purchaseData = {
     wanlaixing: {},
     pxmart: {},
-    houyi: {}
+    houyi: {},
+    jdan: {}
 };
 
 let sauceState = {};
@@ -56,7 +57,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function loadPurchaseData() {
 
-    const saved = localStorage.getItem(PURCHASE_STORAGE_KEY);
+    const saved =
+        localStorage.getItem(PURCHASE_STORAGE_KEY);
 
     if (!saved) {
         return;
@@ -69,7 +71,8 @@ function loadPurchaseData() {
         purchaseData = {
             wanlaixing: parsed.wanlaixing || {},
             pxmart: parsed.pxmart || {},
-            houyi: parsed.houyi || {}
+            houyi: parsed.houyi || {},
+            jdan: parsed.jdan || {}
         };
 
     } catch (error) {
@@ -79,7 +82,8 @@ function loadPurchaseData() {
         purchaseData = {
             wanlaixing: {},
             pxmart: {},
-            houyi: {}
+            houyi: {},
+            jdan: {}
         };
 
     }
@@ -111,7 +115,8 @@ function savePurchaseData() {
 
 function loadSauceData() {
 
-    const saved = localStorage.getItem(SAUCE_STORAGE_KEY);
+    const saved =
+        localStorage.getItem(SAUCE_STORAGE_KEY);
 
     if (!saved) {
         return;
@@ -164,6 +169,10 @@ function getPurchaseList(category) {
         return houyiData;
     }
 
+    if (category === "jdan") {
+        return jdanData;
+    }
+
     return [];
 
 }
@@ -193,6 +202,12 @@ function renderPurchasePages() {
         "🛒 後驛店採購"
     );
 
+    renderPurchasePage(
+        "jdan",
+        jdanData,
+        "🏬 巨蛋店採購"
+    );
+
 }
 
 
@@ -200,9 +215,14 @@ function renderPurchasePages() {
 // 建立單一採購頁面
 // ======================
 
-function renderPurchasePage(category, list, titleText) {
+function renderPurchasePage(
+    category,
+    list,
+    titleText
+) {
 
-    const section = document.getElementById(category);
+    const section =
+        document.getElementById(category);
 
     if (!section) {
         return;
@@ -210,16 +230,19 @@ function renderPurchasePage(category, list, titleText) {
 
     section.innerHTML = "";
 
-    const title = document.createElement("h2");
+    const title =
+        document.createElement("h2");
 
     title.textContent = titleText;
 
     section.appendChild(title);
 
 
-    const description = document.createElement("div");
+    const description =
+        document.createElement("div");
 
-    description.className = "section-description";
+    description.className =
+        "section-description";
 
     description.textContent =
         "選擇今天需要採購的品項與數量";
@@ -229,11 +252,12 @@ function renderPurchasePage(category, list, titleText) {
 
     list.forEach(function (item, index) {
 
-        const card = createPurchaseCard(
-            category,
-            item,
-            index
-        );
+        const card =
+            createPurchaseCard(
+                category,
+                item,
+                index
+            );
 
         section.appendChild(card);
 
@@ -246,26 +270,34 @@ function renderPurchasePage(category, list, titleText) {
 // 建立品項卡片
 // ======================
 
-function createPurchaseCard(category, item, index) {
+function createPurchaseCard(
+    category,
+    item,
+    index
+) {
 
-    const card = document.createElement("div");
+    const card =
+        document.createElement("div");
 
     card.className = "card";
 
 
-    const state = getItemState(
-        category,
-        index
-    );
+    const state =
+        getItemState(
+            category,
+            index
+        );
 
 
     // ==================
     // 品項名稱
     // ==================
 
-    const title = document.createElement("h3");
+    const title =
+        document.createElement("h3");
 
-    title.textContent = item.name;
+    title.textContent =
+        item.name;
 
     card.appendChild(title);
 
@@ -276,58 +308,76 @@ function createPurchaseCard(category, item, index) {
 
     if (item.options) {
 
-        const optionTitle = document.createElement("div");
+        const optionTitle =
+            document.createElement("div");
 
-        optionTitle.className = "option-title";
+        optionTitle.className =
+            "option-title";
 
-        optionTitle.textContent = "規格";
+        optionTitle.textContent =
+            "規格";
 
         card.appendChild(optionTitle);
 
 
-        const optionBox = document.createElement("div");
+        const optionBox =
+            document.createElement("div");
 
-        optionBox.className = "option-box";
-
-
-        item.options.forEach(function (option) {
-
-            const button = document.createElement("button");
-
-            button.type = "button";
-
-            button.className = "option-button";
-
-            button.textContent = option;
+        optionBox.className =
+            "option-box";
 
 
-            if (state.option === option) {
+        item.options.forEach(
+            function (option) {
 
-                button.classList.add("active");
+                const button =
+                    document.createElement("button");
 
-            }
+                button.type = "button";
+
+                button.className =
+                    "option-button";
+
+                button.textContent =
+                    option;
 
 
-            button.addEventListener(
-                "click",
-                function () {
+                if (
+                    state.option === option
+                ) {
 
-                    selectOption(
-                        category,
-                        index,
-                        option
+                    button.classList.add(
+                        "active"
                     );
 
                 }
-            );
 
 
-            optionBox.appendChild(button);
+                button.addEventListener(
+                    "click",
+                    function () {
 
-        });
+                        selectOption(
+                            category,
+                            index,
+                            option
+                        );
+
+                    }
+                );
 
 
-        card.appendChild(optionBox);
+                optionBox.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        card.appendChild(
+            optionBox
+        );
 
     }
 
@@ -336,12 +386,14 @@ function createPurchaseCard(category, item, index) {
     // 數量
     // ==================
 
-    const row = document.createElement("div");
+    const row =
+        document.createElement("div");
 
     row.className = "row";
 
 
-    const minus = document.createElement("button");
+    const minus =
+        document.createElement("button");
 
     minus.type = "button";
 
@@ -362,12 +414,15 @@ function createPurchaseCard(category, item, index) {
     );
 
 
-    const quantity = document.createElement("span");
+    const quantity =
+        document.createElement("span");
 
-    quantity.textContent = state.quantity;
+    quantity.textContent =
+        state.quantity;
 
 
-    const plus = document.createElement("button");
+    const plus =
+        document.createElement("button");
 
     plus.type = "button";
 
@@ -401,20 +456,25 @@ function createPurchaseCard(category, item, index) {
     // 備註
     // ==================
 
-    const noteTitle = document.createElement("div");
+    const noteTitle =
+        document.createElement("div");
 
-    noteTitle.className = "note-title";
+    noteTitle.className =
+        "note-title";
 
-    noteTitle.textContent = "備註";
+    noteTitle.textContent =
+        "備註";
 
     card.appendChild(noteTitle);
 
 
-    const noteInput = document.createElement("input");
+    const noteInput =
+        document.createElement("input");
 
     noteInput.type = "text";
 
-    noteInput.className = "purchase-note";
+    noteInput.className =
+        "purchase-note";
 
     noteInput.placeholder =
         "例如：指定品牌、規格、數量備註";
@@ -442,23 +502,30 @@ function createPurchaseCard(category, item, index) {
     );
 
 
-    card.appendChild(noteInput);
+    card.appendChild(
+        noteInput
+    );
 
 
     // ==================
     // 採購按鈕
     // ==================
 
-    const purchaseButton = document.createElement("button");
+    const purchaseButton =
+        document.createElement("button");
 
-    purchaseButton.type = "button";
+    purchaseButton.type =
+        "button";
 
-    purchaseButton.className = "purchase-button";
+    purchaseButton.className =
+        "purchase-button";
 
 
     if (state.selected) {
 
-        purchaseButton.classList.add("active");
+        purchaseButton.classList.add(
+            "active"
+        );
 
         purchaseButton.textContent =
             "✓ 已加入採購";
@@ -484,7 +551,9 @@ function createPurchaseCard(category, item, index) {
     );
 
 
-    card.appendChild(purchaseButton);
+    card.appendChild(
+        purchaseButton
+    );
 
 
     return card;
@@ -496,7 +565,10 @@ function createPurchaseCard(category, item, index) {
 // 取得品項狀態
 // ======================
 
-function getItemState(category, index) {
+function getItemState(
+    category,
+    index
+) {
 
     if (!purchaseData[category]) {
 
@@ -522,13 +594,13 @@ function getItemState(category, index) {
     }
 
 
-    // 相容舊版資料
     if (
         typeof purchaseData[category][index].note !==
         "string"
     ) {
 
-        purchaseData[category][index].note = "";
+        purchaseData[category][index].note =
+            "";
 
     }
 
@@ -542,12 +614,17 @@ function getItemState(category, index) {
 // 修改數量
 // ======================
 
-function changeQuantity(category, index, amount) {
+function changeQuantity(
+    category,
+    index,
+    amount
+) {
 
-    const state = getItemState(
-        category,
-        index
-    );
+    const state =
+        getItemState(
+            category,
+            index
+        );
 
 
     state.quantity += amount;
@@ -592,17 +669,24 @@ function changeQuantity(category, index, amount) {
 // 選擇規格
 // ======================
 
-function selectOption(category, index, option) {
+function selectOption(
+    category,
+    index,
+    option
+) {
 
-    const state = getItemState(
-        category,
-        index
-    );
+    const state =
+        getItemState(
+            category,
+            index
+        );
 
 
-    state.option = option;
+    state.option =
+        option;
 
-    state.selected = true;
+    state.selected =
+        true;
 
 
     if (state.quantity === 0) {
@@ -623,26 +707,33 @@ function selectOption(category, index, option) {
 // 加入／取消採購
 // ======================
 
-function togglePurchase(category, index) {
+function togglePurchase(
+    category,
+    index
+) {
 
-    const state = getItemState(
-        category,
-        index
-    );
+    const state =
+        getItemState(
+            category,
+            index
+        );
 
 
-    const list = getPurchaseList(
-        category
-    );
+    const list =
+        getPurchaseList(
+            category
+        );
 
 
     if (state.selected) {
 
-        state.selected = false;
+        state.selected =
+            false;
 
     } else {
 
-        state.selected = true;
+        state.selected =
+            true;
 
 
         if (state.quantity === 0) {
@@ -698,6 +789,13 @@ function updatePurchaseSummary() {
         "summary-houyi"
     );
 
+
+    updateSummaryCount(
+        "jdan",
+        jdanData,
+        "summary-jdan"
+    );
+
 }
 
 
@@ -712,7 +810,9 @@ function updateSummaryCount(
 ) {
 
     const element =
-        document.getElementById(elementId);
+        document.getElementById(
+            elementId
+        );
 
 
     if (!element) {
@@ -723,28 +823,31 @@ function updateSummaryCount(
     let count = 0;
 
 
-    list.forEach(function (item, index) {
+    list.forEach(
+        function (item, index) {
 
-        const state =
-            getItemState(
-                category,
-                index
-            );
+            const state =
+                getItemState(
+                    category,
+                    index
+                );
 
 
-        if (
-            state.selected &&
-            state.quantity > 0
-        ) {
+            if (
+                state.selected &&
+                state.quantity > 0
+            ) {
 
-            count++;
+                count++;
+
+            }
 
         }
+    );
 
-    });
 
-
-    element.textContent = count;
+    element.textContent =
+        count;
 
 }
 
@@ -761,15 +864,21 @@ function showPage(page) {
         );
 
 
-    sections.forEach(function (section) {
+    sections.forEach(
+        function (section) {
 
-        section.classList.remove("active");
+            section.classList.remove(
+                "active"
+            );
 
-    });
+        }
+    );
 
 
     const target =
-        document.getElementById(page);
+        document.getElementById(
+            page
+        );
 
 
     if (!target) {
@@ -777,7 +886,9 @@ function showPage(page) {
     }
 
 
-    target.classList.add("active");
+    target.classList.add(
+        "active"
+    );
 
 
     window.scrollTo({
@@ -795,7 +906,9 @@ function showPage(page) {
 function renderSaucePage() {
 
     const section =
-        document.getElementById("sauce");
+        document.getElementById(
+            "sauce"
+        );
 
 
     if (!section) {
@@ -824,91 +937,113 @@ function renderSaucePage() {
     description.textContent =
         "選擇今天需要製作的醬料";
 
-    section.appendChild(description);
+    section.appendChild(
+        description
+    );
 
 
-    sauceData.forEach(function (sauce, index) {
+    sauceData.forEach(
+        function (sauce, index) {
 
-        const card =
-            document.createElement("div");
-
-        card.className = "card sauce-card";
-
-
-        const title =
-            document.createElement("h3");
-
-        title.textContent =
-            sauce.name;
-
-        card.appendChild(title);
-
-
-        sauce.materials.forEach(
-            function (material) {
-
-                const materialRow =
-                    document.createElement("div");
-
-                materialRow.className =
-                    "sauce-material";
-
-                materialRow.textContent =
-                    "・" + material;
-
-                card.appendChild(
-                    materialRow
+            const card =
+                document.createElement(
+                    "div"
                 );
 
+            card.className =
+                "card sauce-card";
+
+
+            const title =
+                document.createElement(
+                    "h3"
+                );
+
+            title.textContent =
+                sauce.name;
+
+            card.appendChild(
+                title
+            );
+
+
+            sauce.materials.forEach(
+                function (material) {
+
+                    const materialRow =
+                        document.createElement(
+                            "div"
+                        );
+
+                    materialRow.className =
+                        "sauce-material";
+
+                    materialRow.textContent =
+                        "・" + material;
+
+                    card.appendChild(
+                        materialRow
+                    );
+
+                }
+            );
+
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.type =
+                "button";
+
+            button.className =
+                "purchase-button";
+
+
+            if (sauceState[index]) {
+
+                button.classList.add(
+                    "active"
+                );
+
+                button.textContent =
+                    "✓ 已加入備料";
+
+            } else {
+
+                button.textContent =
+                    "加入備料";
+
             }
-        );
 
 
-        const button =
-            document.createElement("button");
+            button.addEventListener(
+                "click",
+                function () {
 
-        button.type = "button";
+                    sauceState[index] =
+                        !sauceState[index];
 
-        button.className =
-            "purchase-button";
+                    saveSauceData();
+
+                    renderSaucePage();
+
+                }
+            );
 
 
-        if (sauceState[index]) {
+            card.appendChild(
+                button
+            );
 
-            button.classList.add("active");
 
-            button.textContent =
-                "✓ 已加入備料";
-
-        } else {
-
-            button.textContent =
-                "加入備料";
+            section.appendChild(
+                card
+            );
 
         }
-
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                sauceState[index] =
-                    !sauceState[index];
-
-                saveSauceData();
-
-                renderSaucePage();
-
-            }
-        );
-
-
-        card.appendChild(button);
-
-
-        section.appendChild(card);
-
-    });
+    );
 
 }
 
@@ -923,7 +1058,8 @@ function createLINE() {
         "【溫暖酒場｜今日採購】\n\n";
 
 
-    let hasPurchase = false;
+    let hasPurchase =
+        false;
 
 
     const wanText =
@@ -940,7 +1076,8 @@ function createLINE() {
             wanText +
             "\n\n";
 
-        hasPurchase = true;
+        hasPurchase =
+            true;
 
     }
 
@@ -959,7 +1096,8 @@ function createLINE() {
             pxText +
             "\n\n";
 
-        hasPurchase = true;
+        hasPurchase =
+            true;
 
     }
 
@@ -978,7 +1116,28 @@ function createLINE() {
             houyiText +
             "\n\n";
 
-        hasPurchase = true;
+        hasPurchase =
+            true;
+
+    }
+
+
+    const jdanText =
+        createCategoryLINE(
+            "jdan",
+            jdanData
+        );
+
+
+    if (jdanText) {
+
+        text +=
+            "🟨 巨蛋店\n" +
+            jdanText +
+            "\n\n";
+
+        hasPurchase =
+            true;
 
     }
 
@@ -994,7 +1153,8 @@ function createLINE() {
             sauceText +
             "\n\n";
 
-        hasPurchase = true;
+        hasPurchase =
+            true;
 
     }
 
@@ -1008,7 +1168,9 @@ function createLINE() {
 
 
     const textarea =
-        document.getElementById("lineText");
+        document.getElementById(
+            "lineText"
+        );
 
 
     if (textarea) {
@@ -1036,64 +1198,66 @@ function createCategoryLINE(
     const lines = [];
 
 
-    list.forEach(function (item, index) {
+    list.forEach(
+        function (item, index) {
 
-        const state =
-            getItemState(
-                category,
-                index
-            );
-
-
-        if (
-            state.selected &&
-            state.quantity > 0
-        ) {
-
-            let line =
-                "・" + item.name;
+            const state =
+                getItemState(
+                    category,
+                    index
+                );
 
 
-            // 規格
-            if (item.options) {
-
-                line +=
-                    " " +
-                    (
-                        state.option ||
-                        item.options[0]
-                    );
-
-            }
-
-
-            // 數量
-            line +=
-                " × " +
-                state.quantity;
-
-
-            // 備註
             if (
-                state.note &&
-                state.note.trim()
+                state.selected &&
+                state.quantity > 0
             ) {
 
+                let line =
+                    "・" +
+                    item.name;
+
+
+                if (item.options) {
+
+                    line +=
+                        " " +
+                        (
+                            state.option ||
+                            item.options[0]
+                        );
+
+                }
+
+
                 line +=
-                    "\n  📝 " +
-                    state.note.trim();
+                    " × " +
+                    state.quantity;
+
+
+                if (
+                    state.note &&
+                    state.note.trim()
+                ) {
+
+                    line +=
+                        "\n  📝 " +
+                        state.note.trim();
+
+                }
+
+
+                lines.push(line);
 
             }
 
-
-            lines.push(line);
-
         }
+    );
 
-    });
 
-
-    return lines.join("\n");
+    return lines.join(
+        "\n"
+    );
 
 }
 
@@ -1107,20 +1271,25 @@ function createSauceLINE() {
     const lines = [];
 
 
-    sauceData.forEach(function (sauce, index) {
+    sauceData.forEach(
+        function (sauce, index) {
 
-        if (sauceState[index]) {
+            if (sauceState[index]) {
 
-            lines.push(
-                "・" + sauce.name
-            );
+                lines.push(
+                    "・" +
+                    sauce.name
+                );
+
+            }
 
         }
+    );
 
-    });
 
-
-    return lines.join("\n");
+    return lines.join(
+        "\n"
+    );
 
 }
 
@@ -1148,7 +1317,9 @@ function updatePurchasePreview() {
 
         pxmart: 0,
 
-        houyi: 0
+        houyi: 0,
+
+        jdan: 0
 
     };
 
@@ -1156,40 +1327,48 @@ function updatePurchasePreview() {
     [
         "wanlaixing",
         "pxmart",
-        "houyi"
-    ].forEach(function (category) {
+        "houyi",
+        "jdan"
+    ].forEach(
+        function (category) {
 
-        const list =
-            getPurchaseList(category);
-
-
-        list.forEach(function (item, index) {
-
-            const state =
-                getItemState(
-                    category,
-                    index
+            const list =
+                getPurchaseList(
+                    category
                 );
 
 
-            if (
-                state.selected &&
-                state.quantity > 0
-            ) {
+            list.forEach(
+                function (item, index) {
 
-                counts[category]++;
+                    const state =
+                        getItemState(
+                            category,
+                            index
+                        );
 
-            }
 
-        });
+                    if (
+                        state.selected &&
+                        state.quantity > 0
+                    ) {
 
-    });
+                        counts[category]++;
+
+                    }
+
+                }
+            );
+
+        }
+    );
 
 
     const total =
         counts.wanlaixing +
         counts.pxmart +
-        counts.houyi;
+        counts.houyi +
+        counts.jdan;
 
 
     if (total === 0) {
@@ -1214,6 +1393,10 @@ function updatePurchasePreview() {
 
         "🟫 後驛店　" +
         counts.houyi +
+        " 項<br>" +
+
+        "🟨 巨蛋店　" +
+        counts.jdan +
         " 項";
 
 }
@@ -1226,7 +1409,9 @@ function updatePurchasePreview() {
 function copyLINE() {
 
     const textarea =
-        document.getElementById("lineText");
+        document.getElementById(
+            "lineText"
+        );
 
 
     if (
@@ -1246,22 +1431,26 @@ function copyLINE() {
     navigator.clipboard.writeText(
         textarea.value
     )
-    .then(function () {
+    .then(
+        function () {
 
-        alert(
-            "已複製採購單。"
-        );
+            alert(
+                "已複製採購單。"
+            );
 
-    })
-    .catch(function () {
+        }
+    )
+    .catch(
+        function () {
 
-        textarea.select();
+            textarea.select();
 
-        alert(
-            "請手動複製採購單。"
-        );
+            alert(
+                "請手動複製採購單。"
+            );
 
-    });
+        }
+    );
 
 }
 
@@ -1289,7 +1478,9 @@ function resetAll() {
 
         pxmart: {},
 
-        houyi: {}
+        houyi: {},
+
+        jdan: {}
 
     };
 
@@ -1317,7 +1508,9 @@ function resetAll() {
 
 
     const textarea =
-        document.getElementById("lineText");
+        document.getElementById(
+            "lineText"
+        );
 
 
     if (textarea) {
