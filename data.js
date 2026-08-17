@@ -27,6 +27,12 @@ const purchaseCategories = [
         id: "houyi",
         name: "後驛店",
         icon: "🛒"
+    },
+
+    {
+        id: "jdan",
+        name: "巨蛋店",
+        icon: "🛒"
     }
 
 ];
@@ -252,16 +258,16 @@ const pxmartData = [
     },
 
     {
-    name: "檸檬"
-},
+        name: "檸檬"
+    },
 
-{
-    name: "香菜"
-},
+    {
+        name: "香菜"
+    },
 
-{
-    name: "過碳酸鈉"
-},
+    {
+        name: "過碳酸鈉"
+    },
 
     {
         name: "地板清潔劑"
@@ -312,6 +318,29 @@ const houyiData = [
 
     {
         name: "山藥"
+    }
+
+];
+
+
+
+
+// ======================
+// 巨蛋店採購品項
+// ======================
+
+const jdanData = [
+
+    {
+        name: "衛生紙"
+    },
+
+    {
+        name: "餐巾紙"
+    },
+
+    {
+        name: "紫蘇梅"
     }
 
 ];
