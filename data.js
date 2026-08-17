@@ -252,12 +252,16 @@ const pxmartData = [
     },
 
     {
-        name: "檸檬"
-    },
+    name: "檸檬"
+},
 
-    {
-        name: "過碳酸鈉"
-    },
+{
+    name: "香菜"
+},
+
+{
+    name: "過碳酸鈉"
+},
 
     {
         name: "地板清潔劑"
