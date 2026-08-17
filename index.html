@@ -199,8 +199,6 @@ id="summary-jdan">
 <nav>
 
 
-<!-- 旺來興 -->
-
 <button
 class="nav-wanlaixing"
 onclick="showPage('wanlaixing')">
@@ -216,8 +214,6 @@ onclick="showPage('wanlaixing')">
 </button>
 
 
-
-<!-- 全聯 -->
 
 <button
 class="nav-pxmart"
@@ -235,8 +231,6 @@ onclick="showPage('pxmart')">
 
 
 
-<!-- 後驛店 -->
-
 <button
 class="nav-houyi"
 onclick="showPage('houyi')">
@@ -252,8 +246,6 @@ onclick="showPage('houyi')">
 </button>
 
 
-
-<!-- 巨蛋店 -->
 
 <button
 class="nav-jdan"
@@ -271,8 +263,6 @@ onclick="showPage('jdan')">
 
 
 
-<!-- 醬料 -->
-
 <button
 class="nav-sauce"
 onclick="showPage('sauce')">
@@ -288,8 +278,6 @@ onclick="showPage('sauce')">
 </button>
 
 
-
-<!-- 採購單 -->
 
 <button
 class="nav-line"
@@ -385,6 +373,10 @@ id="line">
 
 
 
+<!-- =========================
+     採購摘要
+========================= -->
+
 <div
 id="purchase-preview">
 
@@ -394,12 +386,60 @@ id="purchase-preview">
 
 
 
+<!-- =========================
+     採購單文字
+========================= -->
+
 <textarea
 id="lineText"
-placeholder="採購單會顯示在這裡">
+placeholder="按下「產生採購單」後會顯示完整採購單">
 </textarea>
 
 
+
+<!-- =========================
+     備註／交接事項
+========================= -->
+
+<div class="handover-box">
+
+
+<div class="handover-title">
+
+<span>
+📝
+</span>
+
+備註／交接事項
+
+</div>
+
+
+<div class="handover-description">
+
+可記錄其他採購以外的事情，例如：
+交接事項、臨時通知、明日待辦、貨品到貨提醒等。
+
+</div>
+
+
+<textarea
+id="handoverNote"
+class="handover-note"
+placeholder="例如：
+・明天早班記得補冰塊
+・後驛店貨到了放冷藏
+・晚上有人會送貨
+・其他需要交接的事情……"></textarea>
+
+
+</div>
+
+
+
+<!-- =========================
+     按鈕
+========================= -->
 
 <button
 class="line-main-button"
