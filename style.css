@@ -218,12 +218,17 @@ header p {
 }
 
 
+/* ================================
+   四間店｜總覽格線
+================================ */
+
+
 .summary-grid {
 
     display: grid;
 
     grid-template-columns:
-        repeat(3,1fr);
+        repeat(4, minmax(0, 1fr));
 
     gap: 8px;
 
@@ -241,6 +246,8 @@ header p {
     align-items: flex-start;
 
     justify-content: center;
+
+    min-width: 0;
 
     min-height: 88px;
 
@@ -342,7 +349,9 @@ header p {
 }
 
 
-/* 各店識別色 */
+/* ================================
+   各店識別色
+================================ */
 
 
 .summary-wanlaixing {
@@ -366,6 +375,13 @@ header p {
 }
 
 
+.summary-jdan {
+
+    border-top: 3px solid #b08a3e;
+
+}
+
+
 /* ================================
    主導航
 ================================ */
@@ -376,7 +392,7 @@ nav {
     display: grid;
 
     grid-template-columns:
-        repeat(5,1fr);
+        repeat(6, minmax(0, 1fr));
 
     gap: 0;
 
@@ -406,6 +422,8 @@ nav button {
     justify-content: center;
 
     gap: 4px;
+
+    min-width: 0;
 
     min-height: 67px;
 
@@ -481,6 +499,11 @@ nav button:active::after {
 }
 
 
+/* ================================
+   導航顏色
+================================ */
+
+
 .nav-wanlaixing {
 
     background: #994235;
@@ -498,6 +521,13 @@ nav button:active::after {
 .nav-houyi {
 
     background: #806247;
+
+}
+
+
+.nav-jdan {
+
+    background: #a47d36;
 
 }
 
@@ -715,6 +745,13 @@ h2::after {
 #houyi .card::before {
 
     background: #8a6849;
+
+}
+
+
+#jdan .card::before {
+
+    background: #b08a3e;
 
 }
 
@@ -1132,6 +1169,38 @@ h2::after {
 
 
 /* ================================
+   平板
+================================ */
+
+
+@media (min-width: 601px) and (max-width: 900px) {
+
+    .summary-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    nav {
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+    }
+
+
+    nav button {
+
+        border-bottom: 1px solid rgba(255,255,255,.15);
+
+    }
+
+}
+
+
+/* ================================
    手機版
 ================================ */
 
@@ -1170,9 +1239,16 @@ h2::after {
     }
 
 
+    /* ============================
+       手機：總覽 2 × 2
+    ============================ */
+
     .summary-grid {
 
-        gap: 5px;
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 6px;
 
     }
 
@@ -1200,7 +1276,23 @@ h2::after {
     }
 
 
+    .summary-card > span:last-child {
+
+        right: 10px;
+
+        top: 14px;
+
+    }
+
+
+    /* ============================
+       手機：導航 3 × 2
+    ============================ */
+
     nav {
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
 
         margin-bottom: 22px;
 
@@ -1212,6 +1304,33 @@ h2::after {
         min-height: 62px;
 
         font-size: 9px;
+
+        border-right: 1px solid rgba(255,255,255,.2);
+
+        border-bottom: 1px solid rgba(255,255,255,.2);
+
+    }
+
+
+    nav button:nth-child(3) {
+
+        border-right: none;
+
+    }
+
+
+    nav button:nth-child(4),
+    nav button:nth-child(5),
+    nav button:nth-child(6) {
+
+        border-bottom: none;
+
+    }
+
+
+    nav button:nth-child(6) {
+
+        border-right: none;
 
     }
 
@@ -1265,6 +1384,77 @@ h2::after {
         height: 280px;
 
         padding: 14px;
+
+    }
+
+}
+
+
+/* ================================
+   小手機
+================================ */
+
+
+@media(max-width:380px) {
+
+    body {
+
+        padding: 8px;
+
+    }
+
+
+    .purchase-summary {
+
+        padding-left: 8px;
+
+        padding-right: 8px;
+
+    }
+
+
+    .summary-grid {
+
+        gap: 5px;
+
+    }
+
+
+    .summary-card {
+
+        min-height: 73px;
+
+        padding: 9px;
+
+    }
+
+
+    .summary-name {
+
+        font-size: 9px;
+
+    }
+
+
+    .summary-card strong {
+
+        font-size: 21px;
+
+    }
+
+
+    nav button {
+
+        min-height: 59px;
+
+        font-size: 8px;
+
+    }
+
+
+    .nav-icon {
+
+        font-size: 17px;
 
     }
 
