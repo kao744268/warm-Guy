@@ -51,9 +51,8 @@ body {
 
 
 /* ================================
-   Header｜居酒屋招牌
+   Header
 ================================ */
-
 
 header {
 
@@ -149,7 +148,6 @@ header p {
    今日採購
 ================================ */
 
-
 .purchase-summary {
 
     position: relative;
@@ -219,9 +217,8 @@ header p {
 
 
 /* ================================
-   四間店｜總覽格線
+   四間店
 ================================ */
-
 
 .summary-grid {
 
@@ -349,11 +346,6 @@ header p {
 }
 
 
-/* ================================
-   各店識別色
-================================ */
-
-
 .summary-wanlaixing {
 
     border-top: 3px solid #a04435;
@@ -385,7 +377,6 @@ header p {
 /* ================================
    主導航
 ================================ */
-
 
 nav {
 
@@ -499,11 +490,6 @@ nav button:active::after {
 }
 
 
-/* ================================
-   導航顏色
-================================ */
-
-
 .nav-wanlaixing {
 
     background: #994235;
@@ -549,7 +535,6 @@ nav button:active::after {
 /* ================================
    Section
 ================================ */
-
 
 section {
 
@@ -674,7 +659,6 @@ h2::after {
    品項卡片
 ================================ */
 
-
 .card {
 
     position: relative;
@@ -699,19 +683,6 @@ h2::after {
     box-shadow:
         0 3px 12px
         rgba(60,46,33,.055);
-
-    transition:
-        transform .12s ease,
-        box-shadow .12s ease;
-
-}
-
-
-.card:hover {
-
-    box-shadow:
-        0 5px 16px
-        rgba(60,46,33,.08);
 
 }
 
@@ -787,7 +758,6 @@ h2::after {
    規格
 ================================ */
 
-
 .option-title {
 
     margin-bottom: 6px;
@@ -845,9 +815,8 @@ h2::after {
 
 
 /* ================================
-   數量控制
+   數量
 ================================ */
-
 
 .row {
 
@@ -923,9 +892,70 @@ h2::after {
 
 
 /* ================================
-   採購按鈕
+   品項備註
 ================================ */
 
+.note-title {
+
+    margin-top: 8px;
+
+    margin-bottom: 6px;
+
+    color: #998d80;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+}
+
+
+.purchase-note {
+
+    display: block;
+
+    width: 100%;
+
+    min-height: 40px;
+
+    margin-bottom: 12px;
+
+    padding: 9px 11px;
+
+    border: 1px solid #d8cec1;
+
+    border-radius: 2px;
+
+    outline: none;
+
+    background: #faf6ef;
+
+    color: #4a423b;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
+
+    font-size: 12px;
+
+}
+
+
+.purchase-note:focus {
+
+    border-color: #a04435;
+
+    background: #fffdf9;
+
+}
+
+
+/* ================================
+   採購按鈕
+================================ */
 
 .purchase-button {
 
@@ -992,7 +1022,6 @@ h2::after {
    醬料
 ================================ */
 
-
 .sauce-card {
 
     padding-bottom: 13px;
@@ -1023,7 +1052,6 @@ h2::after {
 /* ================================
    採購單
 ================================ */
-
 
 #line .line-description {
 
@@ -1063,7 +1091,11 @@ h2::after {
 }
 
 
-#line textarea {
+/* ================================
+   採購單文字區
+================================ */
+
+#line textarea#lineText {
 
     display: block;
 
@@ -1071,7 +1103,7 @@ h2::after {
 
     height: 300px;
 
-    margin-bottom: 9px;
+    margin-bottom: 15px;
 
     padding: 17px;
 
@@ -1107,12 +1139,132 @@ h2::after {
 }
 
 
-#line textarea:focus {
+#line textarea#lineText:focus {
 
     border-color: #a04435;
 
 }
 
+
+/* ================================
+   備註／交接事項
+================================ */
+
+.handover-box {
+
+    position: relative;
+
+    margin-bottom: 15px;
+
+    padding: 15px;
+
+    border: 1px solid #d8cdbf;
+
+    border-left: 3px solid #8a6849;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f7f0e5,
+            #eee5d8
+        );
+
+}
+
+
+.handover-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 6px;
+
+    color: #4d4138;
+
+    font-size: 14px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+}
+
+
+.handover-title span {
+
+    font-size: 16px;
+
+}
+
+
+.handover-description {
+
+    margin-bottom: 10px;
+
+    color: #8a7d70;
+
+    font-size: 10px;
+
+    line-height: 1.7;
+
+}
+
+
+#line textarea.handover-note {
+
+    display: block;
+
+    width: 100%;
+
+    min-height: 120px;
+
+    height: 120px;
+
+    margin: 0;
+
+    padding: 12px;
+
+    border: 1px solid #d6cabc;
+
+    border-radius: 2px;
+
+    outline: none;
+
+    background: #fffdf9;
+
+    color: #403831;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+    resize: vertical;
+
+}
+
+
+#line textarea.handover-note:focus {
+
+    border-color: #8a6849;
+
+    background: #fffefa;
+
+}
+
+
+/* ================================
+   採購單按鈕
+================================ */
 
 #line button {
 
@@ -1172,7 +1324,6 @@ h2::after {
    平板
 ================================ */
 
-
 @media (min-width: 601px) and (max-width: 900px) {
 
     .summary-grid {
@@ -1193,7 +1344,8 @@ h2::after {
 
     nav button {
 
-        border-bottom: 1px solid rgba(255,255,255,.15);
+        border-bottom:
+            1px solid rgba(255,255,255,.15);
 
     }
 
@@ -1201,9 +1353,8 @@ h2::after {
 
 
 /* ================================
-   手機版
+   手機
 ================================ */
-
 
 @media(max-width:600px) {
 
@@ -1238,10 +1389,6 @@ h2::after {
 
     }
 
-
-    /* ============================
-       手機：總覽 2 × 2
-    ============================ */
 
     .summary-grid {
 
@@ -1285,10 +1432,6 @@ h2::after {
     }
 
 
-    /* ============================
-       手機：導航 3 × 2
-    ============================ */
-
     nav {
 
         grid-template-columns:
@@ -1305,9 +1448,11 @@ h2::after {
 
         font-size: 9px;
 
-        border-right: 1px solid rgba(255,255,255,.2);
+        border-right:
+            1px solid rgba(255,255,255,.2);
 
-        border-bottom: 1px solid rgba(255,255,255,.2);
+        border-bottom:
+            1px solid rgba(255,255,255,.2);
 
     }
 
@@ -1379,11 +1524,29 @@ h2::after {
     }
 
 
-    #line textarea {
+    #line textarea#lineText {
 
         height: 280px;
 
         padding: 14px;
+
+    }
+
+
+    .handover-box {
+
+        padding: 13px;
+
+    }
+
+
+    #line textarea.handover-note {
+
+        min-height: 120px;
+
+        height: 120px;
+
+        font-size: 12px;
 
     }
 
@@ -1393,7 +1556,6 @@ h2::after {
 /* ================================
    小手機
 ================================ */
-
 
 @media(max-width:380px) {
 
@@ -1464,7 +1626,6 @@ h2::after {
 /* ================================
    防止選取
 ================================ */
-
 
 button {
 
