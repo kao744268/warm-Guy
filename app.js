@@ -2,7 +2,7 @@
 // 溫暖酒場｜智慧備料系統 V3
 // app.js
 // 採購管理核心
-// 備註 + 巨蛋店
+// 巨蛋店 + 品項備註 + 交接備註
 // ===================================
 
 
@@ -10,8 +10,14 @@
 // LocalStorage
 // ======================
 
-const PURCHASE_STORAGE_KEY = "warmSakabaPurchaseV3";
-const SAUCE_STORAGE_KEY = "warmSakabaSauceV3";
+const PURCHASE_STORAGE_KEY =
+    "warmSakabaPurchaseV3";
+
+const SAUCE_STORAGE_KEY =
+    "warmSakabaSauceV3";
+
+const HANDOVER_STORAGE_KEY =
+    "warmSakabaHandoverV3";
 
 
 // ======================
@@ -19,36 +25,50 @@ const SAUCE_STORAGE_KEY = "warmSakabaSauceV3";
 // ======================
 
 let purchaseData = {
+
     wanlaixing: {},
+
     pxmart: {},
+
     houyi: {},
+
     jdan: {}
+
 };
 
 let sauceState = {};
+
+let handoverNote = "";
 
 
 // ======================
 // 初始化
 // ======================
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    loadPurchaseData();
+        loadPurchaseData();
 
-    loadSauceData();
+        loadSauceData();
 
-    renderPurchasePages();
+        loadHandoverNote();
 
-    renderSaucePage();
+        renderPurchasePages();
 
-    updatePurchaseSummary();
+        renderSaucePage();
 
-    updatePurchasePreview();
+        updatePurchaseSummary();
 
-    showPage("wanlaixing");
+        updatePurchasePreview();
 
-});
+        loadHandoverInput();
+
+        showPage("wanlaixing");
+
+    }
+);
 
 
 // ======================
@@ -58,32 +78,56 @@ document.addEventListener("DOMContentLoaded", function () {
 function loadPurchaseData() {
 
     const saved =
-        localStorage.getItem(PURCHASE_STORAGE_KEY);
+        localStorage.getItem(
+            PURCHASE_STORAGE_KEY
+        );
+
 
     if (!saved) {
         return;
     }
 
+
     try {
 
-        const parsed = JSON.parse(saved);
+        const parsed =
+            JSON.parse(saved);
+
 
         purchaseData = {
-            wanlaixing: parsed.wanlaixing || {},
-            pxmart: parsed.pxmart || {},
-            houyi: parsed.houyi || {},
-            jdan: parsed.jdan || {}
+
+            wanlaixing:
+                parsed.wanlaixing || {},
+
+            pxmart:
+                parsed.pxmart || {},
+
+            houyi:
+                parsed.houyi || {},
+
+            jdan:
+                parsed.jdan || {}
+
         };
 
     } catch (error) {
 
-        console.log("採購資料讀取失敗", error);
+        console.log(
+            "採購資料讀取失敗",
+            error
+        );
+
 
         purchaseData = {
+
             wanlaixing: {},
+
             pxmart: {},
+
             houyi: {},
+
             jdan: {}
+
         };
 
     }
@@ -98,9 +142,15 @@ function loadPurchaseData() {
 function savePurchaseData() {
 
     localStorage.setItem(
+
         PURCHASE_STORAGE_KEY,
-        JSON.stringify(purchaseData)
+
+        JSON.stringify(
+            purchaseData
+        )
+
     );
+
 
     updatePurchaseSummary();
 
@@ -116,19 +166,28 @@ function savePurchaseData() {
 function loadSauceData() {
 
     const saved =
-        localStorage.getItem(SAUCE_STORAGE_KEY);
+        localStorage.getItem(
+            SAUCE_STORAGE_KEY
+        );
+
 
     if (!saved) {
         return;
     }
 
+
     try {
 
-        sauceState = JSON.parse(saved);
+        sauceState =
+            JSON.parse(saved);
 
     } catch (error) {
 
-        console.log("醬料資料讀取失敗", error);
+        console.log(
+            "醬料資料讀取失敗",
+            error
+        );
+
 
         sauceState = {};
 
@@ -144,8 +203,92 @@ function loadSauceData() {
 function saveSauceData() {
 
     localStorage.setItem(
+
         SAUCE_STORAGE_KEY,
-        JSON.stringify(sauceState)
+
+        JSON.stringify(
+            sauceState
+        )
+
+    );
+
+}
+
+
+// ======================
+// 交接備註讀取
+// ======================
+
+function loadHandoverNote() {
+
+    handoverNote =
+        localStorage.getItem(
+            HANDOVER_STORAGE_KEY
+        ) || "";
+
+}
+
+
+// ======================
+// 交接備註儲存
+// ======================
+
+function saveHandoverNote() {
+
+    const input =
+        document.getElementById(
+            "handoverNote"
+        );
+
+
+    if (!input) {
+        return;
+    }
+
+
+    handoverNote =
+        input.value;
+
+
+    localStorage.setItem(
+
+        HANDOVER_STORAGE_KEY,
+
+        handoverNote
+
+    );
+
+}
+
+
+// ======================
+// 載入交接備註
+// ======================
+
+function loadHandoverInput() {
+
+    const input =
+        document.getElementById(
+            "handoverNote"
+        );
+
+
+    if (!input) {
+        return;
+    }
+
+
+    input.value =
+        handoverNote;
+
+
+    input.addEventListener(
+        "input",
+        function () {
+
+            saveHandoverNote();
+
+        }
     );
 
 }
@@ -155,23 +298,49 @@ function saveSauceData() {
 // 取得分類資料
 // ======================
 
-function getPurchaseList(category) {
+function getPurchaseList(
+    category
+) {
 
-    if (category === "wanlaixing") {
+    if (
+        category ===
+        "wanlaixing"
+    ) {
+
         return wanlaixingData;
+
     }
 
-    if (category === "pxmart") {
+
+    if (
+        category ===
+        "pxmart"
+    ) {
+
         return pxmartData;
+
     }
 
-    if (category === "houyi") {
+
+    if (
+        category ===
+        "houyi"
+    ) {
+
         return houyiData;
+
     }
 
-    if (category === "jdan") {
+
+    if (
+        category ===
+        "jdan"
+    ) {
+
         return jdanData;
+
     }
+
 
     return [];
 
@@ -185,27 +354,46 @@ function getPurchaseList(category) {
 function renderPurchasePages() {
 
     renderPurchasePage(
+
         "wanlaixing",
+
         wanlaixingData,
+
         "🛒 旺來興採購"
+
     );
 
+
     renderPurchasePage(
+
         "pxmart",
+
         pxmartData,
+
         "🛒 全聯採購"
+
     );
 
+
     renderPurchasePage(
+
         "houyi",
+
         houyiData,
+
         "🛒 後驛店採購"
+
     );
 
+
     renderPurchasePage(
+
         "jdan",
+
         jdanData,
+
         "🏬 巨蛋店採購"
+
     );
 
 }
@@ -222,46 +410,70 @@ function renderPurchasePage(
 ) {
 
     const section =
-        document.getElementById(category);
+        document.getElementById(
+            category
+        );
+
 
     if (!section) {
         return;
     }
 
+
     section.innerHTML = "";
 
+
     const title =
-        document.createElement("h2");
+        document.createElement(
+            "h2"
+        );
 
-    title.textContent = titleText;
 
-    section.appendChild(title);
+    title.textContent =
+        titleText;
+
+
+    section.appendChild(
+        title
+    );
 
 
     const description =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     description.className =
         "section-description";
 
+
     description.textContent =
         "選擇今天需要採購的品項與數量";
 
-    section.appendChild(description);
+
+    section.appendChild(
+        description
+    );
 
 
-    list.forEach(function (item, index) {
+    list.forEach(
+        function (item, index) {
 
-        const card =
-            createPurchaseCard(
-                category,
-                item,
-                index
+            const card =
+                createPurchaseCard(
+                    category,
+                    item,
+                    index
+                );
+
+
+            section.appendChild(
+                card
             );
 
-        section.appendChild(card);
-
-    });
+        }
+    );
 
 }
 
@@ -277,9 +489,13 @@ function createPurchaseCard(
 ) {
 
     const card =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    card.className = "card";
+
+    card.className =
+        "card";
 
 
     const state =
@@ -294,12 +510,18 @@ function createPurchaseCard(
     // ==================
 
     const title =
-        document.createElement("h3");
+        document.createElement(
+            "h3"
+        );
+
 
     title.textContent =
         item.name;
 
-    card.appendChild(title);
+
+    card.appendChild(
+        title
+    );
 
 
     // ==================
@@ -309,19 +531,29 @@ function createPurchaseCard(
     if (item.options) {
 
         const optionTitle =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         optionTitle.className =
             "option-title";
 
+
         optionTitle.textContent =
             "規格";
 
-        card.appendChild(optionTitle);
+
+        card.appendChild(
+            optionTitle
+        );
 
 
         const optionBox =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         optionBox.className =
             "option-box";
@@ -331,19 +563,26 @@ function createPurchaseCard(
             function (option) {
 
                 const button =
-                    document.createElement("button");
+                    document.createElement(
+                        "button"
+                    );
 
-                button.type = "button";
+
+                button.type =
+                    "button";
+
 
                 button.className =
                     "option-button";
+
 
                 button.textContent =
                     option;
 
 
                 if (
-                    state.option === option
+                    state.option ===
+                    option
                 ) {
 
                     button.classList.add(
@@ -387,17 +626,27 @@ function createPurchaseCard(
     // ==================
 
     const row =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    row.className = "row";
+
+    row.className =
+        "row";
 
 
     const minus =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
-    minus.type = "button";
 
-    minus.textContent = "−";
+    minus.type =
+        "button";
+
+
+    minus.textContent =
+        "−";
 
 
     minus.addEventListener(
@@ -415,18 +664,27 @@ function createPurchaseCard(
 
 
     const quantity =
-        document.createElement("span");
+        document.createElement(
+            "span"
+        );
+
 
     quantity.textContent =
         state.quantity;
 
 
     const plus =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
-    plus.type = "button";
 
-    plus.textContent = "+";
+    plus.type =
+        "button";
+
+
+    plus.textContent =
+        "+";
 
 
     plus.addEventListener(
@@ -443,41 +701,66 @@ function createPurchaseCard(
     );
 
 
-    row.appendChild(minus);
+    row.appendChild(
+        minus
+    );
 
-    row.appendChild(quantity);
 
-    row.appendChild(plus);
+    row.appendChild(
+        quantity
+    );
 
-    card.appendChild(row);
+
+    row.appendChild(
+        plus
+    );
+
+
+    card.appendChild(
+        row
+    );
 
 
     // ==================
-    // 備註
+    // 品項備註
     // ==================
 
     const noteTitle =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     noteTitle.className =
         "note-title";
 
-    noteTitle.textContent =
-        "備註";
 
-    card.appendChild(noteTitle);
+    noteTitle.textContent =
+        "品項備註";
+
+
+    card.appendChild(
+        noteTitle
+    );
 
 
     const noteInput =
-        document.createElement("input");
+        document.createElement(
+            "input"
+        );
 
-    noteInput.type = "text";
+
+    noteInput.type =
+        "text";
+
 
     noteInput.className =
         "purchase-note";
 
+
     noteInput.placeholder =
         "例如：指定品牌、規格、數量備註";
+
 
     noteInput.value =
         state.note || "";
@@ -493,8 +776,10 @@ function createPurchaseCard(
                     index
                 );
 
+
             currentState.note =
                 noteInput.value;
+
 
             savePurchaseData();
 
@@ -512,10 +797,14 @@ function createPurchaseCard(
     // ==================
 
     const purchaseButton =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
+
 
     purchaseButton.type =
         "button";
+
 
     purchaseButton.className =
         "purchase-button";
@@ -526,6 +815,7 @@ function createPurchaseCard(
         purchaseButton.classList.add(
             "active"
         );
+
 
         purchaseButton.textContent =
             "✓ 已加入採購";
@@ -570,14 +860,19 @@ function getItemState(
     index
 ) {
 
-    if (!purchaseData[category]) {
+    if (
+        !purchaseData[category]
+    ) {
 
-        purchaseData[category] = {};
+        purchaseData[category] =
+            {};
 
     }
 
 
-    if (!purchaseData[category][index]) {
+    if (
+        !purchaseData[category][index]
+    ) {
 
         purchaseData[category][index] = {
 
@@ -595,7 +890,9 @@ function getItemState(
 
 
     if (
-        typeof purchaseData[category][index].note !==
+        typeof
+        purchaseData[category][index].note
+        !==
         "string"
     ) {
 
@@ -605,7 +902,9 @@ function getItemState(
     }
 
 
-    return purchaseData[category][index];
+    return purchaseData[
+        category
+    ][index];
 
 }
 
@@ -627,33 +926,46 @@ function changeQuantity(
         );
 
 
-    state.quantity += amount;
+    state.quantity +=
+        amount;
 
 
-    if (state.quantity < 0) {
+    if (
+        state.quantity < 0
+    ) {
 
-        state.quantity = 0;
-
-    }
-
-
-    if (state.quantity > 999) {
-
-        state.quantity = 999;
+        state.quantity =
+            0;
 
     }
 
 
-    if (state.quantity > 0) {
+    if (
+        state.quantity > 999
+    ) {
 
-        state.selected = true;
+        state.quantity =
+            999;
 
     }
 
 
-    if (state.quantity === 0) {
+    if (
+        state.quantity > 0
+    ) {
 
-        state.selected = false;
+        state.selected =
+            true;
+
+    }
+
+
+    if (
+        state.quantity === 0
+    ) {
+
+        state.selected =
+            false;
 
     }
 
@@ -685,13 +997,17 @@ function selectOption(
     state.option =
         option;
 
+
     state.selected =
         true;
 
 
-    if (state.quantity === 0) {
+    if (
+        state.quantity === 0
+    ) {
 
-        state.quantity = 1;
+        state.quantity =
+            1;
 
     }
 
@@ -725,7 +1041,9 @@ function togglePurchase(
         );
 
 
-    if (state.selected) {
+    if (
+        state.selected
+    ) {
 
         state.selected =
             false;
@@ -736,9 +1054,12 @@ function togglePurchase(
             true;
 
 
-        if (state.quantity === 0) {
+        if (
+            state.quantity === 0
+        ) {
 
-            state.quantity = 1;
+            state.quantity =
+                1;
 
         }
 
@@ -892,8 +1213,11 @@ function showPage(page) {
 
 
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
+
     });
 
 }
@@ -916,26 +1240,38 @@ function renderSaucePage() {
     }
 
 
-    section.innerHTML = "";
+    section.innerHTML =
+        "";
 
 
     const title =
-        document.createElement("h2");
+        document.createElement(
+            "h2"
+        );
+
 
     title.textContent =
         "🥣 醬料製作";
 
-    section.appendChild(title);
+
+    section.appendChild(
+        title
+    );
 
 
     const description =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     description.className =
         "section-description";
 
+
     description.textContent =
         "選擇今天需要製作的醬料";
+
 
     section.appendChild(
         description
@@ -950,6 +1286,7 @@ function renderSaucePage() {
                     "div"
                 );
 
+
             card.className =
                 "card sauce-card";
 
@@ -959,8 +1296,10 @@ function renderSaucePage() {
                     "h3"
                 );
 
+
             title.textContent =
                 sauce.name;
+
 
             card.appendChild(
                 title
@@ -975,11 +1314,15 @@ function renderSaucePage() {
                             "div"
                         );
 
+
                     materialRow.className =
                         "sauce-material";
 
+
                     materialRow.textContent =
-                        "・" + material;
+                        "・" +
+                        material;
+
 
                     card.appendChild(
                         materialRow
@@ -994,18 +1337,23 @@ function renderSaucePage() {
                     "button"
                 );
 
+
             button.type =
                 "button";
+
 
             button.className =
                 "purchase-button";
 
 
-            if (sauceState[index]) {
+            if (
+                sauceState[index]
+            ) {
 
                 button.classList.add(
                     "active"
                 );
+
 
                 button.textContent =
                     "✓ 已加入備料";
@@ -1025,7 +1373,9 @@ function renderSaucePage() {
                     sauceState[index] =
                         !sauceState[index];
 
+
                     saveSauceData();
+
 
                     renderSaucePage();
 
@@ -1062,6 +1412,10 @@ function createLINE() {
         false;
 
 
+    // ==================
+    // 旺來興
+    // ==================
+
     const wanText =
         createCategoryLINE(
             "wanlaixing",
@@ -1076,11 +1430,16 @@ function createLINE() {
             wanText +
             "\n\n";
 
+
         hasPurchase =
             true;
 
     }
 
+
+    // ==================
+    // 全聯
+    // ==================
 
     const pxText =
         createCategoryLINE(
@@ -1096,11 +1455,16 @@ function createLINE() {
             pxText +
             "\n\n";
 
+
         hasPurchase =
             true;
 
     }
 
+
+    // ==================
+    // 後驛店
+    // ==================
 
     const houyiText =
         createCategoryLINE(
@@ -1116,11 +1480,16 @@ function createLINE() {
             houyiText +
             "\n\n";
 
+
         hasPurchase =
             true;
 
     }
 
+
+    // ==================
+    // 巨蛋店
+    // ==================
 
     const jdanText =
         createCategoryLINE(
@@ -1136,11 +1505,16 @@ function createLINE() {
             jdanText +
             "\n\n";
 
+
         hasPurchase =
             true;
 
     }
 
+
+    // ==================
+    // 醬料
+    // ==================
 
     const sauceText =
         createSauceLINE();
@@ -1153,11 +1527,63 @@ function createLINE() {
             sauceText +
             "\n\n";
 
+
         hasPurchase =
             true;
 
     }
 
+
+    // ==================
+    // 交接備註
+    // ==================
+
+    const noteInput =
+        document.getElementById(
+            "handoverNote"
+        );
+
+
+    if (noteInput) {
+
+        handoverNote =
+            noteInput.value;
+
+
+        localStorage.setItem(
+
+            HANDOVER_STORAGE_KEY,
+
+            handoverNote
+
+        );
+
+    }
+
+
+    if (
+        handoverNote &&
+        handoverNote.trim()
+    ) {
+
+        text +=
+            "📝 備註／交接事項\n";
+
+
+        text +=
+            handoverNote.trim() +
+            "\n\n";
+
+
+        hasPurchase =
+            true;
+
+    }
+
+
+    // ==================
+    // 沒有任何內容
+    // ==================
 
     if (!hasPurchase) {
 
@@ -1218,7 +1644,9 @@ function createCategoryLINE(
                     item.name;
 
 
-                if (item.options) {
+                if (
+                    item.options
+                ) {
 
                     line +=
                         " " +
@@ -1247,7 +1675,9 @@ function createCategoryLINE(
                 }
 
 
-                lines.push(line);
+                lines.push(
+                    line
+                );
 
             }
 
@@ -1274,11 +1704,15 @@ function createSauceLINE() {
     sauceData.forEach(
         function (sauce, index) {
 
-            if (sauceState[index]) {
+            if (
+                sauceState[index]
+            ) {
 
                 lines.push(
+
                     "・" +
                     sauce.name
+
                 );
 
             }
@@ -1325,10 +1759,15 @@ function updatePurchasePreview() {
 
 
     [
+
         "wanlaixing",
+
         "pxmart",
+
         "houyi",
+
         "jdan"
+
     ].forEach(
         function (category) {
 
@@ -1353,7 +1792,9 @@ function updatePurchasePreview() {
                         state.quantity > 0
                     ) {
 
-                        counts[category]++;
+                        counts[
+                            category
+                        ]++;
 
                     }
 
@@ -1423,6 +1864,7 @@ function copyLINE() {
             "請先產生採購單。"
         );
 
+
         return;
 
     }
@@ -1445,6 +1887,7 @@ function copyLINE() {
 
             textarea.select();
 
+
             alert(
                 "請手動複製採購單。"
             );
@@ -1463,7 +1906,7 @@ function resetAll() {
 
     const confirmed =
         confirm(
-            "確定要清除今天所有採購與醬料備料紀錄嗎？"
+            "確定要清除今天所有採購、醬料備料與交接備註嗎？"
         );
 
 
@@ -1488,6 +1931,9 @@ function resetAll() {
     sauceState = {};
 
 
+    handoverNote = "";
+
+
     localStorage.removeItem(
         PURCHASE_STORAGE_KEY
     );
@@ -1495,6 +1941,11 @@ function resetAll() {
 
     localStorage.removeItem(
         SAUCE_STORAGE_KEY
+    );
+
+
+    localStorage.removeItem(
+        HANDOVER_STORAGE_KEY
     );
 
 
@@ -1515,7 +1966,22 @@ function resetAll() {
 
     if (textarea) {
 
-        textarea.value = "";
+        textarea.value =
+            "";
+
+    }
+
+
+    const handoverInput =
+        document.getElementById(
+            "handoverNote"
+        );
+
+
+    if (handoverInput) {
+
+        handoverInput.value =
+            "";
 
     }
 
